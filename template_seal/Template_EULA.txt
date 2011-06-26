@@ -1,0 +1,167 @@
+
+SCRIPTMATIX LTD TEMPLATE END USER LICENSE AGREEMENT
+
+IMPORTANT:  THIS SOFTWARE END USER LICENSE AGREEMENT 
+('EULA') IS A LEGAL AGREEMENT BETWEEN YOU (EITHER AN 
+INDIVIDUAL OR, IF PURCHASED OR OTHERWISE ACQUIRED BY OR FOR 
+AN ENTITY, AN ENTITY) AND SCRIPTMATIX LTD. READ IT 
+CAREFULLY BEFORE COMPLETING THE INSTALLATION PROCESS AND 
+USING THE TEMPLATE. IT PROVIDES A LICENSE TO USE THE 
+TEMPLATE AND CONTAINS WARRANTY INFORMATION AND LIABILITY 
+DISCLAIMERS.  
+
+1. Definitions
+
+(a) 'SCRIPTMATIX LTD' means SCRIPTMATIX LTD and its licensors, if any. 
+
+(b) 'Template' or 'Theme' means the SEAL TEMPLATE software Template for use with
+the phpPennyAuction software contained therein, in each case supplied by
+SCRIPTMATIX LTD herewith, and corresponding documentation, associated
+media, printed materials, and online or electronic documentation, and all updates
+or upgrades of the above that are provided to you. 
+
+2. License Restrictions
+
+(a) You may not make or distribute copies of the Template, or electronically 
+transfer the Template from one computer to another or over a network, unless
+to those inside your organization or company, as outlined in our Terms of Use
+and License Agreement.
+
+(b) You may not decompile, reverse engineer, disassemble, or otherwise reduce
+the Template.
+
+(c) You may not sell, rent, lease, or sublicense the Template.
+
+(d) In the event that you fail to comply with this EULA, SCRIPTMATIX LTD
+may terminate the Software License and you must destroy all copies of the 
+Template (with all other rights of both parties and all other provisions of this
+EULA surviving any such termination).
+
+3. Ownership
+
+The foregoing license gives you limited license to use the Template. 
+All rights not specifically granted in this EULA, including Federal and
+International Copyrights, are reserved by SCRIPTMATIX LTD, its suppliers
+and its partners.
+
+4. WARRANTY DISCLAIMER
+
+(a) SCRIPTMATIX LTD AND ITS SUPPLIERS AND PARTNERS 
+DISCLAIM ALL WARRANTIES AND REPRESENTATIONS, WHETHER 
+EXPRESS, IMPLIED, OR OTHERWISE, INCLUDING THE WARRANTIES
+OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. 
+ALSO, THERE IS NO WARRANTY OF NON-INFRINGEMENT AND 
+TITLE OR QUIET ENJOYMENT. SCRIPTMATIX LTD DOES NOT 
+WARRANT THAT THE SOFTWARE IS ERROR-FREE OR WILL
+OPERATE WITHOUT INTERRUPTION. NO RIGHTS OR REMEDIES
+REFERRED TO IN ARTICLE 2A OF THE UCC WILL BE CONFERRED
+ON YOU UNLESS EXPRESSLY GRANTED HEREIN. THE SOFTWARE IS
+NOT DESIGNED, INTENDED OR LICENSED FOR USE IN HAZARDOUS 
+ENVIRONMENTS REQUIRING FAIL-SAFE CONTROLS, INCLUDING 
+WITHOUT LIMITATION, THE DESIGN, CONSTRUCTION, 
+MAINTENANCE OR OPERATION OF NUCLEAR FACILITIES, 
+AIRCRAFT NAVIGATION OR COMMUNICATION SYSTEMS, AIR 
+TRAFFIC CONTROL, AND LIFE SUPPORT OR WEAPONS SYSTEMS. 
+SCRIPTMATIX LTD SPECIFICALLY DISCLAIMS ANY EXPRESS 
+OR IMPLIED WARRANTY OF FITNESS FOR SUCH PURPOSES.
+
+(b) IF APPLICABLE LAW REQUIRES ANY WARRANTIES WITH
+RESPECT TO THE SOFTWARE, ALL SUCH WARRANTIES ARE 
+LIMITED IN DURATION TO NINETY (90) DAYS FROM THE DATE OF 
+DELIVERY.
+
+(c) NO ORAL OR WRITTEN INFORMATION OR ADVICE GIVEN BY 
+SCRIPTMATIX LTD, ITS DEALERS, DISTRIBUTORS, AGENTS OR
+EMPLOYEES SHALL CREATE A WARRANTY OR IN ANY WAY
+INCREASE THE SCOPE OF ANY WARRANTY PROVIDED HEREIN. 
+
+(d) SCRIPTMATIX LTD shall have no responsibility if 
+the Template has been altered in any way, or FOR ANY 
+failure THAT arises out of use of the Software with 
+other than a recommended hardware configuration, 
+PLATFORM OR OPERATING SYSTEM. 
+
+6. LIMITATION OF LIABILITY
+
+(a) NEITHER SCRIPTMATIX LTD NOR ITS SUPPLIERS AND 
+PARTNERS SHALL BE LIABLE TO YOU OR ANY THIRD PARTY FOR 
+ANY INDIRECT, SPECIAL, INCIDENTAL, PUNITIVE, COVER OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+DAMAGES FOR THE INABILITY TO USE EQUIPMENT OR ACCESS 
+DATA, LOSS OF BUSINESS, LOSS OF PROFITS, BUSINESS 
+INTERRUPTION OR THE LIKE), ARISING OUT OF THE USE OF, OR
+INABILITY TO USE, THE SOFTWARE AND BASED ON ANY THEORY 
+OF LIABILITY INCLUDING BREACH OF CONTRACT, BREACH OF 
+WARRANTY, TORT (INCLUDING NEGLIGENCE), PRODUCT
+LIABILITY OR OTHERWISE, EVEN IF SCRIPTMATIX LTD OR
+ITS REPRESENTATIVES HAVE BEEN ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGES AND EVEN IF A REMEDY SET FORTH HEREIN IS 
+FOUND TO HAVE FAILED OF ITS ESSENTIAL PURPOSE.
+
+(b) SCRIPTMATIX LTD'S TOTAL LIABILITY TO YOU FOR 
+ACTUAL DAMAGES FOR ANY CAUSE WHATSOEVER WILL BE 
+LIMITED TO £10,000,000. 
+
+(c) THE FOREGOING LIMITATIONS ON LIABILITY ARE INTENDED
+TO APPLY TO ALL ASPECTS OF THIS EULA.
+
+7. Basis of Bargain 
+
+The Warranty Disclaimer and Limited Liability set forth above are fundamental 
+elements of the basis of the agreement between SCRIPTMATIX LTD and 
+you. SCRIPTMATIX LTD would not be able to provide the Template on an 
+economic basis without such limitations. Such Warranty Disclaimer and Limited 
+Liability inure to the benefit of SCRIPTMATIX LTD's licensors.
+
+8. SOFTWARE DETAILS
+
+Developer: SCRIPTMATIX LTD, 
+Unit 223, Fortenay House,
+Ongar Road,
+Brentwood
+Essex, 
+United Kingdom.
+
+9. Consumer End Users Only
+
+The limitations or exclusions of warranties and liability contained in this EULA 
+do not affect or prejudice the statutory rights of a consumer, i.e., a person 
+acquiring goods otherwise than in the course of a business.
+
+The limitations or exclusions of warranties, remedies or liability contained in 
+this EULA shall apply to you only to the extent such limitations or exclusions are 
+permitted under the laws of the jurisdiction where you are located. 
+
+
+
+10. General
+
+This EULA contains the complete agreement between the parties with respect to 
+the subject matter hereof, and supersedes all prior or contemporaneous
+agreements or understandings, whether oral or written. You agree that any varying 
+or additional terms contained in any purchase order or other written notification 
+or document issued by you in relation to the Software licensed hereunder shall be
+of no effect. The failure or delay of SCRIPTMATIX LTD to exercise any
+of its rights under this EULA or upon any breach of this EULA shall not be 
+deemed a waiver of those rights or of the breach. 
+
+
+If any provision of this EULA shall be held by a court of competent jurisdiction
+to be contrary to law, that provision will be enforced to the maximum extent 
+permissible, and the remaining provisions of this EULA will remain in full force
+and effect.
+
+All questions concerning this EULA shall be directed to: 
+
+SCRIPTMATIX LTD, copyright@scriptmatix.com, Attention: Darcy Lane.
+
+SCRIPTMATIX LTD and other trademarks contained in the Template are trademarks or registered
+trademarks of SCRIPTMATIX LTD in the United Kingdom. Third party trademarks, trade names,
+product names and logos may be the trademarks or registered trademarks of their respective 
+owners.  You may not remove oralter any trademark, trade names, product names, logo,
+copyright or other proprietary notices, legends, symbols or labels in the Template.
+This EULA does not authorize you to use SCRIPTMATIX LTD's or its licensors' names or
+any of their respective trademarks.
+
+
+For full Software Terms of Use please review: http://www.phppennyauction.com/terms/. 

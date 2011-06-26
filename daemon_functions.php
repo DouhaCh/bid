@@ -138,8 +138,13 @@ function daemonBidbutler(){
 							   AND a.deleted=0
 							   AND a.end_time < '$bidButlerEndTime' 
 							   AND a.closed = 0 
-							   AND a.active = 1 
-							   AND b.bids > 0 
+							   AND a.active = 1
+							   AND b.active = 1
+							   AND b.deleted = 0
+							   AND b.closed = 0
+							   AND b.bids >= a.bp_cost
+							   AND b.minimum_price <= a.price
+							   AND b.maximum_price >= a.price
 							ORDER BY rand()");
 		
 	$totalRows = mysql_num_rows($sql);
@@ -191,4 +196,8 @@ function checkCanClose($auction_id){
 
 function canBidBuddy($bidbutler, $auction){
 	global $config;
+	
+	if($bidbutler['minimum_price'] < $auction['price']){
+		
+	}
 }

@@ -1,0 +1,75 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 21 (0x15)
+        Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C=US, ST=California, O=Mobivi, OU=MobiviEPay, CN=mbv/emailAddress=mbv
+        Validity
+            Not Before: Dec 30 07:33:44 2008 GMT
+            Not After : Dec 28 07:33:44 2018 GMT
+        Subject: C=US, ST=California, L=Milpitas, O=Mobivi, OU=MobiviEPay, CN=mobivi_sign/emailAddress=mobivi_sign
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:cb:2e:0d:b6:0b:ee:59:01:d0:d2:bd:91:39:d2:
+                    94:3a:57:84:71:c5:0d:d5:28:48:ad:3c:c9:ea:8e:
+                    2e:f2:5a:0a:21:cc:8c:f6:ae:0b:ea:0b:17:94:60:
+                    fd:d7:8a:ee:de:91:1d:b2:48:94:4e:3e:3d:56:eb:
+                    b6:cc:e9:c3:c9:2b:c0:08:1f:68:0d:26:48:78:86:
+                    68:d4:af:cd:45:27:70:c2:5f:ea:dd:89:86:6a:64:
+                    39:f0:b3:c9:4b:94:4b:6b:b1:eb:c9:0a:56:9c:86:
+                    38:42:6f:6f:97:1d:b2:4c:fa:2f:42:fc:88:81:f2:
+                    58:1e:f7:73:b6:f1:fa:bd:9f
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Cert Type: 
+                S/MIME
+            X509v3 Key Usage: 
+                Digital Signature, Non Repudiation, Key Encipherment, Data Encipherment
+            Netscape Comment: 
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier: 
+                33:52:19:C4:C4:48:1B:9A:F9:57:25:FD:F9:44:4B:AA:F9:FC:16:2C
+            X509v3 Authority Key Identifier: 
+                keyid:82:0D:A0:B9:AD:90:D7:FF:12:91:8E:E5:B8:1A:F9:06:68:19:02:ED
+
+    Signature Algorithm: sha1WithRSAEncryption
+        98:07:ff:f2:c9:15:5e:ee:62:ea:da:59:be:6d:b9:03:21:1c:
+        09:66:b4:69:30:18:98:96:90:3e:6e:d6:86:ca:21:f7:39:a0:
+        f2:f6:65:b8:cb:20:c3:85:a3:66:78:2c:b6:c4:c3:44:03:f6:
+        b5:42:cd:9b:9c:44:71:6e:1a:f6:25:24:12:dd:b7:e4:0e:04:
+        51:13:31:55:ba:03:c1:d2:2a:11:4c:5a:b3:ed:4d:ed:9b:f3:
+        05:6c:17:30:f5:00:52:0f:e8:ba:11:9d:5f:89:02:b2:0e:db:
+        71:47:80:a2:50:90:8b:3b:4c:07:c3:47:13:43:e7:b8:03:d3:
+        95:5b:86:07:bf:94:3d:5c:82:f5:39:ad:4c:45:4a:ea:fd:81:
+        41:71:10:f8:26:a2:a8:f1:50:f7:d6:0e:75:19:ac:91:d4:5f:
+        30:1e:dd:92:7d:80:1d:f6:e1:98:07:bb:f1:48:ff:ad:cc:3e:
+        ae:f2:6f:50:ce:83:02:c4:ea:3d:a7:9f:4b:e6:ed:a5:a1:71:
+        7b:bd:d9:2e:74:59:d6:a4:81:e2:5b:01:9c:9a:d5:e4:1b:f4:
+        d1:ae:2f:32:11:e8:34:cb:24:84:87:ba:22:07:8b:40:9e:70:
+        a5:93:d8:5b:3f:d7:3b:e7:be:dc:fb:d6:f1:e6:e2:1e:d5:a5:
+        a0:a4:c5:71
+-----BEGIN CERTIFICATE-----
+MIIDjDCCAnSgAwIBAgIBFTANBgkqhkiG9w0BAQUFADBqMQswCQYDVQQGEwJVUzET
+MBEGA1UECBMKQ2FsaWZvcm5pYTEPMA0GA1UEChMGTW9iaXZpMRMwEQYDVQQLEwpN
+b2JpdmlFUGF5MQwwCgYDVQQDEwNtYnYxEjAQBgkqhkiG9w0BCQEWA21idjAeFw0w
+ODEyMzAwNzMzNDRaFw0xODEyMjgwNzMzNDRaMIGNMQswCQYDVQQGEwJVUzETMBEG
+A1UECBMKQ2FsaWZvcm5pYTERMA8GA1UEBxMITWlscGl0YXMxDzANBgNVBAoTBk1v
+Yml2aTETMBEGA1UECxMKTW9iaXZpRVBheTEUMBIGA1UEAwwLbW9iaXZpX3NpZ24x
+GjAYBgkqhkiG9w0BCQEWC21vYml2aV9zaWduMIGfMA0GCSqGSIb3DQEBAQUAA4GN
+ADCBiQKBgQDLLg22C+5ZAdDSvZE50pQ6V4RxxQ3VKEitPMnqji7yWgohzIz2rgvq
+CxeUYP3Xiu7ekR2ySJROPj1W67bM6cPJK8AIH2gNJkh4hmjUr81FJ3DCX+rdiYZq
+ZDnws8lLlEtrsevJClachjhCb2+XHbJM+i9C/IiB8lge93O28fq9nwIDAQABo4Gc
+MIGZMAkGA1UdEwQCMAAwEQYJYIZIAYb4QgEBBAQDAgUgMAsGA1UdDwQEAwIE8DAs
+BglghkgBhvhCAQ0EHxYdT3BlblNTTCBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYD
+VR0OBBYEFDNSGcTESBua+Vcl/flES6r5/BYsMB8GA1UdIwQYMBaAFIINoLmtkNf/
+EpGO5bga+QZoGQLtMA0GCSqGSIb3DQEBBQUAA4IBAQCYB//yyRVe7mLq2lm+bbkD
+IRwJZrRpMBiYlpA+btaGyiH3OaDy9mW4yyDDhaNmeCy2xMNEA/a1Qs2bnERxbhr2
+JSQS3bfkDgRREzFVugPB0ioRTFqz7U3tm/MFbBcw9QBSD+i6EZ1fiQKyDttxR4Ci
+UJCLO0wHw0cTQ+e4A9OVW4YHv5Q9XIL1Oa1MRUrq/YFBcRD4JqKo8VD31g51GayR
+1F8wHt2SfYAd9uGYB7vxSP+tzD6u8m9QzoMCxOo9p59L5u2loXF7vdkudFnWpIHi
+WwGcmtXkG/TRri8yEeg0yySEh7oiB4tAnnClk9hbP9c7577c+9bx5uIe1aWgpMVx
+-----END CERTIFICATE-----

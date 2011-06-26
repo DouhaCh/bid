@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<flash_parameters copyright="anvsoftPFMTheme">
+    <preferences>
+        <global>
+            <basic_property movieWidth="940" movieHeight="300" html_title="" loadStyle="Bar" startAutoPlay="true" continuum="true" anvsoftMenu="false" backgroundColor="0xfffbf0" hideAdobeMenu="true" photoDynamicShow="false" enableURL="true" transitionArray=""/>
+            <title_property showTitle="false" photoTitleColor="0xff0000" backgroundColor="0xffffff" alpha="50" autoHide="true"/>
+            <music_property path="" stream="true" loop="true"/>
+            <photo_property topPadding="0" bottomPadding="0" leftPadding="0" rightPadding="0"/>
+            <properties enable="false" backgroundColor="0xffffff" backgroundAlpha="0" cssText="a:link{text-decoration: underline;} a:hover{color:#ff0000; text-decoration: none;} a:active{color:#0000ff;text-decoration: none;} .blue {color:#0000ff; font-size:15px; font-style:italic; text-decoration: underline;} .body{color:#ff5500;font-size:20px;}" align="top"/>
+        </global>
+        <thumbnail>
+            <basic_property showPrview="false" buttonColor="0xffffff" borderColor="0xffffff" currentBorderColor="0xffffff"/>
+        </thumbnail>
+    </preferences>
+    <album>
+        <slide jpegURL="thumbs/t_0001.jpg" d_URL="slides/p_0001.jpg" transition="0" panzoom="1" URLTarget="0" phototime="2" transitiontime="2" url="http://www.yasuokuclone.com" title="auction-banner" width="940" height="300"/>
+        <slide jpegURL="thumbs/t_0002.jpg" d_URL="slides/p_0002.jpg" transition="0" panzoom="1" URLTarget="0" phototime="2" transitiontime="2" url="http://www.yasuokuclone.com" title="part1" width="940" height="300"/>
+    </album>
+</flash_parameters>

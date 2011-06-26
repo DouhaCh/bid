@@ -1,0 +1,14 @@
+<script type="text/javascript">
+
+var d1 = new Date();
+var d2 = new Date();
+document.write(d1);
+d1.setSeconds(d1.getSeconds()+10);
+d2.setSeconds(d2.getSeconds()-10);
+var d=new Date();
+if (d>d2) 
+	alert('d>d1');
+document.write((new Date).getSeconds());
+document.write(d2);
+
+</script>
