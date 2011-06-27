@@ -46,8 +46,8 @@ $(document).ready(function(){
     var bidOfficialTime        = $('.bid-official-time');
     var bidBalance             = $('.bid-balance');
     var getAuctionsUrl;
-    var time;
-    var lastGetAuctionsTime;
+    var time = 0;
+    var lastGetAuctionsTime = 0;
 
     if($('.bid-histories').length){
         getAuctionsUrl = '/live/auctions.php?histories=yes&ms=';
@@ -72,14 +72,13 @@ $(document).ready(function(){
             		var auctionObject;
             		for(var i=0; i<auctions.length; i++){
             			auction = auctions[i];
-            			console.log(auction);
             			id = 'auction_' + auction.id;
             			auctionObject = auctionObjects[id];
             			
             			auctionObject['bid-price'].html(auction.price);
             			auctionObject['bid-bidder'].html(auction.username);
             			//auctionObject['bid-bidder-avatar'].attr('src', auction.avatar);
-            			var t = auction.end_time - Math.floor(time / 10);
+            			var t = auction.end_time - time;
             			
             			if(t>0){
             				hour=parseInt(t/3600);
@@ -106,8 +105,8 @@ $(document).ready(function(){
     }
     
     setInterval(function(){
-    	// increase time prevent gettime error -_-
-    	time += 1;
+    	// increase time prevent gettime error
+    	time = parseInt(time, 10) + 1;
     	var gettime = '/live/time.php?' + new Date().getTime();
     	$.ajax({
     		url: gettime,
@@ -126,9 +125,8 @@ $(document).ready(function(){
 
         $.ajax({
             url: "/live/bid.php?auction_id=" + $(this).attr('title'),
-            dataType: 'json',
             success: function(data){
-                console.log(data);
+            	console.log(data);
             }
         });
 

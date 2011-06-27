@@ -15,7 +15,7 @@
 	while($auction = mysql_fetch_array($rs, MYSQL_ASSOC)){
 		$item = array(
 			'id' => $auction['id'],
-			'username' => empty($auction['username']) ? "Chua co ai" : $auction['username'],
+			'username' => empty($auction['username']) ? "Chưa có ai" : $auction['username'],
 			'avatar' => empty($auction['avatar']) ? "default.jpg" : $auction['avatar'],
 			'price' => $auction['price'],
 			'end_time' => strtotime($auction['end_time'])

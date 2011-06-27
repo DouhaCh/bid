@@ -5,7 +5,7 @@
 	
 	$session = array(
 		'save' => 'php',
-		'cookie' => 'AUCTION',
+		'cookie' => 'PHPSESSID',
 		'timeout' => '300',
 		'start' => true,
 		'checkAgent' => true,

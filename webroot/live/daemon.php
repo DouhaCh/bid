@@ -8,7 +8,7 @@ include('../../daemon_functions.php');
 $expireTime = time() + 4;
 
 while (time() < $expireTime) {
-	//daemonBidbutler();
+	daemonBidbutler();
 	
 	daemonAuction();
 	

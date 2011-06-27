@@ -1,5 +1,5 @@
 <?php
-function bid($auction_id, $auto_bid = false, $bidbutler = null){
+function bid($auction, $auto_bid = false, $bidbutler = null){
 	if(!empty($_SESSION['Auth']['User'])){
 		$user = $_SESSION['Auth']['User'];
 	}elseif(!empty($bidbutler['user_id'])){
@@ -8,15 +8,6 @@ function bid($auction_id, $auto_bid = false, $bidbutler = null){
 			
 	}else{
 		return "User is not valid";
-	}
-
-	if(!empty($auction_id)){
-		$auction = findAuctionByid($auction_id);
-		if(empty($auction)){
-			return "Auction is not valid";
-		}
-	}else{
-		return "Auction is not valid";
 	}
 
 	$checkBid = checkBid($user, $auction);
@@ -30,8 +21,8 @@ function bid($auction_id, $auto_bid = false, $bidbutler = null){
 	$data['Bid']['description'] = empty($bidbutler) ? "Single Bid" : "Bid Buddy";
 	$data['Bid']['credit'] = 0;
 	$data['Bid']['debit'] = $auction['bp_cost'];
-	$data['Bid']['created'] = date("");
-	$data['Bid']['modified'] = date("");
+	$data['Bid']['created'] = date('Y-m-d H:i:s');
+	$data['Bid']['modified'] = date('Y-m-d H:i:s');
 	mysql_query("INSERT INTO bids(user_id, auction_id, description, credit, debit, created, modified) VALUES(".$data['Bid']['user_id'].", ".$data['Bid']['auction_id'].", '".$data['Bid']['description']."', '".$data['Bid']['credit']."', '".$data['Bid']['debit']."', '".$data['Bid']['created']."', '".$data['Bid']['modified']."')");
 
 	// update auction
@@ -42,20 +33,20 @@ function bid($auction_id, $auto_bid = false, $bidbutler = null){
 		$data['Auction']['price'] = $auction['price'] + $auction['price_step'];
 	}
 
-	$auction['leader_id'] = $user['id'];
+	$data['Auction']['leader_id'] = $user['id'];
 	if($auction['end_time'] - time() < $auction['peak_time']){
 		if($auction['rapid'] == 1){
-			$data['Auction']['end_time'] = time() + $auction['peak_time'];
+			$data['Auction']['end_time'] = date('Y-m-d H:i:s', time() + $auction['peak_time']);
 		}else{
-			$data['Auction']['end_time'] = $auction['end_time'] + $auction['time_increment'];
+			$data['Auction']['end_time'] = date('Y-m-d H:i:s', $auction['end_time'] + $auction['time_increment']);
 		}
 	}else{
-		$data['Auction']['end_time'] = $auction['end_time'];
+		$data['Auction']['end_time'] = date('Y-m-d H:i:s', $auction['end_time']);
 	}
 
-	$data['Auction']['modified'] = time();
-
-	mysql_query("UPDATE auctions SET price = ".$data['Auction']['price'].", leader_id = ".$data['Auction']['leader_id'].", end_time = '".$data['Auction']['end_time']."', modified = '".$data['Auction']['modified']."' WHERE id = ".$data['Auction']['id']);
+	$data['Auction']['modified'] = date('Y-m-d H:i:s');
+	
+	mysql_query("UPDATE auctions SET price = ".$data['Auction']['price'].", leader_id = ".$data['Auction']['leader_id'].", end_time = '".$data['Auction']['end_time']."', modified = '".$data['Auction']['modified']."' WHERE id = ".$auction['id']);
 
 	// update bidbutler
 	if(!empty($bidbutler)){
@@ -71,6 +62,8 @@ function bid($auction_id, $auto_bid = false, $bidbutler = null){
 
 function getAuctionById($id){
 	$auction = mysql_fetch_array(mysql_query("SELECT auctions.*, users.username, users.avatar FROM auctions LEFT JOIN users ON auctions.leader_id = users.id WHERE auctions.id = ".$id), MYSQL_ASSOC);
+	$auction['end_time'] = strtotime($auction['end_time']);
+	$auction['start_time'] = strtotime($auction['start_time']);
 	return $auction;
 }
 
@@ -132,7 +125,7 @@ function daemonBidbutler(){
 							b.id, 
 							b.minimum_price, 
 							b.maximum_price, 
-							b.user_id,
+							b.user_id
 							FROM auctions a, bidbutlers b
 							WHERE a.id = b.auction_id 
 							   AND a.deleted=0
@@ -161,7 +154,9 @@ function daemonBidbutler(){
 					)
 				);
 				
-				mysql_query("UPDATE bidbutlers SET bids = ".$data['Bidbutler']['bids'].", modified = '".$data['Bidbutler']['modified']."' WHERE id = ".$bidbutler['id']);
+				mysql_query("UPDATE bidbutlers SET bids = ".$data['Bidbutler']['bids'].",
+							modified = '".$data['Bidbutler']['modified']."'
+							WHERE id = ".$bidbutler['id']);
 			}
 		}
 	}
@@ -169,7 +164,7 @@ function daemonBidbutler(){
 
 function daemonAuction(){
 	// cron for auction close
-	$sql = mysql_query("SELECT 	* FROM auctions WHERE end_time <= '".date('Y-m-d H:i:s')."'
+	$sql = mysql_query("SELECT * FROM auctions WHERE end_time <= '".date('Y-m-d H:i:s')."'
 							AND closed = 0 
 							AND active = 1 
 							AND deleted=0");
@@ -194,10 +189,19 @@ function checkCanClose($auction_id){
 	return true;
 }
 
+function closeBidbutler($id, $reason){
+	mysql_query("UPDATE bidbutlers SET closed = 1, active = 0, reason = '".$reason."' WHERE id = ".$id);
+}
+
 function canBidBuddy($bidbutler, $auction){
-	global $config;
-	
-	if($bidbutler['minimum_price'] < $auction['price']){
-		
+	if($bidbutler['minimum_price'] < $auction['price'] && $bidbutler['user_id'] != $auction['leader_id']){
+		if($bidbutler['maximum_price'] > $auction['price'] && $bidbutler['bids'] >= $auction['bp_cost']){
+			return true;
+		}else{
+			closeBidbutler($bidbutler['id'], "Bb close");
+			return false;
+		}
+	}else{
+		return false;
 	}
 }
