@@ -26,6 +26,8 @@
 		echo $javascript->link('jquery/jquery-1.4.4.min');
 		echo $javascript->link('jquery/s3Slider');
 		echo $javascript->link('jquery/superfish');
+		echo $javascript->link('live');
+		echo $javascript->link('app');
 		
 		echo $html->css('/css/reset.css');
 		echo $html->css('/css/960');
@@ -39,29 +41,34 @@
     <div id="container" class="container_12" style="background: #FBFBFB; width: 960px; height: 1000px;">
 		<div id="header" class="grid_12">
 			<div id="top-image" class="grid_12">
-				<a href="#"><img src="../img/slide3.png" width="940px" height="200px"/></a>
+				<div style="width: 940px; height: 200px; border : 1px solid #000">Banner 940x200</div>
+				<!--<a href="#"><img src="../img/slide3.png" width="940px" height="200px"/></a>-->
 			</div>
 			<div id="top-banners" class="grid_12">
 				<div id="steps-to-play" class="grid_2 alpha">
-					<a href="#"><img src="../img/slide3.png" width="140px" height="150px"/></a>
+					<div style="width: 140px; height: 150px; border : 1px solid #000">Banner 140x150</div>
+					<!--<a href="#"><img src="../img/slide3.png" width="140px" height="150px"/></a>-->
 				</div>
 				<div id="banner" class="grid_6">
-					<a href="#"><img src="../img/slide3.png" width="460px" height="150px"/></a>
+					<div style="width: 460px; height: 150px; border : 1px solid #000">Banner 460x150</div>
+					<!--<a href="#"><img src="../img/slide3.png" width="460px" height="150px"/></a>-->
 				</div>
 				<div id="charge" class="grid_4 omega">
-					<a href="#"><img src="../img/slide3.png" width="300px" height="150px"/></a>
+					<div style="width: 300px; height: 150px; border : 1px solid #000">Banner 300x150</div>
+					<!--<a href="#"><img src="../img/slide3.png" width="300px" height="150px"/></a>-->
 				</div>
 			</div>
 			<div id="nav" class="grid_12">
 				<ul class="sf-menu grid_12">
-					<li class="grid_2"><a href="#">Menu 1</a>
+					<li class="grid_2"><a href="#">Menu 1</a></li>
 					<li class="grid_2"><a href="#">Menu 2</a>
 						<ul>
 							<li class="grid_2 alpha omega"><a href="#">Menu 2 1</a>
 							</li>
 							<li class="grid_2 alpha omega"><a href="#">Menu 2 2</a>
 							</li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="grid_2"><a href="#">Menu 3</a>
 						<ul>
 							<li class="grid_2 alpha omega"><a href="#">Menu 3 1</a>

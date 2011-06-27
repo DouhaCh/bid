@@ -132,46 +132,4 @@ $(document).ready(function(){
 
         return false;
     });
-
-    // Function to check limit and change the icon whenever it's changed
-    // Run only when bid icon available
-    if($('.bid-limit-icon').length){
-        setInterval(function(){
-            var count = $('.bid-limit-icon').length
-            if(count > 0){
-                $.ajax({
-                    url: '/limits/getlimitsstatus/?ms=' + new Date().getTime(),
-                    dataType: 'json',
-                    success: function(data){
-                        if(data){
-                            $('.bid-limit-icon').each(function(i){
-                                if(data[i].image){
-                                    $(this).attr('src', '/img/'+data[i].image);
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        }, 30000);
-    }
-
-    if($('.productImageThumb').length){
-        $('.productImageThumb').click(function(){
-            $('.productImageMax').fadeOut('fast').attr('src', $(this).attr('href')).fadeIn('fast');
-            return false;
-        });
-    }
-
-    if($('#CategoryId').length){
-        $('#CategoryId').change(function(){
-            document.location = '/categories/view/' + $('#CategoryId option:selected').attr('value');
-        });
-    }
-
-    if($('#myselectbox').length){
-        $('#myselectbox').change(function(){
-            document.location = '/categories/view/' + $('#myselectbox option:selected').attr('value');
-        });
-    }
 });
