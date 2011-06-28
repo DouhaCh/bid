@@ -90,3 +90,23 @@ $(document).ready(function(){
 		dropShadows : true
 	});
 });
+
+(function(){
+	Array.prototype.removeDuplicate = function removeDuplicate(){
+		var newArray = [];
+		for(var i=0, len=this.length; i<len; i++){
+			if(!newArray.containValue(this[i])){
+				newArray.push(this[i]);
+			}
+		}
+		
+		return newArray;
+	};
+	
+	Array.prototype.containValue = function containValue(val){
+		for(var i=0, len=this.length; i<len; i++){
+			if(this[i] === val) return true;
+		}
+		return false;
+	}
+})();

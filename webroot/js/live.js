@@ -9,50 +9,29 @@ $(document).ready(function(){
         var auctionId    = $(this).attr('id');
         var auctionTitle = $(this).attr('title');
 
-        if($('#' + auctionId + ' .countdown').length){
+        if($('#' + auctionId + ' .auction-time').length){
         	
             // collect the id for post data
             auctions.push(auctionTitle);
 
             // collect the object
             auctionObjects[auctionId]                           = $('#' + auctionId);
-            auctionObjects[auctionId]['flash-elements']         = $('#' + auctionId + ' .countdown, #' + auctionId + ' .bid-price, #' + auctionId + ' .bid-bidder, #' + auctionId+ ' .bid-savings-price, #' + auctionId + ' .bid-savings-percentage, #' + auctionId + ' .closes-on');
-            auctionObjects[auctionId]['countdown']              = $('#' + auctionId + ' .countdown');
-            auctionObjects[auctionId]['closes-on']              = $('#' + auctionId + ' .closes-on');
-            auctionObjects[auctionId]['bid-bidder']             = $('#' + auctionId + ' .bid-bidder');
-            auctionObjects[auctionId]['bid-button']             = $('#' + auctionId + ' .bid-button');
-            auctionObjects[auctionId]['bid-button-a']           = $('#' + auctionId + ' .bid-button a');
-            auctionObjects[auctionId]['bid-button-p']           = $('#' + auctionId + ' .bid-button p');
-            auctionObjects[auctionId]['bid-price']              = $('#' + auctionId + ' .bid-price');
-            auctionObjects[auctionId]['bid-price2']             = $('#' + auctionId + ' .bid-price2');
-            auctionObjects[auctionId]['buy-it-now']             = $('#' + auctionId + ' .price_bin');
-            auctionObjects[auctionId]['bid-price-fixed']        = $('#' + auctionId + ' .bid-price-fixed');
-            auctionObjects[auctionId]['bid-loading']            = $('#' + auctionId + ' .bid-loading');
-            auctionObjects[auctionId]['bid-message']            = $('#' + auctionId + ' .bid-message');
-            auctionObjects[auctionId]['bid-flash']              = $('#' + auctionId + ' .bid-flash');
-            auctionObjects[auctionId]['bid-savings-price']      = $('#' + auctionId + ' .bid-savings-price');
-            auctionObjects[auctionId]['bid-savings-percentage'] = $('#' + auctionId + ' .bid-savings-percentage');
-            auctionObjects[auctionId]['bid-bookbidbutler']      = $('#' + auctionId + ' .bid-bookbidbutler');
-            auctionObjects[auctionId]['bid-increment']      = $('#' + auctionId + ' .bid-increment');
-            auctionObjects[auctionId]['price-increment']      = $('#' + auctionId + ' .price-increment');
-
-            auctionObjects[auctionId]['bid-histories']          = $('#bidHistoryTable' + auctionTitle);
-            auctionObjects[auctionId]['bid-histories-p']        = $('#bidHistoryTable' + auctionTitle + ' p');
-            auctionObjects[auctionId]['bid-histories-tbody']    = $('#bidHistoryTable' + auctionTitle + ' tbody');
+            auctionObjects[auctionId]['bidder']					= $('#' + auctionId + " .auction-bidder");
+            auctionObjects[auctionId]['price']					= $('#' + auctionId + " .auction-price");
+            auctionObjects[auctionId]['time']					= $('#' + auctionId + " .auction-time");
         }
     });
 
     // additional object
-    var bidOfficialTime        = $('.bid-official-time');
     var bidBalance             = $('.bid-balance');
     var getAuctionsUrl;
     var time = 0;
     var lastGetAuctionsTime = 0;
 
     if($('.bid-histories').length){
-        getAuctionsUrl = '/live/auctions.php?histories=yes&ms=';
+        getAuctionsUrl = '/live/auctions.php?histories=yes';
     }else{
-        getAuctionsUrl = '/live/auctions.php?ms=';
+        getAuctionsUrl = '/live/auctions.php';
     }
 
     // Do the loop when auction available only
@@ -62,7 +41,7 @@ $(document).ready(function(){
                 url: getAuctionsUrl,
                 dataType: 'json',
                 type: 'POST',
-                data: "auctions=" + JSON.stringify(auctions),
+                data: "auctions=" + JSON.stringify(auctions.removeDuplicate()),
                 success: function(data){
             		if(lastGetAuctionsTime > data.ms) return;
             		lastGetAuctionsTime = data.ms;
@@ -75,8 +54,8 @@ $(document).ready(function(){
             			id = 'auction_' + auction.id;
             			auctionObject = auctionObjects[id];
             			
-            			auctionObject['bid-price'].html(auction.price);
-            			auctionObject['bid-bidder'].html(auction.username);
+            			auctionObject['price'].html(auction.price);
+            			auctionObject['bidder'].html(auction.username);
             			//auctionObject['bid-bidder-avatar'].attr('src', auction.avatar);
             			var t = auction.end_time - time;
             			
@@ -93,11 +72,12 @@ $(document).ready(function(){
             				second='00';
             			}
   
-            			if(t>10){
+            			/*if(t>10){
             				auctionObject['countdown'].html('<div class="clock">'+hour+'</div> <div class="clock">'+minute+'</div><div class="clock last">'+second+'</div>');
             			}else if(t>=0){
             				auctionObject['countdown'].html('<div class="clock rush">'+hour+'</div> <div class="clock rush">'+minute+'</div><div class="clock rush last">'+second+'</div>');                      	
-            			}
+            			}*/
+            			auctionObject['time'].html(hour + " : " + minute + " : " + second);
             		}
                 }
             });
