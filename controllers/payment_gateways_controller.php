@@ -997,7 +997,7 @@ class PaymentGatewaysController extends AppController{
 		App::import('vendor','icoin_direct');
 		//echo '123';
 		$soapClient = new VMS_Soap_Client('http://123.30.182.135:8088/webservice/VDCTelcoAPI?wsdl','dynabyte1bid','1bid123',8,'1bid');
-		print_r($soapClient->doCardCharge('akitoeki','123412341234:VNP','akitoeki@gmail.com','0945111236'));
+		//print_r($soapClient->doCardCharge('akitoeki','123412341234:VNP','akitoeki@gmail.com','0945111236'));
 		//$this->redirect('/users/update');
 		}
 	}

@@ -29,8 +29,8 @@
 		echo $javascript->link('live');
 		echo $javascript->link('app');
 		
-		echo $html->css('/css/reset.css');
-		echo $html->css('/css/960');
+		echo $html->css('/css/reset');
+		echo $html->css('/css/style');
 		echo $html->css('/css/default');
 		
 		echo $scripts_for_layout;
@@ -38,89 +38,70 @@
 </head>
 
 <body>
-    <div id="container" class="container_12" style="background: #FBFBFB; width: 960px; height: 1000px;">
-		<div id="header" class="grid_12">
-			<div id="top-image" class="grid_12">
-				<div style="width: 940px; height: 200px; border : 1px solid #000">Banner 940x200</div>
-				<!--<a href="#"><img src="../img/slide3.png" width="940px" height="200px"/></a>-->
-			</div>
-			<div id="top-banners" class="grid_12">
-				<div id="steps-to-play" class="grid_2 alpha">
-					<div style="width: 140px; height: 150px; border : 1px solid #000">Banner 140x150</div>
-					<!--<a href="#"><img src="../img/slide3.png" width="140px" height="150px"/></a>-->
-				</div>
-				<div id="banner" class="grid_6">
-					<div style="width: 460px; height: 150px; border : 1px solid #000">Banner 460x150</div>
-					<!--<a href="#"><img src="../img/slide3.png" width="460px" height="150px"/></a>-->
-				</div>
-				<div id="charge" class="grid_4 omega">
-					<div style="width: 300px; height: 150px; border : 1px solid #000">Banner 300x150</div>
-					<!--<a href="#"><img src="../img/slide3.png" width="300px" height="150px"/></a>-->
-				</div>
-			</div>
-			<div id="nav" class="grid_12">
-				<ul class="sf-menu grid_12">
-					<li class="grid_2"><a href="#">Menu 1</a></li>
-					<li class="grid_2"><a href="#">Menu 2</a>
-						<ul>
-							<li class="grid_2 alpha omega"><a href="#">Menu 2 1</a>
-							</li>
-							<li class="grid_2 alpha omega"><a href="#">Menu 2 2</a>
-							</li>
-						</ul>
-					</li>
-					<li class="grid_2"><a href="#">Menu 3</a>
-						<ul>
-							<li class="grid_2 alpha omega"><a href="#">Menu 3 1</a>
-							</li>
-							<li class="grid_2 alpha omega"><a href="#">Menu 3 2</a>
-							</li>
-							<li class="grid_2 alpha omega"><a href="#">Menu 3 3</a>
-							</li>
-						</ul></li>
-					<li class="grid_2"><a href="#">Menu 4</a>
-						<ul>
-							<li class="grid_2 alpha omega"><a href="#">Menu 4 1</a>
-							</li>
-							<li class="grid_2 alpha omega"><a href="#">Menu 4 2</a>
-							</li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
-		<div id="content" class="grid_9">
-			<div class="content_box">
-				<div class="title">Nong nhat</div>
-				<div class="content">Content</div>
-			</div>
-			
-			<div class="content_box">
-				<div class="title">Dang dien ra</div>
-				<div class="content">Content</div>
-			</div>
-		</div>
-		<div id="sidebar" class="grid_3 omega">
-			<div id="how-to-play">
-				<div>
-					<button>Hướng dẫn tham gia >> </button>
-				</div>
-				<div class="clear"></div>
-				<div>(*)Danh 1 phut de tim hieu cach dau gia</div>
-			</div>
-			<div class="side_box">
-				<div class="title">Sap dien ra</div>
-				<div class="content">Content</div>
-			</div>
-			<div class="side_box">
-				<div class="title">Nguoi chien thang</div>
-				<div class="content">Content</div>
-			</div>
-			<div class="side_box">
-				<div class="title">Top dai gia</div>
-				<div class="content">Content</div>
-			</div>
-		</div>
-		<div id="footer" class="grid_12">Footer</div>
-	</div>
+	<div id="wraper">
+		<?php echo $this->element('header');?>
+        <div id="container">
+        	<?php echo $this->element('feature');?>
+            <div id="content">
+            	<div class="top">
+                    	<form action="" name="phanloai" method="post" id="phanloai">
+                        	<label id="lbphanloai"><span>Các 100 phiên đấu giá đang diễn ra | </span>Phân loại sản phẩm  </label>
+                        	<select>
+                            	<option value="0">Tất cả</option>
+                                <option value="0">Theo giá</option>
+                                <option value="0">Theo ...</option>
+                            </select>
+                        </form>
+                </div><!--end .top-->
+                <div id="hotitem">
+                	<div class="tophot">
+                    	<a href="">"Nóng" nhất</a>
+                    
+                    </div><!--End .top-->
+                    <div class="bottomhot">
+                     <?php for($i=0; $i<9; $i++):?>
+                     <div class="item">
+                     	<?php echo $this->element('auction_1');?>
+                     </div>
+                     <?php endfor;?> 
+                        
+                        
+                     <div class="clear"></div>
+                    </div><!--end .bottom-->
+                </div><!--end hotitem-->
+   
+                <div id="directbid">
+                	<div class="topdirectbid">
+                    	<a href="">ĐANG DIỄN RA</a>
+                    </div><!--end .top-->
+                    <div class="bodydirectbid">
+
+                    	<table>
+                            <tr class="title">
+                                <td>SẢN PHẨM</td>
+                                <td>&nbsp;</td>
+                                <td>GIÁ HIỆN TẠI NGƯỜI ĐẶT GIÁ</td>
+                                <td>THỜI GIAN</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <?php for($i=0; $i<5; $i++):?>
+                     		<tr class="item">
+                     			<td colspan="5">
+                     		<?php echo $this->element('auction_2');?>
+                     			</td>
+                     		</tr>
+                     		<?php endfor;?> 
+                        </table>
+                    </div><!--End .body-->
+                </div><!--end #directbid-->
+               
+              <?php //echo $this->element('auction');?>
+            </div><!--End #content-->
+        	 <?php echo $this->element('right');?>
+             <?php echo $this->element('linkout');?>
+        </div><!--End #container-->
+       
+        <?php echo $this->element('footer');?>
+    </div><!--end #wraper-->
 </body>
 </html> 

@@ -1,1 +1,17 @@
-﻿<div class="random-testimonial module">	<h3>Cảm nhận chiến thắng</h3>	<!-- 				<?//php echo ($random_testimonial['Testimonial']['time']); ?>			<div class="pic"><a href="#"><img src=" <?php echo $random_testimonial['Testimonial']['img']; ?>" width="100" height="100" style="padding:0;margin:2px 5px 0px 0;float:left" /></a></div>				<?php echo $random_testimonial['User']['username']; ?>				đã thắng phiên đấu giá <a href="/auction/view/<?php echo $random_testimonial['Auction']['id']; ?>"> "<?php echo $random_testimonial['Auction']['Product']['title']; ?>" </a>					viết "<?php echo $random_testimonial['Testimonial']['content']?>"        <a href="/testimonials"> Xem het >> </a>		 -->	<p>Đang cập nhật</p>	</div>
+<div id="winner">
+	<div class="title_right">
+		<a href="">Người chiến thắng</a>
+	</div>
+	<!--End .topwinner-->
+	<div class="bodywinner">
+		<p class="thongbaowinner">tai_khoan_3 đã dành chiến thắng Điều hòa 1
+			chiều LG</p>
+		<p class="camnhanwinner">
+			<span>"</span>Chiến thắng bất ngờ quá, chúc nhiều người cũng chiến
+			thắng như mình<span>"</span>
+		</p>
+		<a href=""><img src="./images/photowinner.png" alt="winner" /> </a> <a
+			class="detailwinner" href="">chi tiết ...</a>
+	</div>
+	<!--End .bodywinner-->
+</div>

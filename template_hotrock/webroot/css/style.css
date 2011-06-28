@@ -1,0 +1,778 @@
+@charset "utf-8";
+/* CSS Document */
+*{padding:0px;margin:0px}
+body{
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:12px;
+}
+a {
+	text-decoration:none;
+}
+.clear{
+	clear:both;
+}
+
+a img{
+	border:none;
+}
+
+#wraper{
+
+	width:1010px;
+	margin:0px auto;
+	
+}
+
+/*-------------Header --------*/
+#header{
+	width:1010px;
+	height:130px;
+	background: url(../images/bg_quangcao.png) no-repeat top left;
+}
+#header .left{
+	width:740px;
+	height:95px;
+	float:left;
+}
+#header .left a{
+	display:block;
+	height:80px;
+	width:80px;
+	background:url(../images/button_daugia.png) no-repeat top left;
+	margin:10px 0px 0px 30px;
+}
+#header .right{
+	height:95px;
+	width:150px;
+	float:right;
+}
+#header .right a{
+	font-size:12px;
+	font-weight:bold;
+	color:black;
+	margin-top:10px;
+}
+/*---------------Nav-------------*/
+#navigator{
+	height:30px;
+	width:710px;
+	background:url(../images/bg_nav.png) no-repeat top left;
+	float:left;
+	color:#b70400;
+}
+#navigator a{
+	font-weight:bold;
+	color:#b70400;
+	margin:10px;
+	line-height:20px;
+}
+/*------------Container-------*/
+#container {
+	width:1010px;
+}
+#feature{
+	width:1010px;
+	height:230px;
+}
+#feature .left{
+	height:220px;
+	width:150px;
+	background:url(../images/bg_step.png) no-repeat top left;
+	padding:5px;
+	float:left;
+}
+#feature .left .register{
+	display:block;
+	height:60px;
+	width:150px;
+	background: url(../images/Index_06.png) no-repeat top left;
+}
+#feature .left .selectbid{
+	display:block;
+	height:60px;
+	width:150px;
+	background: url(../images/Index_09.png) no-repeat top left;
+	margin-top:3px;
+}
+#feature .left .win{
+	display:block;
+	height:60px;
+	width:150px;
+	background: url(../images/Index_11.png) no-repeat top left;
+	margin-top:3px;
+}
+#feature .left  .join{
+	display:block;
+	height:30px;
+	width:155px;
+	background: url(../images/button_join.png) no-repeat top left;
+	margin-top:3px;
+}
+#feature .right{
+	width:545px;
+	height:230px;
+	margin-left:5px;
+	float:left;
+	
+}
+#feature .right a{
+	display:block;
+	height:230px;
+	width:545px;
+	background: url(../images/fearure_ad.png) no-repeat top left;
+}
+#feature .quangcao{
+	height:230px;
+	width:300px;
+	float:right;
+}
+#feature .quangcao{
+	display:block;
+	height:230px;
+	width:300px;
+	background: url(../images/bg_quangcao3.png) no-repeat top left;
+}
+/*----------------------------Content------------*/
+#content{
+	width:710px;
+	float:left;
+	
+}
+/*----------------top-------*/
+#content .top form{
+	margin:5px 0px;
+	height:20px;
+	width:710px;
+	text-align:center;
+}
+#content .top #phanloai #lbphanloai{
+	font-size:12px;
+	
+	color:#000;
+}
+#content .top #phanloai #lbphanloai span{
+	font-weight:bold;
+	color:#cd0000;
+}
+/*-------------------------HOt item--------*/
+#hotitem{
+	width:710px;
+}
+#hotitem .tophot{
+	height:33px;
+	width:710px;
+	background:url(../images/bg_top.png) no-repeat top left;
+}
+#hotitem .tophot a{
+	line-height:25px;
+	margin-left:20px;
+	font-size:14px;
+	font-weight:bold;
+	color:#FFF;
+}
+	
+#hotitem .bottomhot{
+	width:710px;
+	margin-top:10px;
+}
+/*------------------------item--------------------*/
+#hotitem .bottomhot .item{
+	width:200px;
+	height:350px;
+	background: url(../images/bg_bd.png) no-repeat top left;
+	float:right;
+	margin-left:36px;
+}
+#hotitem .bottomhot .item .top{
+	width:198px;
+	height:70px;
+	text-align:center;
+	padding-top:20px;
+}
+
+#hotitem .bottomhot .item .top a{
+	font-size:15px;
+	color:#0f74fb;
+}
+#hotitem .bottomhot .item .top  p{
+	font-size:24px;
+	font-weight:bold;
+	color:red;
+	margin-top:20px;
+}
+
+#hotitem .bottomhot .item .body{
+	height:200px;
+	width:200px;
+	position: relative;
+}
+#hotitem .bottomhot .item .body a img{
+	height:125px;
+	width:165px;
+	margin-left:15px;
+}
+
+#hotitem .bottomhot .item .body p.prime{
+	font-size:11px;
+	color:#454545;
+	margin-left:20px;
+	margin-top:10px;
+	overflow:hidden;
+}
+#hotitem .bottomhot .item .body p.prime span{
+	font-size:12px;
+	font-weight:bold;
+	color:red;
+}
+#hotitem .bottomhot .item .body p.giacuoc{
+	display:block;
+	height:35px;
+	width:35px;
+	background:url(../images/bg_cuoc.png) no-repeat top left;
+	position:absolute;
+	bottom:50px;
+	right:10px;
+	font-size:12px;
+	font-weight:bold;
+	color:white;
+	line-height:30px;
+	text-align:center;
+}
+
+#hotitem .bottomhot .item .body p.username{
+	font-size:11px;
+	color:#454545;
+	margin-left:20px;
+	margin-top:10px;
+	overflow:hidden;
+}
+#hotitem .bottomhot .item .body p.username span{
+	font-size:12px;
+	font-weight:bold;
+	color:red;
+}
+
+#hotitem .bottomhot .item .body p.buynow{
+	
+	display:block;
+	height:15px;
+	width:200px;
+	background:url(../images/bg_muangay.png) no-repeat top left;
+	text-align:center;
+	margin-left:4px;
+	margin-top:11px;
+	color:#666;
+	font-size:11px;
+	line-height:15px;
+}
+#hotitem .bottomhot .item .bottom{
+	width:200px;
+}
+#hotitem .bottomhot .item .bottom a{
+	display:block;
+	height:50px;
+	width:180px;
+	background:url(../images/button_bid.png) no-repeat top left;
+	margin-left:14px;
+	font-size:18px;
+	font-weight:bold;
+	color:#FFF;
+	text-align:center;
+	line-height:35px;
+	
+}
+#hotitem .bottomhot .item .bottom a:hover{
+	background: url(../images/button_bid_red.png) no-repeat top left;
+}
+/*--------------------enditem------------------*/
+
+
+
+
+
+/*------------------------item het gio--------------------*/
+#hotitem .bottomhot .itemhetgio{
+	width:200px;
+	height:350px;
+	background: url(../images/bg_bd.png) no-repeat top left;
+	float:right;
+	margin-left:36px;
+}
+#hotitem .bottomhot .itemhetgio .tophetgio{
+	width:198px;
+	height:70px;
+	text-align:center;
+	padding-top:20px;
+}
+
+#hotitem .bottomhot .itemhetgio .tophetgio a{
+	font-size:15px;
+	color:#838383;
+}
+#hotitem .bottomhot .itemhetgio .tophetgio  p{
+	font-size:24px;
+	font-weight:bold;
+	color:#838383;
+	margin-top:20px;
+}
+
+#hotitem .bottomhot .itemhetgio .bodyhetgio{
+	height:200px;
+	width:200px;
+	position: relative;
+}
+#hotitem .bottomhot .itemhetgio .bodyhetgio a img{
+	height:125px;
+	width:165px;
+	margin-left:15px;
+}
+
+#hotitem .bottomhot .itemhetgio .bodyhetgio p.primehetgio{
+	font-size:11px;
+	color:#838383;
+	margin-left:20px;
+	margin-top:10px;
+	overflow:hidden;
+}
+#hotitem .bottomhot .itemhetgio .bodyhetgio p.primehetgio span{
+	font-size:12px;
+	font-weight:bold;
+	color:#838383;
+}
+#hotitem .bottomhot .itemhetgio .bodyhetgio p.giacuochetgio{
+	display:block;
+	height:35px;
+	width:35px;
+	background: url(../images/bg_cuochetgio.png) no-repeat top left;
+	position:absolute;
+	bottom:50px;
+	right:10px;
+	font-size:12px;
+	font-weight:bold;
+	color:white;
+	line-height:30px;
+	text-align:center;
+}
+
+#hotitem .bottomhot .itemhetgio .bodyhetgio p.usernamehetgio{
+	font-size:11px;
+	color:#454545;
+	margin-left:20px;
+	overflow:hidden;
+	display:block;
+	height:42px;
+	width:230px;
+	background:url(../images/bg_user_hetgio.png) no-repeat top left;
+	position:absolute;
+	bottom:5px;
+	left:-28px;
+	text-align:center;
+	line-height:30px;
+}
+#hotitem .bottomhot .itemhetgio .bodyhetgio p.usernamehetgio span{
+	font-size:12px;
+	font-weight:bold;
+	color:white;
+}
+
+#hotitem .bottomhot .itemhetgio .bodyhetgio p.buynowhetgio{
+	
+	display:block;
+	height:15px;
+	width:200px;
+	background:url(../images/bg_muangay.png) no-repeat top left;
+	text-align:center;
+	color:#666;
+	font-size:11px;
+	line-height:15px;
+	margin-top:36px;
+	margin-left:5px;
+}
+#hotitem .bottomhot .itemhetgio .bottomhetgio{
+	width:200px;
+}
+#hotitem .bottomhot .itemhetgio .bottomhetgio a{
+	display:block;
+	height:50px;
+	width:180px;
+	background: url(../images/bg_xem_hetgio.png) no-repeat top left;
+	margin-left:14px;
+	font-size:18px;
+	font-weight:bold;
+	color:#FFF;
+	text-align:center;
+	line-height:35px;
+	
+}
+#hotitem .bottomhot .itemhetgio .bottomhetgio a:hover{
+	background: uurl(../images/bg_xem_hetgio.png) no-repeat top left;
+}
+/*-------------------------End item het gio-------------------*/
+
+
+/*----------------End hot item-----------------*/
+
+/*----------------�ang di?n ra-----------------*/
+#directbid{
+    width: 710px;
+    margin-top:10px;
+    
+}
+
+#directbid .topdirectbid{
+    height: 35px;
+    width:710px;
+    background:url(../images/bg_top.png) no-repeat top left;
+}
+#directbid .topdirectbid a{
+    font-size:14px;
+    font-weight:bold;
+    color:white;
+    line-height:25px;
+    margin-left:20px;
+}
+
+#directbid .bodydirectbid table{
+    width: 690px;
+    margin-top: 5px;
+    padding:5px;
+    margin-left:20px;
+}
+
+#directbid .bodydirectbid table .title{
+    font-size: 11px;
+    color:#8c8b8b;
+}
+
+
+#directbid .bodydirectbid table .item{
+    
+    height: 80px;
+}
+#directbid .bodydirectbid table .item .imageitem img{
+    height:60px;
+    width:60px;
+}
+
+#directbid .bodydirectbid table .item .infoitem{
+    font-size: 12px;
+    color:black;
+    
+}
+#directbid .bodydirectbid table .item .infoitem p.giathitruong{
+    font-size:10px;
+    margin-top: 2px;
+}
+#directbid .bodydirectbid table .item .primeitem{
+    text-align:center;
+}
+#directbid .bodydirectbid table .item .primeitem .primedetail{
+    font-size:12px;
+    font-weight: bold;
+    color:red;
+}
+
+
+
+#directbid .bodydirectbid table .item .primeitem .usernamebid{
+    font-size:10px;
+    color:#0970fa;
+    margin-top:2px;
+}
+
+
+
+#directbid .bodydirectbid table .item .timebid p{
+    font-size: 18px;
+    font-weight:bold;
+    color:#b60200;
+}
+#directbid .bodydirectbid table .item .itembid a{
+    display:block;
+    height:30px;
+    width:80px;
+    background:url(../images/button_daugia_blue.png) no-repeat top left;
+}
+#directbid .bodydirectbid table .item .itembid a:hover{
+    background:url(../images/button_daugia_red.png) no-repeat top left;
+}
+
+/*-------------------------------------------------RIGHT---------------*/
+/*-----------------------Hướng dẫn ham gia----*/
+#right{
+	width:290px;
+	float:left;
+}
+#huongdanthamgia{
+	width:290px;
+	height:70px;
+}
+#huongdanthamgia a{
+	display:block;
+	height:50px;
+	width:280px;
+	background:url(../images/button_huongdan.png) no-repeat top right;
+	margin-left:10px;
+	font-size:18px;
+	color:white;
+	font-weight:bold;
+	line-height:40px;
+	text-align:center;
+}
+#huongdanthamgia p{
+	font-size:11px;
+	margin-left:10px;
+}
+#sapdienra{
+	width:290px;
+	background:url(../images/bg_right_bottom.png) no-repeat bottom left;
+}
+#sapdienra .topsapdienra{
+	width:290px;
+	height:35px;
+	background:url(../images/bg_right_top.png) no-repeat top right;
+}
+#sapdienra .topsapdienra a{
+	font-size:14px;
+	font-weight:bold;
+	color:white;
+	float:right;
+	line-height:25px;
+	margin-right:20px
+}
+#sapdienra .bodysapdienra{
+	width:280px;
+	padding-left:10px;
+}
+#sapdienra .bodysapdienra .itemsapdienra{
+	height:70px;
+	width:275px;
+	margin-bottom:2px;
+	position:relative;
+	
+}
+
+#sapdienra .bodysapdienra .itemsapdienra .imageitemsapdienra img{
+	height:60px;
+	width:60px;
+	float:left;
+	margin-right:3px;
+}
+#sapdienra .bodysapdienra .itemsapdienra .rightitemdienra{
+	width:195px;
+	float:left;
+	overflow:hidden;
+}
+
+#sapdienra .bodysapdienra .itemsapdienra .titleitem{
+	font-size:12px;
+	color:#1e8bdc;
+	float:right;
+}
+#sapdienra .bodysapdienra .itemsapdienra .timeitem{
+	font-size:12px;
+	color:red;
+	margin-top:5px;
+	float:right;
+}
+#sapdienra .bodysapdienra .itemsapdienra .timeitem span{
+	font-weight:bold;
+}
+#sapdienra .bodysapdienra .itemsapdienra .xicho{
+	display:block;
+	height:25px;
+	width:57px;
+	background:url(../images/button_xicho_blue.png) no-repeat top left;
+	font-size:12px;
+	color:white;
+	line-height: 25px;
+	font-weight:bold;
+	text-align:center;
+	position:absolute;
+	bottom:10px;
+	right:10px;
+		
+}
+#sapdienra .bodysapdienra .itemsapdienra .xicho:hover{
+	background:url(../images/button_xicho_red.png) no-repeat top left;
+}
+
+#sapdienra .bottomitemsapdienra{
+	width:290px;
+	height:40px;
+	text-align:center;
+
+}
+#sapdienra .bottomitemsapdienra p{
+	font-size:14px;
+	font-weight:bold;
+	color:red;
+	line-height:40px;
+	
+}
+
+/*------------------Winner-------*/
+#winner{
+	width:290px;
+	margin-top:10px;
+	background:url(../images/bg_right_bottom.png) no-repeat bottom left;
+}
+#winner .topwinner{
+	width:290px;
+	height:35px;
+	background:url(../images/bg_right_top.png) no-repeat top right;
+}
+#winner .topwinner a{
+	font-size:14px;
+	font-weight:bold;
+	color:white;
+	float:right;
+	margin-right:20px;
+	line-height:25px;
+}
+#winner .bodywinner{
+	width:275px;
+	margin-right:10px;
+	margin-top:5px;
+}
+#winner .bodywinner .thongbaowinner{
+	text-align:center;
+	font-size:12px;
+	color:red;
+}  
+#winner .bodywinner .camnhanwinner{
+	font-size:14px;
+	color:#1e8bdc;
+	padding:0px 3px;
+}
+#winner .bodywinner .camnhanwinner span{
+	font-size:24px;
+	font-weight:bold;
+	color:#dfdfdf;
+}
+
+#winner .bodywinner a img{
+	height:180px;
+	width:240px;
+	border:2px solid #dfdfdf;
+	margin-left:20px;
+}
+#winner .bodywinner a.detailwinner{
+	font-weight:bold;
+	display:block;
+	height:30px;
+	width:275px;
+	margin-top:20px;
+	margin-left:200px;
+	color:red;
+	font-style:italic;
+}
+/*-----------------------------Top dai gia------------*/
+#topdaigia{
+	width:290px;
+	margin-top:10px;
+	background:url(../images/bg_right_bottom.png) no-repeat bottom left;
+}
+#topdaigia .topdaigia{
+	width:290px;
+	height:35px;
+	background:url(../images/bg_right_top.png) no-repeat top right;
+}
+#topdaigia .topdaigia a{
+	font-size:14px;
+	font-weight:bold;
+	float:right;
+	color:white;
+	line-height:25px;
+	margin-right:20px;
+}
+#topdaigia .bodytopdaigia{
+	width:275px;
+}
+#topdaigia .bodytopdaigia .userdaigia{
+	height:85px;
+	width:275px;
+	overflow:hidden;
+}
+#topdaigia .bodytopdaigia .userdaigia .thutuuser{
+	float:left;
+	margin:0px 5px;
+	font-size:14px;
+	font-weight:bold;
+	color:red;
+	line-height:80px;
+}
+#topdaigia .bodytopdaigia .userdaigia a.avatartopdaigia img{
+	height:71px;
+	width:84px;
+	float:left;
+}
+#topdaigia .bodytopdaigia .userdaigia .usernametopdaigia{
+	font-size:12px;
+	font-weight:bold;
+	color:red;
+}
+
+#topdaigia .bodytopdaigia .userdaigia .xengdaigia{
+	font-size:12px;
+	color:red;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+#topdaigia .bodytopdaigia .userdaigia .xengdaigia span{
+	font-weight:bold;
+}
+#topdaigia .bodytopdaigia .userdaigia a.lichsuragia{
+	font-size:12px;
+	
+	color:red;
+}
+#topdaigia .bottomdaigia{
+	height:30px;
+	width:273px;
+}
+#topdaigia .bottomdaigia a{
+	font-size:12px;
+	color:red;
+	float:right;
+}
+
+/*--------------------------------LIEN KET-------------------*/
+#lienket_quangcao{
+	height:100px;
+	width:1010px;
+	border:1px solid #dfdfdf;
+	float:left;
+}
+#lienket_quangcao a{
+	float:left;
+	margin:25px 10px;
+}
+
+/*-------------------------------FOOTER-------------------------*/
+#footer{
+	height:50px;
+	width:1010px;
+	background:#bfbfbf;
+	float:left;
+	margin-top:20px;
+}
+#footer .leftfooter{
+	height:50px;
+	width:800px;
+	float:left;
+	padding:5px;
+}
+#footer .leftfooter p{
+	color:#3d3d3d;
+}
+#footer .rightfooter p{
+	color:#1e8dbc;
+	font-weight:bold;
+	margin-top:15px;
+	float:left;
+}
+#footer .rightfooter  a {
+	margin-top:20px;
+}
+	
