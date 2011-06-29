@@ -78,7 +78,7 @@ $(document).ready(function(){
                 			auctionObject['time'].html(hour + " : " + minute + " : " + second);
             			}else{
             				if(auctionObject['bid-container-1'].html()){
-            					auctionObject['bid-container-1'].html("<a class=\"auction-bid-ended\">Xem</a>");
+            					auctionObject['bid-container-1'].html("<a href=\"#\" class=\"auction-bid-ended\">Xem</a>");
             				}
             			}
             		}
