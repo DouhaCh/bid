@@ -167,7 +167,7 @@ function daemonAuction(){
 	$sql = mysql_query("SELECT * FROM auctions WHERE end_time <= '".date('Y-m-d H:i:s')."'
 							AND closed = 0 
 							AND active = 1 
-							AND deleted=0");
+							AND deleted = 0");
 	
 	$total_rows = mysql_num_rows($sql);
 
@@ -190,7 +190,9 @@ function checkCanClose($auction_id){
 }
 
 function closeBidbutler($id, $reason){
-	mysql_query("UPDATE bidbutlers SET closed = 1, active = 0, reason = '".$reason."' WHERE id = ".$id);
+	mysql_query("UPDATE bidbutlers SET closed = 1,
+				active = 0, reason = '".$reason."', modified = '".date('Y-m-d H:i:s')."'
+				WHERE id = ".$id);
 }
 
 function canBidBuddy($bidbutler, $auction){
@@ -204,4 +206,16 @@ function canBidBuddy($bidbutler, $auction){
 	}else{
 		return false;
 	}
+}
+
+function closeAuction($auction){
+	mysql_query("UPDATE auctions SET closed = 1,
+				winner_id = leader_id,
+				modified = '".date('Y-m-d H:i:s')."'
+				WHERE id = '".$auction['id']."'");
+	mysql_query("UPDATE bidbutlers SET closed = 1, 
+				reason = 'action close', active = 0 
+				WHERE auction_id = '".$auction['id']."' 
+				AND active = 1");
+	echo "Close auction ".$auction['id'];
 }
