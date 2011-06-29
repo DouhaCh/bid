@@ -97,14 +97,9 @@ $(document).ready(function(){
 	}, 1000);
 
     // Function for bidding
-    $('.bid-button-link').click(function(){
-        var auctionElement = 'auction_' + $(this).attr('title');
-
-        auctionObjects[auctionElement]['bid-button'].hide(1);
-        auctionObjects[auctionElement]['bid-loading'].show(1);
-
+    $('.auction-bid-link').click(function(){
         $.ajax({
-            url: "/live/bid.php?auction_id=" + $(this).attr('title'),
+            url: "/live/bid.php?auction_id=" + $(this).attr('href'),
             success: function(data){
             	console.log(data);
             }
