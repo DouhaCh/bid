@@ -19,6 +19,8 @@ $(document).ready(function(){
             auctionObjects[auctionId]['bidder']					= $('#' + auctionId + " .auction-bidder");
             auctionObjects[auctionId]['price']					= $('#' + auctionId + " .auction-price");
             auctionObjects[auctionId]['time']					= $('#' + auctionId + " .auction-time");
+            auctionObjects[auctionId]['bid-1']					= $('#' + auctionId + ".auction-type-1 .auction-bid-link");
+            auctionObjects[auctionId]['bid-container-1']		= $('#' + auctionId + ".auction-type-1 .auction-bid-container");
         }
     });
 
@@ -57,27 +59,28 @@ $(document).ready(function(){
             			auctionObject['price'].html(auction.price);
             			auctionObject['bidder'].html(auction.username);
             			//auctionObject['bid-bidder-avatar'].attr('src', auction.avatar);
-            			var t = auction.end_time - time;
-            			
-            			if(t>0){
-            				hour=parseInt(t/3600);
-            				minute=parseInt((t-3600*hour)/60);
-            				second=t%60;
-            				if(hour<10) hour='0'+hour;
-            				if(minute<10) minute='0'+minute;
-            				if(second<10) second='0'+second;
+            			if(auction.closed == "0"){
+            				var t = auction.end_time - time;
+                			
+                			if(t>0){
+                				hour=parseInt(t/3600);
+                				minute=parseInt((t-3600*hour)/60);
+                				second=t%60;
+                				if(hour<10) hour='0'+hour;
+                				if(minute<10) minute='0'+minute;
+                				if(second<10) second='0'+second;
+                			}else{
+                				hour='00';
+                				minute='00';
+                				second='00';
+                			}
+                			
+                			auctionObject['time'].html(hour + " : " + minute + " : " + second);
             			}else{
-            				hour='00';
-            				minute='00';
-            				second='00';
+            				if(auctionObject['bid-container-1'].html()){
+            					auctionObject['bid-container-1'].html("<a class=\"auction-bid-ended\">Xem</a>");
+            				}
             			}
-  
-            			/*if(t>10){
-            				auctionObject['countdown'].html('<div class="clock">'+hour+'</div> <div class="clock">'+minute+'</div><div class="clock last">'+second+'</div>');
-            			}else if(t>=0){
-            				auctionObject['countdown'].html('<div class="clock rush">'+hour+'</div> <div class="clock rush">'+minute+'</div><div class="clock rush last">'+second+'</div>');                      	
-            			}*/
-            			auctionObject['time'].html(hour + " : " + minute + " : " + second);
             		}
                 }
             });
@@ -101,7 +104,7 @@ $(document).ready(function(){
         $.ajax({
             url: "/live/bid.php?auction_id=" + $(this).attr('href'),
             success: function(data){
-            	console.log(data);
+            	$.jGrowl(data);
             }
         });
 
