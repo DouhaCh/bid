@@ -90,7 +90,7 @@
 }
 
 .auction-type-1 .auction-rrp-container {
-	background: url("../images/bg_muangay.png") no-repeat scroll left top transparent;
+	background: url("/images/bg_muangay.png") no-repeat scroll left top transparent;
     color: #666666;
     display: block;
     font-size: 11px;
@@ -102,8 +102,8 @@
     width: 200px;
 }
 
-.auction-type-1 .auction-bid-container a {
-	background: url("../images/button_bid.png") no-repeat scroll left top transparent;
+.auction-type-1 .auction-bid-container .auction-bid-link {
+	background: url("/images/button_bid.png") no-repeat scroll left top transparent;
     color: #FFFFFF;
     display: block;
     font-size: 18px;
@@ -117,8 +117,21 @@
     margin-top : 5px;
 }
 
-.auction-type-1 .auction-bid-container a:hover {
-	background: url("../images/button_bid_red.png") no-repeat scroll left top transparent;
+.auction-type-1 .auction-bid-container .auction-bid-link:hover {
+	background: url("/images/button_bid_red.png") no-repeat scroll left top transparent;
+}
+
+.auction-type-1 .auction-bid-container .auction-bid-ened {
+	background: url("/images/bg_xem_hetgio.png") no-repeat scroll left top transparent;
+    color: #FFFFFF;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    height: 50px;
+    line-height: 35px;
+    margin-left: 14px;
+    text-align: center;
+    width: 180px;
 }
 
 .auction-type-2 {
