@@ -26,12 +26,14 @@
 		echo $javascript->link('jquery/jquery-1.4.4.min');
 		echo $javascript->link('jquery/s3Slider');
 		echo $javascript->link('jquery/superfish');
+		echo $javascript->link('jquery/jquery.jgrowl.js');
 		echo $javascript->link('live');
 		echo $javascript->link('app');
 		
 		echo $html->css('/css/reset');
 		echo $html->css('/css/style');
 		echo $html->css('/css/default');
+		echo $html->css('/js/jquery/jquery.jgrowl');
 		
 		echo $scripts_for_layout;
 	?>
