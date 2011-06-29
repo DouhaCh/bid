@@ -7,7 +7,7 @@
 	
 	$ids = json_decode($ids);
 	
-	$q = "SELECT auctions.*, users.username, users.avatar FROM auctions LEFT JOIN users ON auctions.leader_id = users.id WHERE auctions.id IN (".implode(",", $ids).") AND auctions.active = 1 AND auctions.closed = 0 AND auctions.deleted = 0";
+	$q = "SELECT auctions.*, users.username, users.avatar FROM auctions LEFT JOIN users ON auctions.leader_id = users.id WHERE auctions.id IN (".implode(",", $ids).") AND auctions.active = 1 AND auctions.deleted = 0";
 	$rs = mysql_query($q);
 		
 	$data = array();
@@ -18,7 +18,8 @@
 			'username' => empty($auction['username']) ? "Chưa có ai" : $auction['username'],
 			'avatar' => empty($auction['avatar']) ? "default.jpg" : $auction['avatar'],
 			'price' => $auction['price'],
-			'end_time' => strtotime($auction['end_time'])
+			'end_time' => strtotime($auction['end_time']),
+			'closed' => $auction['closed']
 		);
 		
 		array_push($data['auctions'], $item);
