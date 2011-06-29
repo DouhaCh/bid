@@ -121,7 +121,7 @@
 	background: url("/images/button_bid_red.png") no-repeat scroll left top transparent;
 }
 
-.auction-type-1 .auction-bid-container .auction-bid-ened {
+.auction-type-1 .auction-bid-container .auction-bid-ended {
 	background: url("/images/bg_xem_hetgio.png") no-repeat scroll left top transparent;
     color: #FFFFFF;
     display: block;
@@ -132,6 +132,7 @@
     margin-left: 14px;
     text-align: center;
     width: 180px;
+    margin-top : 5px;
 }
 
 .auction-type-2 {
