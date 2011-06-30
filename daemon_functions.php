@@ -176,7 +176,6 @@ function daemonAuction(){
 			// before we declare this user the winner, lets run some test to make sure the auction can definitely close
 			if(checkCanClose($auction['id']) == false) {
 				$endTime = date('Y-m-d H:i:s', strtotime($endTime) + 86400);
-
 				mysql_query("UPDATE auctions SET end_time = '$endTime', modified = '".date('Y-m-d H:i:s')."' WHERE id = ".$auction['id']);
 			} else {
 				closeAuction($auction);
