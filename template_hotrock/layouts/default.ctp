@@ -9,7 +9,7 @@
 	<?php echo $html->charset(); ?>
 	<title>
 		<?php echo $appConfigurations['name'];?>::
-		<?php echo 'Đấu giá xu!' ?> 
+		<?php echo 'Đấu giá';?> 
 	</title>
 	<style type="text/css">
 		img, a, input, button { behavior: url(/iepngfix.htc);}

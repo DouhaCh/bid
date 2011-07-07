@@ -49,7 +49,7 @@
             'host'       => 'localhost',
             'login'      => 'root',
             'password'   => 'imissuak',
-            'database'   => 'penny', 
+            'database'   => '1bid', 
             'prefix'     => '',
             'encoding'	 => 'utf-8'
         ),
