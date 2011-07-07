@@ -246,15 +246,6 @@ class AppController extends Controller {
 			$this->set('reminders', $reminders);
 		}*/
 		
-		//load random Testimonial
-		App::import('model','Testimonial');
-		$testimonial = $this->User->Testimonial->find('first', array('conditions' => array('Testimonial.active' => 1),
-																	  'order' => 'rand()',
-																	  'fields' => array('Testimonial.img', 'Testimonial.content', 'Testimonial.id', 'Testimonial.auction_id', 'User.username' ),
-										   							  'contain' => array('User', 'Auction' => array('fields' => array('id','price','product_id'),
-										   							  												'Product.title'))));
-		$this->set('random_testimonial', $testimonial);
-		
 		//load top news
 		/*App::import('model','News');
 		$news = new News();
