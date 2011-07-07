@@ -49,7 +49,7 @@
             'host'       => 'localhost',
             'login'      => 'root',
             'password'   => 'imissuak',
-            'database'   => '1bid', 
+            'database'   => 'penny', 
             'prefix'     => '',
             'encoding'	 => 'utf-8'
         ),
@@ -73,11 +73,11 @@
 		'base'                   => '',
 		'dir'		    		 => '',
 		'webroot'				 => 'webroot',
-		'name'                   => '1bid.vn',
-		'url'                    => 'http://local.ape-project.org',
-		'ref_url'                => 'http://local.ape-project.org',
-		'nml_url'                => 'http://local.ape-project.org',
-		'serverName'             => 'local.ape-project.org',
+		'name'                   => '',
+		'url'                    => '',
+		'ref_url'                => '',
+		'nml_url'                => '',
+		'serverName'             => '',
 		'timezone'               => 'Asia/Bangkok',
 		'language'               => 'vie',
 		'email'                  => 'abcvna@gmail.com',
@@ -325,17 +325,17 @@
 
 
 		'nganluong' => array(
-        	'return_url'	=> "http://www.1bid.vn/payment_gateways/nganluong_complete",
-        	'email'			=> "finance@dynabyte.vn"
+        	'return_url'	=> "",
+        	'email'			=> ""
         
         ),
 		'mobivi' => array(
-        	'checkout_url'  => "https://www.mobivi.vn/checkout",
-        	'return_url'	=> "http://www.1bid.vn/packages",
-        	'private_key'	=> "../vendors/payments/dynabyte_pri.pem",
-        	'done_url'		=> "http://www.1bid.vn/",
-        	'merchant_ewallet' => "onebid",
-        	'mobivi_cert'	=> "../vendors/payments/mobivi.crt"                
+        	'checkout_url'  => "",
+        	'return_url'	=> "",
+        	'private_key'	=> "",
+        	'done_url'		=> "",
+        	'merchant_ewallet' => "",
+        	'mobivi_cert'	=> ""                
         ),
 
 
@@ -355,12 +355,12 @@
             'IsHTML'     => true,
             'SMTPAuth'   => false,
             'CharSet'   => 'UTF-8',
-            'Host'       => '1bid.vn',
+            'Host'       => '',
             'Port'       => 25,
             'WordWrap'   => 50,
-            'From'       => 'no-reply@1bid.vn',
-            'FromName'   => '1bid.vn',
-            'ReplyTo'    => 'no-reply@1bid.vn'
+            'From'       => '',
+            'FromName'   => '',
+            'ReplyTo'    => ''
             
         ),
    /*

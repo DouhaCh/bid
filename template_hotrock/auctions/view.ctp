@@ -57,9 +57,6 @@
                             <h1 class="left"><?php echo $auction['Product']['title']; ?>
                             </h1>
 
-                            <div class="right">
-                                <iframe src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2F1bid.vn&amp;layout=button_count&amp;show_faces=false&amp;width=96&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:96px; height:21px;" allowTransparency="true"></iframe>
-                            </div>
                             <div class="clearBoth">
                             </div>
                             <p class="pad10">Tag: 

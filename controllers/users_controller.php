@@ -1,5 +1,4 @@
 <?php
-//require_once '..' . DS . 'controllers' . DS . 'users_module1.php';
 if (! class_exists ( 'UsersController' )) {
 	class UsersController extends AppController {
 		
@@ -281,7 +280,7 @@ if (! class_exists ( 'UsersController' )) {
 					} else {
 						$this->Session->setFlash ( __ ( 'Your account has been activated. Please login using your username and password.', true ), 'default', array ('class' => 'active' ) );
 					}
-					$this->redirect ( "/page/gioi-thieu-ve-1bid" );
+					$this->redirect ( "/" );
 					return null;
 				}
 				$this->Session->setFlash ( __ ( 'Invalid activation key or you have already been activated. Please try again or contact the administrator.', true ) );
@@ -307,7 +306,7 @@ if (! class_exists ( 'UsersController' )) {
 					$data ['subject'] = sprintf ( __ ( 'Account Activation - %s', true ), $this->appConfigurations ['name'] );
 					$data ['template'] = 'users/activate';
 					if ($this->_sendEmail ( $data )) {
-						$this->Session->setFlash ( 'Mã kích hoạt đã được gửi đến hòm thư của bạn, Vui lòng kiểm tra và kích hoạt tài khoản. Nếu chưa nhận được mã kích hoạt, vui lòng kiểm tra hòm thư Spam và bổ sung 1bid.vn vào danh sách những người gửi hợp lệ.', array ('class' => 'active' ) );
+						$this->Session->setFlash ( 'Mã kích hoạt đã được gửi đến hòm thư của bạn, Vui lòng kiểm tra và kích hoạt tài khoản. Nếu chưa nhận được mã kích hoạt, vui lòng kiểm tra hòm thư Spam.', array ('class' => 'active' ) );
 					} else {
 						$this->Session->setFlash ( __ ( 'Email sending failed.ại Please try again or contact the administrator.', true ) );
 						$this->redirect ( array ('action' => 'login' ) );
@@ -378,8 +377,8 @@ if (! class_exists ( 'UsersController' )) {
 						$this->User->Bid->save ( $bid );
 					}
 					
-					$this->Session->setFlash ('Bạn đã đăng ký tài khoản tại 1bid thành công. Để tham gia đấu giá, click vào <a href="/users/edit">đây</a> để cập nhật thông tin cá nhân', 'default', array ('class' => 'active' ) );
-					$this->redirect("/page/gioi-thieu-ve-1bid");
+					$this->Session->setFlash ("Bạn đã đăng ký thành công");
+					$this->redirect("/");
 					
 					
 					/*if ($this->_sendEmail ( $data )) {

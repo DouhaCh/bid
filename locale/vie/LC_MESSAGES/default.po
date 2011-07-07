@@ -1443,7 +1443,7 @@ msgstr "Đăng nhập thành công."
 
 #: /controllers/users_controller.php:62
 msgid "You have an SMS account only.  Please create an online account in order to access the features on the website."
-msgstr "Bạn chỉ có tài khoản SMS. Hãy tạo tài khoản giao dịch online để có thể sử dụng các chức năng khác của 1bid.vn"
+msgstr "Bạn chỉ có tài khoản SMS. Hãy tạo tài khoản giao dịch online để có thể sử dụng các chức năng khác của website"
 
 #: /controllers/users_controller.php:66
 msgid "Your account has not been actived yet or your account has been suspended."
@@ -1502,7 +1502,7 @@ msgstr "Bid thưởng khi gia nhập."
 
 #: /controllers/users_controller.php:189
 msgid "Your account has been activated and some free bids have been added to your account. Please login using your username and password."
-msgstr "Bạn đã kích hoạt tài khoản thành công và nhận được bid thưởng của 1bid.vn. Vui lòng đăng nhập với tên đăng nhập và Mật khẩu đã đăng ký."
+msgstr "Bạn đã kích hoạt tài khoản thành công và nhận được bid thưởng. Vui lòng đăng nhập với tên đăng nhập và Mật khẩu đã đăng ký."
 
 #: /controllers/users_controller.php:191
 msgid "Your account has been activated. Please login using your username and password."
@@ -1522,7 +1522,7 @@ msgstr "Bid thưởng khi đăng ký"
 
 #: /controllers/users_controller.php:238
 msgid "Thank you for registering.  An email has been sent to your email address, please check your email in order to activate your account.  If you fail to receive an email please check your SPAM box and add as an accepted sender."
-msgstr "Cám ơn bạn đã đăng ký. Mã kích hoạt đã được gửi đến hòm thư của bạn, Vui lòng kiểm tra và kích hoạt tài khoản. Nếu chưa nhận được mã kích hoạt, vui lòng kiểm tra hòm thư Spam và bổ sung 1bid.vn vào danh sách những người gửi hợp lệ."
+msgstr "Cám ơn bạn đã đăng ký. Mã kích hoạt đã được gửi đến hòm thư của bạn, Vui lòng kiểm tra và kích hoạt tài khoản. Nếu chưa nhận được mã kích hoạt, vui lòng kiểm tra hòm thư Spam."
 
 #: /controllers/users_controller.php:253
 msgid "Email sending failed. Please try again or contact the administrator."

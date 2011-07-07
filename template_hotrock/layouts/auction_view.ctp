@@ -42,14 +42,6 @@
 		echo $javascript->link('jquery/jquery-ui-1.8.10.custom.min.js');
 		echo $javascript->link('dateformat.js');
 		echo $javascript->link('jquery/jquery.cookie');
-		//echo $javascript->link('APE-Project-APE_JSF-c8a11b4/Clients/mootools-core.js');
-		//echo $javascript->link('APE-Project-APE_JSF-c8a11b4/Clients/MooTools.js');
-		echo $javascript->link('ape-jsf/Clients/mootools-core.js');
-		echo $javascript->link('ape-jsf/Clients/MooTools.js');
-		//echo $javascript->link('1bid');
-		echo $javascript->link('ape-jsf/config');
-		//echo $javascript->link('APEdefault');
-		echo $javascript->link('APE');
 		echo $javascript->link('default');
 		echo $javascript->link('jquery/jquery.validate.min.js');
 		echo $scripts_for_layout;
@@ -86,18 +78,6 @@
 		</script>
 		
 		<script type="text/javascript">
-
-			  var _gaq = _gaq || [];
-			  _gaq.push(['_setAccount', 'UA-20462121-1']);
-			  _gaq.push(['_setDomainName', '.1bid.vn']);
-			  _gaq.push(['_trackPageview']);
-			
-			  (function() {
-			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			  })();
-
 		</script>
 </head>
 <body>

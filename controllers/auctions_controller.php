@@ -1624,18 +1624,8 @@ class AuctionsController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		
-		$data['to'] = $auction['Winner']['email'];
-		$data['subject'] = "Bạn đã thắng một phiên đấu giá tại 1bid.vn";
-		$data['template'] = 'auctions/won_auction';
-		$this->_sendEmail($data);
-		
-		
-		
-		
 		$this->Session->setFlash(__('The bids were successfully refunded.', true));
 		//$this->redirect(array('action' => 'index'));
 	}
 }
-//require_once('..' . DS .'controllers' . DS .'users_controller.php');
-
 ?>
