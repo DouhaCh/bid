@@ -7,7 +7,7 @@ function bid($auction, $auto_bid = false, $bidbutler = null){
 	}elseif(!empty($auto_bid['user_id'])){
 			
 	}else{
-		return "User is not valid";
+		return "Người chơi không hợp lệ";
 	}
 
 	$checkBid = checkBid($user, $auction);
@@ -57,7 +57,7 @@ function bid($auction, $auto_bid = false, $bidbutler = null){
 		$mysql_query("UPDATE `bidbutlers` SET `bids` = '".$data['Bidbutler']['bids']."', closed  = '".$data['Bidbutler']['closed']."', active = '".$data['Bidbutler']['active']."', modified = '".$data['Bidbutler']['modified']."' WHERE id = ".$bidbutler['id']);
 	}
 
-	echo "Bid success";
+	echo "Bạn đã đặt thành công";
 }
 
 function getAuctionById($id){
@@ -77,21 +77,21 @@ function getUserById($id){
 function checkBid($user, $auction){
 	// check last bid
 	if($user['id'] == $auction['leader_id']){
-		return "Last bid";
+		return "Bạn đang là người dẫn đầu";
 	}
 
 	// check beginner
 	if($user['beginner'] == 0 && $auction['beginner'] == 1){
-		return "Beginner auction";
+		return "Phiên đấu gía chỉ dành cho người mới chơi";
 	}
 
 	// check time
 	if(time() < $auction['start_time']){
-		return "Auction not start";
+		return "Phiên đấu giá chưa bắt đầu";
 	}
 
 	if(time() > $auction['end_time']){
-		return "Auction ended";
+		return "Phiên đấu giá đã kết thúc";
 	}
 
 	// check reverse
@@ -101,12 +101,12 @@ function checkBid($user, $auction){
 
 	// check balance
 	if($user['bid_balance'] < $auction['bp_cost']){
-		return "Balance";
+		return "Tài khoản của bạn đã hết, hãy nạp thêm để chơi tiép";
 	}
 
 	// check active
 	if($user['active'] == 0){
-		return 'Active';
+		return 'Tài khoản của bạn chưa kích hoạt hoặc bị ban bởi hệ thống';
 	}
 
 	return;

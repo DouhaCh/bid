@@ -876,28 +876,5 @@ class AppController extends Controller {
 			exit('This feature is disabled in the demo version. <p><a href="javascript:history.back()">Go back</a>');
 		}
 	}
-	
-	function apePush($cmd, $data){
-		$APEserver = 'http://ape.local.ape-project.org:6969/?';
-		$APEPassword = 'testpasswd';
-		
-		$apeCmd = array(
-			array(
-	  			'cmd' => $cmd,
-	  			'params' => array(
-					'password' => $APEPassword,
-					'data' => $data
-	   			)
-			)
-		);
-			
-		//echo $APEserver.json_encode($apeCmd);
-		//var_dump($APEserver.rawurlencode(json_encode($apeCmd)));
-		$result = file_get_contents($APEserver.rawurlencode(json_encode($apeCmd)));
-		$result = json_decode($result);
-		//debug($result);
-		
-		return $result;
-	}
 }
 ?>

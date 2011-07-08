@@ -48,9 +48,7 @@
             	<?php echo $content_for_layout; ?>
             </div>
         	 <?php echo $this->element('right');?>
-             <?php echo $this->element('linkout');?>
         </div><!--End #container-->
-       
         <?php echo $this->element('footer');?>
     </div><!--end #wraper-->
 </body>
