@@ -3,8 +3,8 @@
 		<a href="">&nbsp;</a>
 	</div><!--End .left-->
 	<div class="right">
-		<a href="">Đăng nhập |</a>
-		<a href="">Đăng kí</a>
+		<a href="/users/login">Đăng nhập</a> |
+		<a href="/users/register">Đăng kí</a>
 	</div><!--end .right-->
 	<div id="navigator">
 		<a href="">Trang chủ</a> |
