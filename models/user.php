@@ -14,11 +14,6 @@
 				'limit' => 10
 			),
 			'Bidbutler',
-			'Bug',
-			'BugComment',
-			'Account',
-			'Affiliate',
-			'AffiliateCode',
 			'Referral',
 			'Referred' => array(
 				'className'  => 'Referral',
@@ -42,13 +37,6 @@
 				'foreignKey' => 'user_id',
 				'limit' => 10
 			),
-
-			'Comment',
-			'Shout',
-			'Notification',
-			'Reminder',
-			'Testimonial',
-			'Lottery'
 		);
 
 		var $belongsTo = array('Gender', 'Source');
