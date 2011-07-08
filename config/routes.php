@@ -1,5 +1,5 @@
 <?php
-	Router::connect('/', array('controller' => 'auctions', 'action' => 'home'));
+	Router::connect('/', array('controller' => 'auctions', 'action' => 'index'));
 	
 	/* Admin Stuff */
 	Router::connect('/admin', array('controller' => 'dashboards', 'action' => 'index', 'admin' => true));
@@ -39,15 +39,13 @@
 	Router::connect('/dcleaner', array('controller' => 'daemons', 'action' => 'cleaner'));
 	Router::connect('/dwinner', array('controller' => 'daemons', 'action' => 'winner'));
 	*/
-	/* Router for rss */
-	Router::parseExtensions('rss');
 	
-	Router::connect('/dau-gia-xu/:id', array('controller' => 'auctions', 'action' => 'view'), array('id'=>'.*-.*','pass'=>array('id')));
-	Router::connect('/dau-gia-xu', array('controller' => 'auctions', 'action' => 'index'));
+	Router::connect('/dau-gia/:id', array('controller' => 'auctions', 'action' => 'view'), array('id'=>'.*-.*','pass'=>array('id')));
+	Router::connect('/dau-gia', array('controller' => 'auctions', 'action' => 'index'));
 	Router::connect('/danh-muc/:id', array('controller' => 'categories', 'action' => 'view'), array('id'=>'.*-.*','pass'=>array('id')));
 	Router::connect('/da-ban', array('controller' => 'auctions', 'action' => 'closed'));
-	Router::connect('/dau-gia-hot', array('controller' => 'auctions', 'action' => 'featured'));
-	Router::connect('/dau-gia-chien-thang', array('controller' => 'auctions', 'action' => 'won'));
+	/*Router::connect('/dau-gia-hot', array('controller' => 'auctions', 'action' => 'featured'));
+	Router::connect('/dau-gia-chien-thang', array('controller' => 'auctions', 'action' => 'won'));*/
 
 	Router::parseExtensions('json');
 ?>
