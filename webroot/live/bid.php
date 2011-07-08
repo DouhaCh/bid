@@ -12,11 +12,11 @@
 	if(!empty($auction_id)){
 		$auction = getAuctionById($auction_id);
 		if(empty($auction)){
-			echo "Auction is not valid";
+			echo "Phiên đấu giá không hợp lệ";
 			return;
 		}
 	}else{
-		echo "Auction is not valid";
+		echo "Phiên đấu giá không hợp lệ";
 		return;
 	}
 	
