@@ -60,11 +60,11 @@ $(document).ready(function(){
             			auctionObject['bidder'].html(auction.username);
             			//auctionObject['bid-bidder-avatar'].attr('src', auction.avatar);
             			if(auction.closed == "0"){
-            				var t = auction.end_time - time;
+            				var t = auction.end_time - time - 1;
                 			
                 			if(t>0){
-                				hour=parseInt(t/3600);
-                				minute=parseInt((t-3600*hour)/60);
+                				hour=Math.floor(t/3600);
+                				minute=Math.floor((t-3600*hour)/60);
                 				second=t%60;
                 				if(hour<10) hour='0'+hour;
                 				if(minute<10) minute='0'+minute;
@@ -75,10 +75,11 @@ $(document).ready(function(){
                 				second='00';
                 			}
                 			
-                			auctionObject['time'].html(hour + " : " + minute + " : " + second);
+                			auctionObject['time'].html(hour + " : " + minute + " : " + second);auctionObject
             			}else{
             				if(auctionObject['bid-container-1'].html()){
             					auctionObject['bid-container-1'].html("<a href=\"#\" class=\"auction-bid-ended\">Xem</a>");
+            					auctionObject['time'].html("00 : 00 : 00");
             				}
             			}
             		}
