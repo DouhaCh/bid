@@ -25,16 +25,10 @@ $(document).ready(function(){
     });
 
     // additional object
-    var bidBalance             = $('.bid-balance');
-    var getAuctionsUrl;
+    var bidBalance = $('.bid-balance');
     var time = 0;
     var lastGetAuctionsTime = 0;
-
-    if($('.bid-histories').length){
-        getAuctionsUrl = '/live/auctions.php?histories=yes';
-    }else{
-        getAuctionsUrl = '/live/auctions.php';
-    }
+    var getAuctionsUrl = '/live/auctions.php';
 
     // Do the loop when auction available only
     if(auctions){
@@ -43,9 +37,10 @@ $(document).ready(function(){
                 url: getAuctionsUrl,
                 dataType: 'json',
                 type: 'POST',
-                data: "auctions=" + JSON.stringify(auctions.removeDuplicate()),
+                data: "auctions=" + JSON.stringify(auctions),
                 success: function(data){
             		if(lastGetAuctionsTime > data.ms) return;
+            		if(time < 1000) return;
             		lastGetAuctionsTime = data.ms;
             		var auctions = data.auctions;
             		var auction;
@@ -58,7 +53,6 @@ $(document).ready(function(){
             			
             			auctionObject['price'].html(auction.price);
             			auctionObject['bidder'].html(auction.username);
-            			//auctionObject['bid-bidder-avatar'].attr('src', auction.avatar);
             			if(auction.closed == "0"){
             				var t = auction.end_time - time - 1;
                 			
@@ -75,7 +69,7 @@ $(document).ready(function(){
                 				second='00';
                 			}
                 			
-                			auctionObject['time'].html(hour + " : " + minute + " : " + second);auctionObject
+                			auctionObject['time'].html(hour + " : " + minute + " : " + second);
             			}else{
             				if(auctionObject['bid-container-1'].html()){
             					auctionObject['bid-container-1'].html("<a href=\"#\" class=\"auction-bid-ended\">Xem</a>");
@@ -85,27 +79,35 @@ $(document).ready(function(){
             		}
                 }
             });
-        }, 1000);
+        }, 500);
     }
     
     setInterval(function(){
-    	// increase time prevent gettime error
-    	time = parseInt(time, 10) + 1;
-    	var gettime = '/live/time.php?' + new Date().getTime();
+    	time++;
+    }, 1000);
+    
+    (function getTime(){
     	$.ajax({
-    		url: gettime,
-    		success: function(data){
+    		url : '/live/time.php',
+    		success : function(data){
     			time = data;
     		}
     	});
-	}, 1000);
+    	
+    	setTimeout(getTime, 5000);
+    })();
 
     // Function for bidding
     $('.auction-bid-link').click(function(){
         $.ajax({
             url: "/live/bid.php?auction_id=" + $(this).attr('href'),
-            success: function(data){
-            	$.jGrowl(data);
+            success: function(msg){
+            	var parts = msg.split("::");
+            	$.jGrowl(parts[0]);
+            	
+            	if(parts[1]){
+            		bidBalance.html(parts[1]);
+            	}
             }
         });
 

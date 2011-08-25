@@ -11,10 +11,6 @@ $(document).ready(function(){
 		
 		return false;
 	});
-	
-	$('.button_link').click(function(){
-		$()
-	});
 });
 
 // script to generate slider
