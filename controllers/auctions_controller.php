@@ -86,108 +86,12 @@ class AuctionsController extends AppController {
 	}
 
 	function home() {
-		//CHeck if it was a visitor
-		
-		if (!$this->Auth->user('id')){
-			if (!empty($_GET['khuyenmai'])&&!$this->Cookie->read('referral')){
-				$this->Cookie->write('referral',$_GET['khuyenmai'],false,36000);
-				$this->Cookie->write('registered','0',false,36000);
-				/*App::import('model','Referral');
-				
-				$refer = new Referral();
-				
-				$refdata = array('Referral'=>array (	
-													'user_id'=>'0',
-												  	'referrer_id'=>$_GET['khuyenmai'],
-													'ip'=>$_SERVER['REMOTE_ADDR'],
-													'confirmed'=>0
-												)
-								 );
-				
-				$refer->add($refdata);*/
-			}
-		}
-		if(!empty($this->appConfigurations['homeFeaturedAuction'])) {
-			
-			// Get the featured auctions
-			// *** Upcoming auctions
-			$upcoming = $this->Auction->getAuctions(array(	'Auction.start_time > '=>date('Y-m-d H:i:s'),
-						'Auction.active' => 1, 
-						'Auction.featured' => 1), 
-						5, 
-						'Auction.end_time ASC');
-
-			$this->set('upcoming', $upcoming);
-			
-			
-			// *** Featured auction
-			/*
-			$featured  = $this->Auction->getAuctions(array(		'Auction.end_time > '=>UsersController::getEndTime(),
-										'Auction.active' => 1, 
-										'Auction.featured' => 1), 
-									1, 'Auction.end_time ASC');
-
-			// if there are no featured auctions, lets just get a closing soon auction
-			if(empty($featured)) {
-				$featured  = $this->Auction->getAuctions(array(	'Auction.end_time > '=>UsersController::getEndTime(),
-										'Auction.active' => 1),
-										1, 'Auction.end_time ASC');
-			}
-
-			if(!empty($featured['Auction']['image'])){
-				if(!empty($featured['Product']['Image'][0]['ImageDefault'])) {
-					$featured['Auction']['image'] = 'default_images/'.Configure::read('App.serverName').'/max/'.$featured['Product']['Image'][0]['ImageDefault']['image'];
-					$featured['Auction']['thumb'] = 'default_images/'.Configure::read('App.serverName').'/thumbs/'.$featured['Product']['Image'][0]['ImageDefault']['image'];
-				} else {
-					$featured['Auction']['image'] = 'product_images/max/'.$featured['Product']['Image'][0]['image'];
-					$featured['Auction']['thumb'] = 'product_images/thumbs/'.$featured['Product']['Image'][0]['image'];
-				}
-			}
-
-			if(!empty($featured)) {
-				$this->set('featured', $featured);
-				$excludeFeatured[]['Auction']['id'] = $featured['Auction']['id'];
-			} else {
-				$excludeFeatured = array();
-			}
-			*/
-			//*** Auctions ending soon
-			$endSoon  = $this->Auction->getAuctions(array(	'Auction.end_time > '=>UsersController::getEndTime(), 
-									'Auction.active' => 1), 
-								$this->appConfigurations['homeEndingLimit'], 
-								'Auction.end_time ASC', 
-								$excludeFeatured);
-			if(!empty($featured)) {
-				$combine_featured[] = $featured;
-				$exclude = array_merge($endSoon, $combine_featured);
-			} else {
-				$exclude = $endSoon;
-			}
-		} else {
-			$endSoon  = $this->Auction->getAuctions(array(	'Auction.end_time > '=>UsersController::getEndTime(), 
-									'Auction.active' => 1), 
-								$this->appConfigurations['homeEndingLimit'], 
-								'Auction.end_time ASC');
-			$exclude = $endSoon;
-		}
-		$this->set('auctions_end_soon', $endSoon);
-
 		//*** Live auctions
-		$live = $this->Auction->getAuctions(array(	'Auction.start_time'=>date('Y-m-d H:i:s'),
-								'Auction.end_time >'=>UsersController::getEndTime(), 
-								'Auction.active' => 1, 
-								'Auction.featured' => 1), 
-							$this->appConfigurations['homeFeaturedLimit'], 
-							'Auction.end_time ASC', 
-							$exclude);
-		if(empty($live)) {
-			$live = $this->Auction->getAuctions(array(	'Auction.start_time < '=>date('Y-m-d H:i:s'),
-									'Auction.end_time >'=>UsersController::getEndTime(), 
-									'Auction.active' => 1), 
-								$this->appConfigurations['homeFeaturedLimit'], 
-								'Auction.end_time ASC', 
-								$exclude);
-		}
+		$live = $this->Auction->getAuctions(array(
+				'Auction.end_time >'=>date ( 'Y-m-d H:i:s' ),
+				'Auction.active' => 1), 
+				$this->appConfigurations['homeFeaturedLimit'],
+				'Auction.end_time ASC');
 
 		$this->set('auctions_live', $live);
 	}

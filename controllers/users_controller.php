@@ -36,13 +36,6 @@ if (! class_exists ( 'UsersController' )) {
 							$this->PhpBB3->login ( $this->Auth->user ( 'username' ), $this->Auth->user ( 'key' ), $this->Auth->user ( 'email' ) );
 						}
 						
-						if ($this->Auth->user ( 'changed' ) == '0') {
-							$this->Session->setFlash ( 'Bạn đã đăng nhập thành công. Tuy nhiên, bạn nên hoàn thiện thông tin cá nhân trước khi sử dụng.', 'default', array ('class' => 'success' ) );
-							
-							$this->redirect ( array ('action' => 'edit' ) );
-						}
-						;
-						
 						$this->Session->setFlash ( __ ( 'You have successfully logged in.', true ), 'default', array ('class' => 'success' ) );
 						
 						if ($this->Session->read ( 'justActivated' )) {
@@ -52,18 +45,7 @@ if (! class_exists ( 'UsersController' )) {
 							} else {
 								$this->redirect ( array ('controller' => 'packages', 'action' => 'index' ) );
 							}
-						} else { /*
-                            	//FOR BETA ONLY _ DAILY REWARD
-                            	$last_login = strtotime(date('d-m-y',strtotime($this->Auth->user('last_login'))));
-                            	$now = strtotime(date('d-m-y',time()));
-                            	
-                            	$created = strtotime($this->Auth->user('created'));
-                            	$daydiff = floor(($now-$last_login)/(60*60*24));
-                            	$daydiff2 = floor(($now-$created)/(60*60*24));
-                            if ($daydiff >= 1){
-                            	$this->User->dailyBP('BETA daily reward',$this->Auth->user('id'),50000,'Bonus');
-                            }
-                            	//END */
+						} else {
 							if ($this->Cookie->read ( 'last_visit' )) {
 								$this->redirect ( $this->Cookie->read ( 'last_visit' ) );
 							

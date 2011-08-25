@@ -10,6 +10,26 @@ class BidsController extends AppController {
 			$this->Auth->allow('histories', 'balance', 'unique');
 		}
 	}
+	
+	function charge($amount){
+		// request to web service, check if it's possible to convert to bid and return
+		if($result == true){
+			$this->Bid->addBid($this->Auth->User('id'), "Bid charged", $amount, 0);
+		}
+	}
+	
+	function release($amount){
+		$balance = $this->Bid->balance($this->Auth->user('id'));
+		
+		if($balance < $amount){
+			return;
+		}else{
+			// request to web service, check if it's possible to convert to bid and return
+			if($result == true){
+				$this->Bid->addBid($this->Auth->User('id'), "Bid converted", 0, $amount);
+			}
+		}
+	}
 
 	function histories($auction_id = null){
 		Configure::write('debug', 0);
@@ -101,53 +121,6 @@ class BidsController extends AppController {
 		$this->paginate = array('conditions' => $conditions, 'limit' => $this->appConfigurations['adminPageLimit'], 'order' => array('Bid.id' => 'desc'), 'contain' => array('User', 'Auction' => 'Product'));
 		$this->set('bids', $this->paginate());
 	}
-	
-	function admin_allusers(){
-		$bids = $this->Bid->find('all', array(
-			'conditions' => array('User.admin' => '0'),
-			'order' => array('SUM(credit)-SUM(debit)' => 'desc'), 'contain' => array('User'),
-			'fields' => array('User.username', "SUM(credit) - SUM(debit) AS bid_balance"),
-			'group' => array('User.id HAVING SUM(credit)-SUM(debit) > 100')
-		));
-		
-		$this->set('bids', $bids);
-	}
-	
-	function admin_errorrefund($auction_id,$percent=0.1,$return_winner=false){
-		$auction = $this->Bid->Auction->findById($auction_id);
-		$bids = $this->Bid->find('all', array(
-			'conditions' => array('Bid.auction_id' => $auction_id),
-			'fields' => array('Bid.user_id', 'SUM(debit) AS total'),
-			'group' => array('User.id')
-		));
-		
-		foreach($bids as $bid){
-			if ($return_winner || $bid['Bid']['user_id']!=$auction['Auction']['winner_id']) {
-				$this->Bid->create();
-				$this->Bid->save(array(
-					'Bid' => array(
-						'user_id' => $bid['Bid']['user_id'],
-						'auction_id' => '0',
-						'description' => 'Trả lại Xu cho phiên '.$auction_id,
-						'type'	=> 'Bid refund',
-						'credit' => $bid['0']['total'] * $percent,
-						'debit' => '0',
-						'code' => '0',
-						'created' => date('Y-m-d H:i:s'),
-						'modified' => date('Y-m-d H:i:s')
-					)
-				));
-			}
-		}
-		
-		$this->Session->setFlash('Trả lại XU thành công', 'default', array(
-        	'class' => 'success'
-        ));
-		$this->redirect(array(
-			'controller' => 'auctions',
-        	'action' => 'index'
-        ));
-	}
 
 	function admin_user($user_id = null) {
 		if(empty($user_id)) {
@@ -189,13 +162,6 @@ class BidsController extends AppController {
 			}
 
 			if($this->Bid->save($this->data)) {
-				//update user bid_balance on ape-server
-				$cmd = '_updateUser';
-				$data = array(
-					'user_id' => $user_id,
-				);
-				$this->apePush($cmd, $data);
-				
 				$this->Session->setFlash(__('The bid transaction has been added successfully.', true));
 				$this->redirect(array('action' => 'user', $user_id));
 			} else {
