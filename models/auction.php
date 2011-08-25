@@ -17,17 +17,17 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 				'className'  => 'Status',
 				'foreignKey' => 'status_id'
 			),
-			'Winner' => array(
+			/*'Winner' => array(
 				'className'  => 'User',
 				'foreignKey' => 'winner_id'
-			),
+			),*/
 			'Leader' => array(
 				'className'  => 'User',
 				'foreignKey' => 'leader_id'
 			)
 		);
 
-		var $hasOne = array(
+		/*var $hasOne = array(
 			'Message', 'AuctionEmail', 'Testimonial'
 		);
 
@@ -96,7 +96,7 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 				'dependent'  => true
 			),
 			
-		);
+		);*/
 
 
 		/**
@@ -146,50 +146,12 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 				}
 			}
 
-			$this->contain(array('Product' => array('Image' => 'ImageDefault', 'Limit')), 'Winner', 'Watchlist');
+			$this->contain(array('Product' => array('Image' => 'ImageDefault')));
 			$auctions = $this->find('all', array('conditions' => $conditions, 'order' => $order, 'limit' => $limit));
-
-			// process any translations
-			//$auctions = $this->Product->Translation->translate($auctions);
-			App::import('model','User');
 			
 			foreach($auctions as $key => $auction) {
-				// Check if auction already started
-				if(strtotime($auction['Auction']['start_time']) > time()) {
-					$auctions[$key]['Auction']['isFuture'] = true;
-				} else {
-					$auctions[$key]['Auction']['isClosed'] = $auction['Auction']['closed'];
-				}
-				
-				$tempMod = new User();
-				$user=$tempMod->find('first', array(
-					'conditions' => array('User.id' => $auction['Auction']['leader_id']),
-					'fields'	 => array('username', 'avatar'),
-					'contain'	 => false
-				));
-				
-				$auctions[$key]['User']=$user['User'];
-
 				// Put it back into the array
 				$auctions[$key]['Auction']['end_time'] = strtotime($auction['Auction']['end_time']);
-				
-				// Get savings
-				if($auction['Product']['rrp'] > 0) {
-					if(!empty($auction['Product']['fixed'])) {
-						if($auction['Product']['fixed_price'] > 0) {
-							$auctions[$key]['Auction']['savings']['percentage'] = round(100 - ($auction['Product']['fixed_price'] / $auction['Product']['rrp'] * 100), 2);
-						} else {
-							$auctions[$key]['Auction']['savings']['percentage'] = 100;
-						}
-							$auctions[$key]['Auction']['savings']['price']  = $auction['Product']['rrp'] - $auction['Product']['fixed_price'];
-					} else {
-						$auctions[$key]['Auction']['savings']['percentage'] = round(100 - ($auction['Auction']['price'] / $auction['Product']['rrp'] * 100), 2);
-						$auctions[$key]['Auction']['savings']['price']      = $auction['Product']['rrp'] - $auction['Auction']['price'];
-					}
-				} else {
-					$auctions[$key]['Auction']['savings']['percentage'] = 0;
-					$auctions[$key]['Auction']['savings']['price']      = 0;
-				}
 
 				if(!empty($auction['Product']['Image'])) {
 					if(!empty($auction['Product']['Image'][0]['ImageDefault'])) {
@@ -198,25 +160,6 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 						$auctions[$key]['Auction']['image'] = 'product_images/'.$folder.'/'.$auction['Product']['Image'][0]['image'];
 					}
 				}
-
-				$lastBid = $this->Bid->lastBid($auction['Auction']['id']);
-				//var_dump($lastBid);
-				if(!empty($lastBid)) {
-					$auctions[$key]['LastBid'] = $lastBid;
-					
-					$temp = explode("@", $auctions[$key]['LastBid']['username']);
-					$auctions[$key]['LastBid']['username'] = $temp[0];
-					
-					if(strlen($auctions[$key]['LastBid']['username'])>12){
-						$auctions[$key]['LastBid']['username'] = substr($auctions[$key]['LastBid']['username'], 0, 12)."...";
-					}
-				} else {
-					$auctions[$key]['LastBid']['username'] = __('No bids placed yet', true);
-				}
-
-				$auction['Auction']['serverTimestamp'] = time();
-
-				//$auctions[$key]['Histories'] = $this->Bid->histories($auction['Auction']['id'], $this->appConfigurations['bidHistoryLimit'], $historiesOptions);
 			}
 
 			if($limit == 1){
@@ -226,266 +169,6 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 			}
 
 			return $auctions;
-		}
-
-		/**
-		 * Function to put a bid for an auction. It can be used for single bid
-		 * or bidbutler daemon
-		 *
-		 * @param array $data Data which consist of auction settings like peak_start, end, etc
-		 * @return mixed Can be PEAK_ONLY, BID_NOT_ENOUGH, or OK
-		 */
-		function bid($data = array(), $autobid = false, $bid_description = null) {
-			$canBid = true;
-			$message = '';
-			$flash = '';
-
-			// Get the auctions
-			$this->contain();
-			$fieldList = array('Auction.id', 'Auction.product_id', 'Auction.start_time', 'Auction.end_time', 'Auction.price', 'Auction.peak_only', 'Auction.closed', 'Auction.minimum_price', 'Auction.autobids', 'Auction.max_end', 'Auction.max_end_time', 'Auction.penny');
-
-			$auction = $this->find('first', array('conditions' => array('Auction.id' => $data['auction_id']), 'fields' => $fieldList));
-
-			if(!empty($auction)){
-				// check to see if this is a free auction
-				if(!empty($this->appConfigurations['freeAuctions'])) {
-					$product = $this->Product->find('first', array('conditions' => array('Product.id' => $auction['Auction']['product_id']), 'fields' => 'Product.free', 'contain' => ''));
-					if(!empty($product['Product']['free'])) {
-						$data['bid_debit'] = 0;
-					}
-				}
-
-				if(!empty($this->appConfigurations['limits']['active'])) {
-					$limits_exceeded = $this->requestAction('/limits/canbid/'.$data['auction_id'].'/'.$data['user_id']);
-					if($limits_exceeded == false) {
-						$message = __('You cannot bid on this auction as your have exceeded your bidding limit.', true);
-						$canBid = false;
-					}
-				}
-
-				// Check if the auction has been end - this only applies to NON autobidders
-				if((!empty($auction['Auction']['closed']) || strtotime($auction['Auction']['end_time']) <= time()) && $autobid == false) {
-					$message = __('Auction has been closed', true);
-					$canBid = false;
-				}
-
-				// Check if the auction has been not started yet
-				if(!empty($auction['Auction']['start_time'])) {
-					if(strtotime($auction['Auction']['start_time']) > time()){
-						$message = __('Auction has not started yet', true);
-						$canBid = false;
-					}
-				}
-
-				// Check if the auction is peak only and if the now is peak time
-				if(!empty($auction['Auction']['peak_only'])){
-					if(empty($data['isPeakNow'])){
-						$message = __('This is a peak auction', true);
-						$canBid = false;
-					}
-				}
-
-				// Get user balance
-				if($autobid == true || $this->appConfigurations['bidButlerDeploy'] == 'group') {
-					$balance = $data['bid_debit'];
-				} else {
-					$balance = $this->Bid->balance($data['user_id']);
-				}
-
-				// this goes last to prevent the double bid issues
-				$latest_bid = $this->Bid->lastBid($data['auction_id']);
-				if(!empty($latest_bid) && $latest_bid['user_id'] == $data['user_id']){
-					$message = __('You cannot bid as you are already the highest bidder', true);
-					$canBid = false;
-				}
-
-				if($canBid == true) {
-					// Checking if user has enough bid to place
-					if($balance >= $data['bid_debit']) {
-
-						// Check if it's bidbutler call
-						if(!empty($data['bid_butler'])) {
-							// Find the bidbutler
-							$this->Bidbutler->contain();
-							$bidbutler = $this->Bidbutler->find('first', array('conditions' => array('Bidbutler.id' => $data['bid_butler'])));
-
-							// If bidbutler found
-							if(!empty($bidbutler)){
-								if($bidbutler['Bidbutler']['bids'] >= $data['bid_debit']) {
-									// Decrease the bid butler bids
-									$bidbutler['Bidbutler']['bids'] -= $data['bid_debit'];
-
-									// Save it
-									$this->Bidbutler->save($bidbutler, false);
-								} else {
-									// Get out of here, the bids on bidbutler was empty
-									return $auction;
-								}
-							}
-						}
-
-						// Formatting auction time and price increment
-						if(!empty($auction['Auction']['penny'])) {
-							$auction['Auction']['price'] 	+= 0.01;
-						} else {
-							$auction['Auction']['price'] 	+= $data['price_increment'];
-						}
-
-						$auction['Auction']['end_time'] = date('Y-m-d H:i:s', strtotime($auction['Auction']['end_time']) + $data['time_increment']);
-						
-						// lets make sure the auction time is now less than now
-						if(strtotime($auction['Auction']['end_time']) < time()) {
-							$auction['Auction']['end_time'] = date('Y-m-d H:i:s', time() + $data['time_increment']);
-						}
-						
-						// lets check the max end time to see if the end_time is greater than the max_end_time
-						if(!empty($auction['Auction']['max_end'])) {
-							if(strtotime($auction['Auction']['end_time']) > strtotime($auction['Auction']['max_end_time'])) {
-								$auction['Auction']['end_time'] = $auction['Auction']['max_end_time'];
-							}
-						}
-
-						// lets extend the minimum price if its an auto bidder
-						if($autobid == true) {
-							if(!empty($auction['Auction']['penny'])) {
-								$auction['Auction']['minimum_price'] += 0.01;
-							} else {
-								$auction['Auction']['minimum_price'] += $data['price_increment'];
-							}
-							$auction['Auction']['autobids'] += 1;
-						} else {
-							$auction['Auction']['autobids'] = 0;
-						}
-
-						// Formatting user bid transaction
-						$bid['Bid']['user_id'] 	  = $data['user_id'];
-						$bid['Bid']['auction_id'] = $auction['Auction']['id'];
-						$bid['Bid']['credit']     = 0;
-
-						if(!empty($data['bid_butler']) && Configure::read('App.bidButlerType') == 'advanced') {
-							$bid['Bid']['debit']      = 0;
-						} else {
-							$bid['Bid']['debit']      = $data['bid_debit'];
-						}
-						
-						// Insert proper description, bid or bidbutler
-						if(!empty($bid_description)) {
-							$bid['Bid']['description'] = $bid_description;
-						} elseif(!empty($data['bid_butler'])){
-							$bid['Bid']['description'] = __('Bid Butler', true);
-						} else {
-							$bid['Bid']['description'] = __('Single Bid', true);
-						}
-
-						// lets check for double bids - 01/03/2008 - Michael - lets only include bids in this check due to error from group deploy for bid butlers
-						$auction['Auction']['double_bids_check'] = false;
-						$bid['Bid']['double_bids_check'] = true;
-
-						// Saving bid
-						if(is_array($data['user_id'])) {
-							foreach($data['user_id'] as $user){
-								// 2008-02-27 21:44:20 -- Maulana
-								// Update the leader id, set the leader_id to
-								// latest user_id in array Q
-								$auction['Auction']['leader_id'] = $user;
-								$this->save($auction);
-
-								$bid['Bid']['user_id'] = $user;
-								$this->Bid->create();
-								$this->Bid->save($bid);
-
-								if($this->appConfigurations['simpleBids'] == true) {
-									$winner = $this->Winner->find('first', array('conditions' => array('Winner.id' => $data['user_id']), 'contain' => ''));
-									$winner['Winner']['bid_balance'] -= $bid['Bid']['debit'];
-									$winner['Winner']['modified'] = date('Y-m-d H:i:s');
-									$this->Winner->save($winner);
-								} elseif($autobid == true) {
-									// 18/2/2009 - this has been added for "grouped" bids.  We need to update the modified date for the autobidders
-									$winner = $this->Winner->find('first', array('conditions' => array('Winner.id' => $data['user_id']), 'contain' => ''));
-									$winner['Winner']['modified'] = date('Y-m-d H:i:s');
-									$this->Winner->save($winner, false);
-								}
-							}
-						} else {
-							// 2008-02-27 21:44:20 -- Maulana
-							// Update the leader id to $data['user_id']. since
-							// it's not an array we can put it directly
-							$auction['Auction']['leader_id'] = $data['user_id'];
-
-							$this->Bid->create();
-							$this->Bid->save($bid);
-
-							if($this->appConfigurations['simpleBids'] == true) {
-								$winner = $this->Winner->find('first', array('conditions' => array('Winner.id' => $data['user_id']), 'contain' => ''));
-								$winner['Winner']['bid_balance'] -= $bid['Bid']['debit'];
-								$winner['Winner']['modified'] = date('Y-m-d H:i:s');
-								$this->Winner->save($winner, false);
-							} elseif($autobid == true) {
-								// 18/2/2009 - this has been added for "grouped" bids.  We need to update the modified date for the autobidders
-								$winner = $this->Winner->find('first', array('conditions' => array('Winner.id' => $data['user_id']), 'contain' => ''));
-								$winner['Winner']['modified'] = date('Y-m-d H:i:s');
-								$this->Winner->save($winner, false);
-							}
-						}
-
-						// Saving auction
-						$this->save($auction);
-
-						$message = __('Your bid was placed', true);
-
-						if(!empty($this->appConfigurations['flashMessage'])) {
-							App::import('Helper', array('Number'));
-							$number = new NumberHelper();
-
-							// New flash message
-							if(!empty($data['bid_butler'])){
-								if(!empty($data['bid_butler_count'])){
-									$flash = sprintf(__('%d Bid Butler + %s + %s seconds', true), $data['bid_butler_count'], $number->currency($data['price_increment'], $this->appConfigurations['currency']), $data['time_increment']);
-								}else{
-									$flash = sprintf(__('1 Bid Butler + %s + %s seconds', true), $number->currency($data['price_increment'], $this->appConfigurations['currency']), $data['time_increment']);
-								}
-							}else{
-								$flash = sprintf(__('1 Single bid + %s + %s seconds', true), $number->currency($data['price_increment'], $this->appConfigurations['currency']), $data['time_increment']);
-							}
-						}
-
-						$auction['Auction']['success'] = true;
-						$auction['Bid']['description'] = $bid['Bid']['description'];
-						$auction['Bid']['user_id'] = $bid['Bid']['user_id'];
-
-						// lets add in the bid information for smartBids - we need this
-						$result['Bid'] = $bid['Bid'];
-					} else {
-						$message = __('You have no more bids in your account', true);
-					}
-				}
-
-				$result['Auction']['id']      = $auction['Auction']['id'];
-				$result['Auction']['message'] = $message;
-				$result['Auction']['element'] = 'auction_'.$auction['Auction']['id'];
-
-				if(!empty($this->appConfigurations['flashMessage'])){
-					$auction['Auction']['flash']   = $flash;
-
-					$auctionMessage = $this->Message->findByAuctionId($auction['Auction']['id']);
-					$auctionMessage['Message']['auction_id'] = $auction['Auction']['id'];
-					$auctionMessage['Message']['message']    = $flash;
-
-					if(empty($auctionMessage)){
-						$this->Message->create();
-					}
-					$this->Message->save($auctionMessage);
-				}
-
-				// now lets refund any bid credits not used before returning the data IF advanced mode is on
-				if($this->appConfigurations['bidButlerType'] == 'advanced') {
-		        	$this->Bid->refundBidButlers($auction['Auction']['id'], $auction['Auction']['price']);
-		        }
-
-				return $result;
-			} else {
-				return false;
-			}
 		}
 
 		/**
@@ -785,7 +468,7 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 			return $result[0]['TOTAL'];
 		}
 		
-		function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
+		/*function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
 			$args = func_get_args();
 			$uniqueCacheId = '';
 			foreach ($args as $arg) {
@@ -825,7 +508,7 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 				Cache::write('auction_paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'short');
 			}
 			return $paginationcount;
-		}
+		}*/
 		
 		
 	}

@@ -5,20 +5,14 @@
 
 		var $actsAs = array('Containable');
 
-		var $hasOne = array('Point');
+		//var $hasOne = array('Point');
 
 		var $hasMany = array(
-			'Address',
 			'Bid' => array(
 				'className'  => 'Bid',
 				'limit' => 10
 			),
-			'Bidbutler',
-			'Referral',
-			'Referred' => array(
-				'className'  => 'Referral',
-				'foreignKey' => 'referrer_id'
-			),
+			/*'Bidbutler',
 
 			'Auction' => array(
 				'className'  => 'Auction',
@@ -36,10 +30,10 @@
 				'className'  => 'Watchlist',
 				'foreignKey' => 'user_id',
 				'limit' => 10
-			),
+			),*/
 		);
 
-		var $belongsTo = array('Gender', 'Source');
+		//var $belongsTo = array('Gender', 'Source');
 
 		/**
 		 * Constructor, redefine to use __() in validate message
@@ -493,38 +487,6 @@
 			}
 
 			return true;
-		}
-		
-		function currentBalance($user_id){
-			$bid=$this->Bid->find('first', array(
-				'conditions' => array(
-					'user_id' => $user_id,
-					'winner_id' => $user_id
-				),
-				'fields'	 => array('SUM(Bid.debit) as TOTAL'),
-				'join'		=> array (
-					array(
-						'tale'=>'auctions',
-						'type'=>'inner',
-						'condition'=>array('auctions.id = bids.auction_id')
-					)
-				)
-			));
-			
-			$balance=$this->Auction->Product->find('first', array(
-				'conditions' => array('auctions.winner_id' => $user_id),
-				'fields'	 => array('SUM(Product.rrp)-SUM(auctions.price) as TOTAL'),
-				'group'	 	 => array('auctions.winner_id'),
-				'joins' => array(
-					array(
-						'table' => 'auctions',
-        				'type' => 'inner',
-        				'foreignKey' => false,
-        				'conditions'=> array('auctions.product_id = Product.id')
-					),
-				),
-			));
-			return $balance[0]['TOTAL']-15*$bid[0]['TOTAL'];
 		}
 	}
 	
