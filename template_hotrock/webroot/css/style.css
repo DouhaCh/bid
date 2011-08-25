@@ -180,8 +180,8 @@ a img{
 	width:200px;
 	height:350px;
 	background: url(../images/bg_bd.png) no-repeat top left;
-	float:right;
-	margin-left:36px;
+	float:left;
+	margin-right:36px;
 }
 #hotitem .bottomhot .item .top{
 	width:198px;
@@ -295,8 +295,6 @@ a img{
 	width:200px;
 	height:350px;
 	background: url(../images/bg_bd.png) no-repeat top left;
-	float:right;
-	margin-left:36px;
 }
 #hotitem .bottomhot .itemhetgio .tophetgio{
 	width:198px;
