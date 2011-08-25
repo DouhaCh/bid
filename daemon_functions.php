@@ -4,16 +4,21 @@ function bid($auction, $auto_bid = false, $bidbutler = null){
 		$user = $_SESSION['Auth']['User'];
 	}elseif(!empty($bidbutler['user_id'])){
 		$user = findUserById($bidbutler['user_id']);
-	}elseif(!empty($auto_bid['user_id'])){
-			
 	}else{
 		return "Người chơi không hợp lệ";
 	}
 
 	$checkBid = checkBid($user, $auction);
 	if(!empty($checkBid)) return $checkBid;
+	
+	$balance = getBalance($user['id']);
+	
+	if($balance < $auction['bp_cost']){
+		return "Tài khoản của bạn đã hết";
+	}
 
 	$data = array();
+	
 	// insert bid
 	$data['Bid'] = array();
 	$data['Bid']['user_id'] = $user['id'];
@@ -48,20 +53,22 @@ function bid($auction, $auto_bid = false, $bidbutler = null){
 	
 	mysql_query("UPDATE auctions SET price = ".$data['Auction']['price'].", leader_id = ".$data['Auction']['leader_id'].", end_time = '".$data['Auction']['end_time']."', modified = '".$data['Auction']['modified']."' WHERE id = ".$auction['id']);
 
-	// update bidbutler
+	/*// update bidbutler
 	if(!empty($bidbutler)){
 		$data['Bidbutler']['bids'] = $bidbutler['bids'] - $auction['bp_cost'];
 		$data['Bidbutler']['modified'] = time();
 		$data['Bidbutler']['closed'] = $bidbutler['bids'] < 2 * $auction['bp_cost'] ? 1 : 0;
 		$data['Bidbutler']['active'] = $bidbutler['bids'] < 2 * $auction['bp_cost'] ? 0 : 1;
 		$mysql_query("UPDATE `bidbutlers` SET `bids` = '".$data['Bidbutler']['bids']."', closed  = '".$data['Bidbutler']['closed']."', active = '".$data['Bidbutler']['active']."', modified = '".$data['Bidbutler']['modified']."' WHERE id = ".$bidbutler['id']);
-	}
+	}*/
+	
+	$bid = mysql_fetch_array(mysql_query("SELECT SUM(credit) - SUM(debit) AS balance FROM bids WHERE bids.user_id = ".mysql_escape_string($user['id'])), MYSQL_ASSOC);
 
-	echo "Bạn đã đặt thành công";
+	echo "Bạn đã đặt thành công::".$bid['balance'];
 }
 
 function getAuctionById($id){
-	$auction = mysql_fetch_array(mysql_query("SELECT auctions.*, users.username, users.avatar FROM auctions LEFT JOIN users ON auctions.leader_id = users.id WHERE auctions.id = ".$id), MYSQL_ASSOC);
+	$auction = mysql_fetch_array(mysql_query("SELECT auctions.*, users.username FROM auctions LEFT JOIN users ON auctions.leader_id = users.id WHERE auctions.id = ".mysql_escape_string($id)), MYSQL_ASSOC);
 	$auction['end_time'] = strtotime($auction['end_time']);
 	$auction['start_time'] = strtotime($auction['start_time']);
 	return $auction;
@@ -106,7 +113,7 @@ function checkBid($user, $auction){
 
 	// check active
 	if($user['active'] == 0){
-		return 'Tài khoản của bạn chưa kích hoạt hoặc bị ban bởi hệ thống';
+		return 'Tài khoản của bạn bị ban bởi hệ thống';
 	}
 
 	return;
@@ -217,4 +224,9 @@ function closeAuction($auction){
 				WHERE auction_id = '".$auction['id']."' 
 				AND active = 1");
 	echo "Close auction ".$auction['id'];
+}
+
+function getBalance($user_id){
+	$bid = mysql_fetch_array(mysql_query("SELECT SUM(credit) - SUM(debit) AS balance FROM bids WHERE user_id = ".mysql_escape_string($user_id)), MYSQL_ASSOC);
+	return $bid['balance'];
 }

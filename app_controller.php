@@ -201,62 +201,9 @@ class AppController extends Controller {
 
 	function beforeRender(){
 		parent::beforeRender();
-		
-		//App::import('model','User');
-		/*
-		$leaders=$this->User->find('all',array(
-			'order' => 'badges DESC',
-			'limit' => 10
-		));
-		$this->set('leaders',$leaders);
-		
-		App::import('model','Shout');
-		$shouts=$this->User->Shout->find('all',array(
-			'order' => 'Shout.id DESC',
-			'limit' => 10,
-			'contain' => 'User',
-		));
-		$this->set('shouts',$shouts);
-		*/
-		
-		//reminder
-		/*if($this->Auth->user()){
-			App::import('model','Notification');
-			$unreadNotifications=$this->User->Notification->find('all', array(
-				'order' => 'Notification.id DESC',
-				'limit' => 10,
-				'conditions' => array(
-					'Notification.user_id' => $this->Auth->user('id'),
-					'Notification.status' => '0'
-				),
-				'contain' => false,
-			));
-			$this->set('unreadNotifications', $unreadNotifications);
-			
-			App::import('model', 'Reminder');
-			$reminders=$this->User->Reminder->find('all', array(
-				'order' => 'Reminder.id DESC',
-				'limit' => 5,
-				'conditions' => array(
-					'Reminder.user_id' => $this->Auth->user('id'),
-					'Reminder.active' => '1'
-				),
-				'contain' => false,
-			));
-			$this->set('reminders', $reminders);
-		}*/
-		
-		//load top news
-		/*App::import('model','News');
-		$news = new News();
-		$topNews = $news->find('all', array('limit' => 5, 'order' => array('created' => 'desc')));
-		$this->set('topNews', $topNews);*/
-		
-		
+				
 		if ($this->Auth->user('id')) {
-		$this->set('bidBalance', $this->User->Bid->balance($this->Auth->user('id')));
-		$this->set('userImg',$this->Auth->user('avatar'));
-		$this->set('currentBalance',$this->User->currentBalance($this->Auth->user('id')));
+			$this->set('bidBalance', $this->User->Bid->balance($this->Auth->user('id')));
 		}
 		
 		if(empty($this->params['requested']) && empty($this->params['prefix'])) {
@@ -270,17 +217,6 @@ class AppController extends Controller {
 			$menuCategoriesCount = $auction->countAll(array('live', 'comingsoon', 'closed', 'free'));
 			$this->set(compact('menuCategories', 'menuCategoriesSelect', 'menuCategoriesCount'));
 		}
-			/*
-		
-		$ignores = array();
-		App::import('model','Auction');
-		$Auction = new Auction();
-		$auctions_ending=$Auction->getAuctions(array('Auction.end_time > '=>UsersController::getEndTime(), 
-					'Auction.active' => 1), 
-					4, 
-					'Auction.end_time ASC');
-		$this->set('auctions_ending',$auctions_ending);
-		$this->set('ignoreList',$ignores);*/
 		
 		// SCD mode
 		if (Configure::read('SCD') && Configure::read('SCD.isSCD')===true) {
@@ -851,7 +787,7 @@ class AppController extends Controller {
 	}
 	
 	function AuctionLinkFlat($id, $product_name) {
-		return '/dau-gia-xu/'.self::urlTitle($product_name.'-'.$id);
+		return '/dau-gia/'.self::urlTitle($product_name.'-'.$id);
 	}
 	
 	function CategoryLink($id, $category_name) {
