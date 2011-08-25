@@ -11,29 +11,10 @@
 			'Bid' => array(
 				'className'  => 'Bid',
 				'limit' => 10
-			),
-			/*'Bidbutler',
-
-			'Auction' => array(
-				'className'  => 'Auction',
-				'foreignKey' => 'winner_id',
-				'limit' => 10
-			),
-
-			'Credit' => array(
-				'className'  => 'Credit',
-				'foreignKey' => 'user_id',
-				'limit' => 10
-			),
-
-			'Watchlist' => array(
-				'className'  => 'Watchlist',
-				'foreignKey' => 'user_id',
-				'limit' => 10
-			),*/
+			)
 		);
 
-		//var $belongsTo = array('Gender', 'Source');
+		var $belongsTo = array('Gender');
 
 		/**
 		 * Constructor, redefine to use __() in validate message
@@ -153,37 +134,11 @@
 						'rule' => 'email',
 						'message' => __('The confirm email you entered is not valid.', true)
 					),
-					/*'minLength' => array(
-						'rule' => array('minLength', 1),
-						'message' => __('Confirm email is required.', true)
-					)*/
-				),
-				/*'referrer' => array(
-					'referrer' => array(
-						'rule' => array('referrer', 'referrer'),
-						'message' => __('The referrer username or email address you entered does not exist.', true)
-					)
-				),*/
-				'affiliate' => array(
-					'affiliate' => array(
-						'rule' => array('affiliate', 'affiliate'),
-						'message' => __('The referrer code you entered does not exist.', true)
-					)
-				),
-				/*'source_id' => array(
-					'rule' => array('sourceRequired'),
-					'message' => __('Source is required.', true)
-				),
-				'source_extra' => array(
-					'rule' => array('sourceNeedExtra'),
-					'message' => __('Site name is required.', true)
-				),
-				'terms' => array(
 					'minLength' => array(
 						'rule' => array('minLength', 1),
-						'message' => __('Please accept the terms and conditions.', true)
+						'message' => __('Confirm email is required.', true)
 					)
-				),*/
+				)
 			);
 		}
 
@@ -470,11 +425,6 @@
 			$this->save();				
 		}
 		
-		function dailyBP($des,$id,$amount,$type)
-		{
-			$newbid=array('Bid'=>array('user_id'=>$id,'description'=>$des,'credit'=>$amount,'type'=>$type)); 
-			$this->Bid->save($newbid);
-		}
 		function sourceNeedExtra($data){
 			if(!empty($this->data['User']['source_id'])){
 				$source = $this->Source->findById($this->data['User']['source_id']);

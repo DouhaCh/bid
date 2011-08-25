@@ -17,19 +17,13 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 				'className'  => 'Status',
 				'foreignKey' => 'status_id'
 			),
-			/*'Winner' => array(
-				'className'  => 'User',
-				'foreignKey' => 'winner_id'
-			),*/
 			'Leader' => array(
 				'className'  => 'User',
 				'foreignKey' => 'leader_id'
 			)
 		);
 
-		/*var $hasOne = array(
-			'Message', 'AuctionEmail', 'Testimonial'
-		);
+		var $hasOne = array('Testimonial');
 
 		var $hasMany = array(
 			'Bidbutler'  => array(
@@ -47,56 +41,7 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 				'dependent'  => true
 			),
 			
-			'Bet' => array(
-				'className'  => 'Bet',
-				'foreignKey' => 'auction_id',
-				'order'      => 'Bet.id DESC',
-				'limit'      => 10,
-				'dependent'  => true
-			),
-
-			'Autobid' => array(
-				'className'  => 'Autobid',
-				'foreignKey' => 'auction_id',
-				'limit'      => 10,
-				'dependent'  => true
-			),
-
-			'Smartbid' => array(
-				'className'  => 'Smartbid',
-				'foreignKey' => 'auction_id',
-				'limit'      => 10,
-				'dependent'  => true
-			),
-
-			'Credit' => array(
-				'className'  => 'Credit',
-				'foreignKey' => 'auction_id',
-				'limit'      => 10,
-				'dependent'  => true
-			),
-
-			'Watchlist' => array(
-				'className'  => 'Watchlist',
-				'foreignKey' => 'auction_id',
-				'limit' 	 => 10,
-				'dependent'  => true
-			),
-			
-			'Comment' => array(
-				'className'  => 'Comment',
-				'foreignKey' => 'auction_id',
-				'limit' 	 => 10,
-				'dependent'  => true
-			),
-			'Visitor' => array(
-				'className'  => 'Visitor',
-				'foreignKey' => 'auction_id',
-				'limit' 	 => 10,
-				'dependent'  => true
-			),
-			
-		);*/
+		);
 
 
 		/**
@@ -201,19 +146,7 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 			if($auction['Auction']['peak_only'] == 1 && !$isPeakNow) {
 				return false;
 			}
-
-			// now lets make sure the minimum price has been meet checking on the autobid limit too\
-			/*
-			if($auction['Product']['autobid'] == 1 && ($auction['Auction']['price'] < $auction['Auction']['minimum_price'])) {
-				if($auction['Product']['autobid_limit'] > 0) {
-					if($auction['Auction']['autobids'] <= $auction['Product']['autobid_limit']) {
-						return false;
-					}
-				} else {
-					return false;
-				}
-			}*/
-
+			
 			return true;
 		}
 
@@ -457,15 +390,6 @@ require_once('..' . DS .'controllers' . DS .'users_controller.php');
 			//we must be able to buy then
 			return true;
 			
-		}
-		
-		function userWonMoney($user_id){
-			$result=$this->Product->find('first', array(
-				'conditions' => array('Auction.winner_id' => $user_id),
-				'fields'	 => array('SUM(Product.rrp)-SUM(Auction.price) as TOTAL'),
-			));
-			
-			return $result[0]['TOTAL'];
 		}
 		
 		/*function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {

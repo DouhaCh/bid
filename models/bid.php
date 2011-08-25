@@ -14,20 +14,6 @@
 				'description' => array(
 					'rule' => array('minLength', 1),
 					'message' => __('Description is a required field.', true)
-				),
-				'total' => array(
-					'comparison' => array(
-						'rule'=> array('comparison', 'not equal', 0),
-						'message' => __('The total cannot be zero.', true)
-					),
-					'numeric' => array(
-						'rule'=> 'numeric',
-						'message' => __('The total can be a number only.', true)
-					),
-					'minLength' => array(
-						'rule' => array('minLength', 1),
-						'message' => __('Total is required.', true)
-					)
 				)
 			);
 		}
