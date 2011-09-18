@@ -1,125 +1,43 @@
-<script type='text/javascript'>
-	
-	$(document).ready(function(){
-		$('.rInput input').poshytip({
-			className: 'tip-darkgray',
-			showOn: 'focus',
-			alignTo: 'target',
-			alignX: 'right',
-			alignY: 'center',
-			offsetX: 10
-		});
-	});
+<div id="users-register">
+	<div id="left-content">
+		<div id="formregister">
+			<h4>Đăng kí tài khoản</h4>
+			<?php echo $form->create(array("action"=>"register"));?>
+				<?php echo $form->input("username", array("label" => "Tên đăng nhập:", "class"=>"ip"))?>
+				<?php echo $form->input("password", array("label" => "Mật khẩu:", "class"=>"ip"))?>
+				<?php echo $form->input("repassword", array("label" => "Xác nhận mật khẩu:", "class"=>"ip"))?>
+				<?php echo $form->input("mobile", array("label" => "Điện thoại", "class"=>"ip"))?>
+				<input type="checkbox" id="checkagree" name="checkagree" />
+				<label class="checkbox" for="checkagree"> Đồng ý chấp nhận
+					<span><a href="/">Quy định & Điều khoản</a></span>
+				</label><br /> <input type="submit" value="" id="submit-register" />
+			<?php echo $form->end();?>
+			</form>
+		</div>
+		<!--End Form-->
+	</div>
+	<!--End right-content-->
+	<div id="right-content">
+		<div id="nowplaying">
+			<h3>Đang Diễn Ra:</h3>
+			<table>
+				<tr id="title-table">
+					<td>Sản phẩm</td>
+					<td></td>
+					<td>Giá hiện tại</td>
+					<td>Thời gian</td>
 
-	$(document).ready(function(){
-		$('#UserRegisterForm').validate({
-			errorPlacement: function(error, element) {
-				error.appendTo(element.parent("dd").next("div"));
-			},
-			rules : {
-				"data[User][username]" : {
-					"required" : true,
-					"minlength" : 4,
-					"maxlength" : 50,
-					"alphaNumeric_" : true,
-					"remote" : {
-						"url" : "/validate.php?q=1",
-						"type" : "post"					
-					}
-				},
-				"data[User][before_password]" : {
-					"required" : true,
-					"rangelength" : [6, 20],
-				},
-				"data[User][retype_password]" : {
-					"required" : true,
-					"rangelength" : [6, 20],
-					"equalTo" : "#UserBeforePassword",
-				}
-			},
-			messages : {
-				"data[User][username]" : {
-					"required" : "Tên đăng nhập không được để trống",
-					"minlength" : "Tên đăng nhập phải nhiều hơn 4 kí tự",
-					"maxlength" : "Tên đăng nhập phải ít hơn 50 kí tự",
-					"remote" : "Tên đăng nhập đã tồn tại",
-					"alphaNumeric_" : "Tên đăng nhập chỉ gồm chữ cái, chữ số và dấu gạch dưới"	
-				},
-				"data[User][before_password]" : {
-					"required" : "Mật khẩu không được để trống",
-					"rangelength" : "Mật khẩu có độ dài từ 6 đến 20 kí tự",
-				},
-				"data[User][retype_password]" : {
-					"required" : "Xác nhận mật khẩu không được để trống",
-					"rangelength" : "Xác nhận mật khẩu phải có độ dài từ 6 đến 20 kí tự",
-					"equalTo" : "Xác nhận mật khẩu và mật khẩu phải giống nhau"
-				}
-			}
-		});
-	});
+				</tr>
+				<!-- Sản phẩm 1-->
+				<?php foreach ($auctions_running as $auction):?>
+				<?php echo $this->element('home_running_auction', array('auction' => $auction));?>
+				<?php endforeach;?>
+			</table>
+		</div>
+		<!--End bid-->
+	</div>
+	<!--Eng left-content-->
 
-	$(document).ready(function() {
-		$(".hint").hide();
-		
-		$('.userForm .text').focus(function(){
-			$(this).addClass('focus');
-			$(this).next(".hint").css('display','inline');
-		});
+	<div class="clear"></div>
 
-		$('.userForm .text').blur(function(){
-			$(this).removeClass('focus');
-			$(this).next(".hint").css('display','none');
-		});
-	});
-	
-</script>
-
-
-<div class="box clearfix">
-	
-	<?php echo $form->create(array('class'=>'userForm', 'action'=>'register'));?>
-		<fieldset>
-			<legend>Đăng ký tài khoản</legend>
-			<dl>
-  				<dt>
-    				<label for="username">Tên đăng nhập:</label>
-			  	</dt>
-			  	<dd>
-					<input type="text" class="text" id="UserUsername" value="<?php echo $this->data['User']['username']?>" maxlength="80" name="data[User][username]">
-			    	<span class="hint">
-			    		Tên đăng nhập chỉ được gồm chữ cái, chữ số và dấu gạch dưới
-			    		<span class="hint-pointer">&nbsp;</span>
-			    	</span>
-			  	</dd>
-			  	<div class="clearBoth">&nbsp;</div>
-			  	<dt>
-    				<label for="before_password">Mật khẩu:</label>
-			  	</dt>
-			  	<dd>
-					<input type="password" class="text" id="UserBeforePassword" value="<?php echo $this->data['User']['before_password']?>" maxlength="80" name="data[User][before_password]">
-			    	<span class="hint">
-			    		Mật khẩu chỉ được gồm chữ cái và chữ số, có độ dài từ 8 đến 20 kí tự
-			    		<span class="hint-pointer">&nbsp;</span>
-			    	</span>
-			  	</dd>
-			  	<div class="clearBoth">&nbsp;</div>
-			  	<dt>
-    				<label for="retype_password">Xác nhận mật khẩu:</label>
-			  	</dt>
-			  	<dd>
-					<input type="password" class="text" id="UserRetypePassword" value="<?php echo $this->data['User']['before_password']?>" maxlength="80" name="data[User][retype_password]">
-			    	<span class="hint">
-			    		Mật khẩu xác nhận phải trùng khớp với mật khẩu đã nhập ở trên
-			    		<span class="hint-pointer">&nbsp;</span>
-			    	</span>
-			  	</dd>
-			  	<div class="clearBoth">&nbsp;</div>
-			  	<dt>&nbsp;
-			  	</dt>
-			  	<dd>
-			  		<p>Bằng việc click vào nút Đăng ký dưới đây, bạn đã đọc và chấp nhận <a href="/page/quy-dinh-dieu-khoan"> Quy định & Điều khoản </a>. </p>
-					<input type="submit" class="submit" value="Đăng ký">
-			  	</dd>
-			</dl>
-		</fieldset>
-	</form>
+</div>
