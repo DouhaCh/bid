@@ -1,5 +1,5 @@
 <?php
-	Router::connect('/', array('controller' => 'auctions', 'action' => 'home'));
+	Router::connect('/', array('controller' => 'auctions', 'action' => 'index'));
 	
 	/* Admin Stuff */
 	Router::connect('/admin', array('controller' => 'dashboards', 'action' => 'index', 'admin' => true));
