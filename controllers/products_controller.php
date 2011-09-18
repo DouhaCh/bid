@@ -9,7 +9,7 @@ class ProductsController extends AppController {
 		$this->paginate = array('limit' => $this->appConfigurations['adminPageLimit'], 'order' => array('Product.title' => 'asc'));
 		$this->set('products', $this->paginate('Product'));
 
-		$this->set('languages', $this->Language->find('count'));
+		//$this->set('languages', $this->Language->find('count'));
 	}
 
 	function admin_auctions($id = null) {
