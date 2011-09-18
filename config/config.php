@@ -49,7 +49,7 @@
             'host'       => 'localhost',
             'login'      => 'root',
             'password'   => 'imissuak',
-            'database'   => 'penny', 
+            'database'   => '1bid', 
             'prefix'     => '',
             'encoding'	 => 'utf-8'
         ),
@@ -277,6 +277,220 @@
 // debugging of your database and output SQL commands.
 // Do NOT leave this setting enabled on live websites, always set back to '0' 
         'debug' => 2,
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+// 
+// For advanced tracking only
+// Do not edit these settings unless you are sure what you are doing
+	'GoogleTracking' => array(
+		'registration' => array(
+			'active' => false,
+			'id' => '',
+			'language' => '',
+			'format' => '',
+			'color' => '',
+			'label' => '',
+		),
+		'bidPurchase' => array(
+			'active' => false,
+			'id' => '',
+			'language' => '',
+			'format' => '',
+			'color' => '',
+			'label' => '',
+		)
+	),
+
+
+
+
+
+
+
+
+
+
+//
+// Custom Payment gateways
+// Add your own custom gateway here if you need to. 
+        'PaymentGateways' => array(
+            'Dotpay' => array(
+                'id'       => '',        // Merchant id
+                'currency' => 'USD',          // Currency
+                'lang'     => 'en',           // Can be pl, en, de, it, fr, es, cz, ru
+                'URL'      => 'http://www.',  // URL where the user will be redirected after payment succeded
+                'URLC'     => 'http://www.',  // URL where the confirmation will be called (IPN)
+            ),
+
+            'GoogleCheckout' => array(
+                'merchant_id' => '226042601717660',
+                'key'         => 'yEQdpbXBQHCzljKCSyWJ7A',
+                'currency'    => 'USD',
+                'local'       => 'en_US',
+                'charset'     => 'utf-8',
+                'sandbox'     => true
+            ),
+
+            'iDeal' => array(
+                'layout' => '5555551212'
+            ),
+
+            'AuthorizeNet' => array(
+                'login' => '6gYV7z22',
+                'key'   => '5ZxhtUM75h284M8h',
+                'test'  => true,
+                'url'   => 'https://test.authorize.net/gateway/transact.dll',// Test URL
+                //'url'   => 'https://secure.authorize.net/gateway/transact.dll',// Real Url
+            ),
+
+	    'DIBS' => array(
+	    	// Merchant identity
+	    	'merchant' => '',
+	    
+	    	// For currency check the CODE (number) on
+	    	// http://tech.dibs.dk/?id=2656 or
+	    	// http://en.wikipedia.org/wiki/ISO_4217 for complete ISO number
+	    	// ex: if you use USD, then put 840 here
+	    	'currency' => '',
+	    
+	    	// lang can be one of these da = Danish (default), sv = Swedish, no = Norwegian, en = English
+	    	// nl = Dutch, de = German, fr = French, fi = Finnish, es = Spanish, it = Italian, fo = Faroese
+	    	// pl = Polish
+	    	'lang' => 'en',
+	    
+	    	'test' => false // 'yes' or false
+	    ),
+
+            'custom' => array(
+            	'active' => false,
+            	'won_url' => 'http://www.custom.com?user_id=[user_id]&auction_id=[auction_id]&price=[price]'
+            )
+        ),
+
+
+
+
+
+
+
+
+
+
+		
+//
+// SMS gateways 
+// Allows SMS bidding through approved providers. Please refer to the 
+// documentation available if your package supports this.
+        'SmsGateways' => array(
+            // Main Configurations
+			'replyStatus' => false,
+
+
+            // Clickatell.com SMS Gateway
+            'Clickatell' => array(
+                'user' => '', // Clickatell user id
+                'password' => '', // Clickatell password id
+                'api_id' => '' // Clickatell api id
+            ),
+
+
+            // Aspiro SMS Gateway
+            'Aspiro' => array(
+                'username' => '', // Aspiro username
+				'password' => '',
+                'phone_country_code' => '',
+				'reply' => array(
+					'text'		         => "",
+                    'invalidAuctionText' => "Invalid Auction ID. Please try again.",
+					'country'	         => '',
+					'accessNumber'       => '',
+					'senderNumber'       => '',
+					'price'		         => ''
+				)
+            )
+        ),
+
+
+
+
+
+
+
+
+
+
+//
+// Recpatcha (Captcha/Turing Number) settings
+// These settings control the reCaptcha module on the Register page
+// to prevent automated/spammy registrations. You don't need to adjust these
+// settings and can just use the global key as standard
+        'Recaptcha' => array(
+            'enabled' => true,
+            'secure_server' => false,
+            'public_key' => '6LeK8wgAAAAAAIAf8adQkBEm5lwk5wgWRii4a9wE',
+            'private_key' => '6LeK8wgAAAAAAKaiZlLVLAwlHPtFmF6JLcWFCTCq'
+        ),
+        
+		
+		
+		
+		
+		
+		
+		
+
+//
+// Stats tracking
+// Advanced statistics for your website, including page views, sources of traffic and
+// much more. Needs to be enabled first by changing 'false' to 'true'. Viewable from your Admin
+// Panel once enabled.
+        'Stats'=>array(
+		'enabled'=>false,		//if set to false, stats logging is disabled. Reduces MySQL load
+		'log_admin'=>false,		//if set to true, administrator's actions will be logged
+        ),
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		
+// Twitter
+// Tweet this feature, allowing you to automatically Tweet auction data.
+// Firstly, sign up for an account at http://twitter.com, and place the information
+// for that account in the box below (username, password)
+        'Twitter'=>array(
+        	'enabled'=>false,		//set to false to shut off twitter integration
+        	'username'=>'phppennyauction',			//your twitter.com username
+        	'password'=>'',			//your twitter.com pasword
+        	'tweet'=>'#%PRODUCT% for just %START-PRICE% %LINK%',
+		
+		// Bit.ly / URL Shortening
+		// Within your Tweets, auto-append short URLs i.e., bit.ly/s8dJksm, to save on space. 
+		// Sign up for an API account at http://bit.ly, and place the information
+		// for that account in the box below
+        	'short_url'=>array(
+			'append_short_url'=>false,	
+			'short_url_provider'=>'bit.ly',	  // current option: bit.ly only, more soon!
+			'bitly'=>array(
+				'login'=>'login here',
+				'api_key'=>'key here'
+				),
+			)
+	),
         
     );
 ?>
