@@ -7,40 +7,43 @@ $(document).ready(function(){
     // Collecting auction data, the layer id and auction id
     $('.auction-item').each(function(){
         var auctionId    = $(this).attr('id');
-        var auctionTitle = $(this).attr('title');
+        var auctionTitle = $(this).attr('auction_id');
 
-        if($('#' + auctionId + ' .auction-time').length){
-        	
+        if($('#' + auctionId + ' .-auction-time').length){
             // collect the id for post data
             auctions.push(auctionTitle);
 
             // collect the object
             auctionObjects[auctionId]                           = $('#' + auctionId);
-            auctionObjects[auctionId]['bidder']					= $('#' + auctionId + " .auction-bidder");
-            auctionObjects[auctionId]['price']					= $('#' + auctionId + " .auction-price");
-            auctionObjects[auctionId]['time']					= $('#' + auctionId + " .auction-time");
-            auctionObjects[auctionId]['bid-1']					= $('#' + auctionId + ".auction-type-1 .auction-bid-link");
-            auctionObjects[auctionId]['bid-container-1']		= $('#' + auctionId + ".auction-type-1 .auction-bid-container");
+            auctionObjects[auctionId]['bidder']					= $('#' + auctionId + " .-auction-bidder");
+            auctionObjects[auctionId]['price']					= $('#' + auctionId + " .-auction-price");
+            auctionObjects[auctionId]['time']					= $('#' + auctionId + " .-auction-time");
         }
     });
 
     // additional object
-    var bidBalance = $('.bid-balance');
+    var bidBalance             = $('.bid-balance');
+    var getAuctionsUrl;
     var time = 0;
     var lastGetAuctionsTime = 0;
-    var getAuctionsUrl = '/live/auctions.php';
+
+    if($('.bid-histories').length){
+        getAuctionsUrl = '/live/auctions.php?histories=yes';
+    }else{
+        getAuctionsUrl = '/live/auctions.php';
+    }
 
     // Do the loop when auction available only
     if(auctions){
-        setInterval(function(){
-            $.ajax({
+    	(function getAuctionsLoop(){
+        	$.ajax({
                 url: getAuctionsUrl,
                 dataType: 'json',
                 type: 'POST',
-                data: "auctions=" + JSON.stringify(auctions),
+                data: "auctions=" + JSON.stringify(auctions.removeDuplicate()),
                 success: function(data){
             		if(lastGetAuctionsTime > data.ms) return;
-            		if(time < 1000) return;
+            		if(time < 10000) return;
             		lastGetAuctionsTime = data.ms;
             		var auctions = data.auctions;
             		var auction;
@@ -53,61 +56,61 @@ $(document).ready(function(){
             			
             			auctionObject['price'].html(auction.price);
             			auctionObject['bidder'].html(auction.username);
+            			//auctionObject['bid-bidder-avatar'].attr('src', auction.avatar);
             			if(auction.closed == "0"){
-            				var t = auction.end_time - time - 1;
-                			
-                			if(t>0){
-                				hour=Math.floor(t/3600);
-                				minute=Math.floor((t-3600*hour)/60);
-                				second=t%60;
-                				if(hour<10) hour='0'+hour;
-                				if(minute<10) minute='0'+minute;
-                				if(second<10) second='0'+second;
-                			}else{
-                				hour='00';
-                				minute='00';
-                				second='00';
-                			}
-                			
-                			auctionObject['time'].html(hour + " : " + minute + " : " + second);
-            			}else{
-            				if(auctionObject['bid-container-1'].html()){
-            					auctionObject['bid-container-1'].html("<a href=\"#\" class=\"auction-bid-ended\">Xem</a>");
-            					auctionObject['time'].html("00 : 00 : 00");
+            				if(time > 0){
+            					var t = auction.end_time - time;
+                    			
+                    			if(t>0){
+                    				hour=parseInt(t/3600);
+                    				minute=parseInt((t-3600*hour)/60);
+                    				second=t%60;
+                    				if(hour<10) hour='0'+hour;
+                    				if(minute<10) minute='0'+minute;
+                    				if(second<10) second='0'+second;
+                    			}else{
+                    				hour='00';
+                    				minute='00';
+                    				second='00';
+                    			}
+                    			
+                    			auctionObject['time'].html(hour + " : " + minute + " : " + second);
             				}
+            			}else{
             			}
             		}
                 }
             });
-        }, 500);
+        	
+        	setTimeout(function(){
+        		getAuctionsLoop();
+        	}, 1000);
+        })();
+        
+        (function getRemoteTimeLoop(){
+        	var gettime = '/live/time.php?' + new Date().getTime();
+        	$.ajax({
+        		url: gettime,
+        		timeout : 2000,
+        		success: function(data){
+        			time = data;
+        		}
+        	});
+        	
+        	setTimeout(function(){
+        		// increase time prevent gettime error
+            	time = parseInt(time, 10) + 1;
+        		getRemoteTimeLoop();
+        	}, 1000);
+        })();
     }
-    
-    setInterval(function(){
-    	time++;
-    }, 1000);
-    
-    (function getTime(){
-    	$.ajax({
-    		url : '/live/time.php',
-    		success : function(data){
-    			time = data;
-    		}
-    	});
-    	
-    	setTimeout(getTime, 5000);
-    })();
 
     // Function for bidding
-    $('.auction-bid-link').click(function(){
+    $('.-auction-bid').click(function(){
         $.ajax({
-            url: "/live/bid.php?auction_id=" + $(this).attr('href'),
-            success: function(msg){
-            	var parts = msg.split("::");
-            	$.jGrowl(parts[0]);
-            	
-            	if(parts[1]){
-            		bidBalance.html(parts[1]);
-            	}
+            url: "/live/bid.php?auction_id=" + $(this).attr('auction_id'),
+            success: function(data){
+            	$.jGrowl(data);
             }
         });
 

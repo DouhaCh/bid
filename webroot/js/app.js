@@ -72,7 +72,7 @@ $(document).ready(function(){
 	$('#s3slider').s3Slider({ 
 		timeOut: 4000 
 	});
-});*/
+});
 
 $(document).ready(function(){
 	$('ul.sf-menu').superfish({
@@ -86,6 +86,7 @@ $(document).ready(function(){
 		dropShadows : true
 	});
 });
+*/
 
 (function(){
 	Array.prototype.removeDuplicate = function removeDuplicate(){
