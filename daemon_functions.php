@@ -4,21 +4,16 @@ function bid($auction, $auto_bid = false, $bidbutler = null){
 		$user = $_SESSION['Auth']['User'];
 	}elseif(!empty($bidbutler['user_id'])){
 		$user = findUserById($bidbutler['user_id']);
+	}elseif(!empty($auto_bid['user_id'])){
+			
 	}else{
-		return "Người chơi không hợp lệ";
+		return "Bạn phải đăng nhập để tham gia đấu giá";
 	}
 
 	$checkBid = checkBid($user, $auction);
 	if(!empty($checkBid)) return $checkBid;
-	
-	$balance = getBalance($user['id']);
-	
-	if($balance < $auction['bp_cost']){
-		return "Tài khoản của bạn đã hết";
-	}
 
 	$data = array();
-	
 	// insert bid
 	$data['Bid'] = array();
 	$data['Bid']['user_id'] = $user['id'];
@@ -53,7 +48,7 @@ function bid($auction, $auto_bid = false, $bidbutler = null){
 	
 	mysql_query("UPDATE auctions SET price = ".$data['Auction']['price'].", leader_id = ".$data['Auction']['leader_id'].", end_time = '".$data['Auction']['end_time']."', modified = '".$data['Auction']['modified']."' WHERE id = ".$auction['id']);
 
-	/*// update bidbutler
+	// update bidbutler
 	if(!empty($bidbutler)){
 		$data['Bidbutler']['bids'] = $bidbutler['bids'] - $auction['bp_cost'];
 		$data['Bidbutler']['modified'] = time();
@@ -63,7 +58,6 @@ function bid($auction, $auto_bid = false, $bidbutler = null){
 	}*/
 	
 	$bid = mysql_fetch_array(mysql_query("SELECT SUM(credit) - SUM(debit) AS balance FROM bids WHERE bids.user_id = ".mysql_escape_string($user['id'])), MYSQL_ASSOC);
-
 	echo "Bạn đã đặt thành công::".$bid['balance'];
 }
 
