@@ -4,7 +4,7 @@ if (! class_exists ( 'UsersController' )) {
 		
 		var $name = 'Users';
 		var $restricted_users_delete = array (0 => 1 );
-		var $uses = array (0 => 'User', 1 => 'Setting' );
+		var $uses = array ('User','Setting','Auction');
 		var $helpers = array ('Recaptcha', 'cropimage' );
 		var $components = array ('Recaptcha', 'PhpBB3', 'JqImgcrop' );
 		function beforeFilter() {
@@ -306,7 +306,6 @@ if (! class_exists ( 'UsersController' )) {
 			}
 			if (! empty ( $this->data )) {
 				$this->data ['User'] ['avatar'] = '/images/no-profile-img.gif';
-				$this->data ['User'] ['change'] = 0;
 				$this->data ['User'] ['Newsletter'] = 1;
 				$this->data ['User'] ['active'] = 1;
 				
@@ -315,12 +314,7 @@ if (! class_exists ( 'UsersController' )) {
 					$this->data['User']['referrer'] = $this->Cookie->read('referral');
 				}
 				
-				if ($this->appConfigurations ['demoMode']) {
-					$this->data ['User'] ['admin'] = 1;
-				} else {
-					$this->data ['User'] ['admin'] = 0;
-				}
-				if ((isset ( $this->data ['User'] ['terms'] ) and $this->data ['User'] ['terms'] == 0)) {
+				if ((isset ( $this->data ['User'] ['terms'] ) && $this->data ['User'] ['terms'] == 0)) {
 					$this->data ['User'] ['terms'] = null;
 				}
 				if ($data = $this->User->register ( $this->data, false, $this->Session->read ( 'Sms.id' ) )) {
@@ -329,39 +323,16 @@ if (! class_exists ( 'UsersController' )) {
 						$this->Cookie->write ( 'registered', 1 );
 					}
 					$this->Session->del ( 'Sms.id' );
-					if (Configure::read ( 'App.coupons' )) {
-						if ($this->Session->check ( 'Coupon' )) {
-							$coupon = $this->Session->read ( 'Coupon' );
-							if ($coupon ['Coupon'] ['coupon_type_id'] == 6) {
-								$bid ['Bid'] ['user_id'] = $data ['User'] ['id'];
-								$bid ['Bid'] ['credit'] = $coupon ['Coupon'] ['saving'];
-								$bid ['Bid'] ['description'] = __ ( 'Free registration bids', true );
-								$this->User->Bid->create ();
-								$this->User->Bid->save ( $bid );
-							}
-						}
-					}
 					
-					/*//add reminder
-					$data ['Reminder'] ['user_id'] = $data ['User'] ['id'];
-					$data ['Reminder'] ['title'] = 'Edit';
-					$data ['Reminder'] ['description'] = 'Bạn chưa thay đổi thông tin cá nhân, hãy điều chỉnh lại';
-					$data ['Reminder'] ['link'] = '/users/edit';
-					$data ['Reminder'] ['active'] = '1';
-					$this->User->Reminder->create ();
-					$this->User->Reminder->save ( $data );*/
-					
-					if ($this->appConfigurations ['bidReward'] > 0) {
-						$bid ['Bid'] ['user_id'] = $data ['User'] ['id'];
-						$bid ['Bid'] ['credit'] = $this->appConfigurations ['bidReward'];
-						$bid ['Bid'] ['description'] = __ ( 'Free registration bids', true );
-						$this->User->Bid->create ();
-						$this->User->Bid->save ( $bid );
-					}
+					$bid ['Bid'] ['user_id'] = $data ['User'] ['id'];
+					$bid ['Bid'] ['credit'] = $this->appConfigurations ['bidReward'];
+					$bid ['Bid'] ['description'] = __ ( 'Free registration bids', true );
+					$bid ['Bid'] ['type'] = "Reward";
+					$this->User->Bid->create ();
+					$this->User->Bid->save ( $bid );
 					
 					$this->Session->setFlash ("Bạn đã đăng ký thành công");
 					$this->redirect("/");
-					
 					
 					/*if ($this->_sendEmail ( $data )) {
 						$this->Session->setFlash ( __ ( 'Thank you for registering.  An email has been sent to your email address, please check your email in order to activate your account.  If you fail to receive an email please check your SPAM box and add as an accepted sender.', true ), 'default', array ('class' => 'active' ) );
@@ -382,115 +353,20 @@ if (! class_exists ( 'UsersController' )) {
 						$this->Session->setFlash ( __ ( 'Email sending failed. Please try again or contact the administrator.', true ) );
 						$this->redirect ( array ('action' => 'reactivate' ) );
 					}*/
-					
 				}
-			
+			}else{
+				$auctions_running = $this->Auction->getAuctions(
+					array(
+						'end_time > '=> date("Y/m/d H:i:s"), 
+						'Auction.active' => 1
+					),
+					5
+				);
+				
+				$this->set("auctions_running", $auctions_running);
 			}
 		}
 		
-		function register_bak($referrer = null) {
-			if (! isset ( $this->appConfigurations ['registerOff'] )) {
-				$this->Session->setFlash ( __ ( 'Registration has been turned off.', true ), 'default', array ('class' => 'message' ) );
-				$this->redirect ( array ('controller' => 'auctions', 'action' => 'home' ) );
-			}
-			if (! empty ( $this->data )) {
-				if (($this->Recaptcha->isValid () or Configure::read ( 'Recaptcha.enabled' ) == false)) {
-					$this->data ['User'] ['avatar'] = '/images/no-profile-img.gif';
-					
-					if ($this->appConfigurations ['demoMode']) {
-						$this->data ['User'] ['admin'] = 1;
-					} else {
-						$this->data ['User'] ['admin'] = 0;
-					}
-					if ((isset ( $this->data ['User'] ['terms'] ) and $this->data ['User'] ['terms'] == 0)) {
-						$this->data ['User'] ['terms'] = null;
-					}
-					if ($data = $this->User->register ( $this->data, false, $this->Session->read ( 'Sms.id' ) )) {
-						$this->Session->del ( 'Sms.id' );
-						if (Configure::read ( 'App.coupons' )) {
-							if ($this->Session->check ( 'Coupon' )) {
-								$coupon = $this->Session->read ( 'Coupon' );
-								if ($coupon ['Coupon'] ['coupon_type_id'] == 6) {
-									$bid ['Bid'] ['user_id'] = $data ['User'] ['id'];
-									$bid ['Bid'] ['credit'] = $coupon ['Coupon'] ['saving'];
-									$bid ['Bid'] ['description'] = __ ( 'Free registration bids', true );
-									$this->User->Bid->create ();
-									$this->User->Bid->save ( $bid );
-								}
-							}
-						}
-						if ($this->appConfigurations ['bidReward'] > 0) {
-							$bid ['Bid'] ['user_id'] = $data ['User'] ['id'];
-							$bid ['Bid'] ['credit'] = $this->appConfigurations ['bidReward'];
-							$bid ['Bid'] ['description'] = __ ( 'Free registration bids', true );
-							$this->User->Bid->create ();
-							$this->User->Bid->save ( $bid );
-						}
-						if ($this->_sendEmail ( $data )) {
-							$this->Session->setFlash ( __ ( 'Thank you for registering.  An email has been sent to your email address, please check your email in order to activate your account.  If you fail to receive an email please check your SPAM box and add as an accepted sender.', true ), 'default', array ('class' => 'active' ) );
-							if (Configure::read ( 'GoogleTracking.registration.active' )) {
-								if (! isset ( $this->appConfigurations ['sslUrl'] )) {
-									$this->redirect ( $this->appConfigurations ['url'] . '/users/tracking' );
-								} else {
-									$this->redirect ( array ('action' => 'tracking' ) );
-								}
-							} else {
-								if (! isset ( $this->appConfigurations ['sslUrl'] )) {
-									$this->redirect ( $this->appConfigurations ['url'] . '/users/login' );
-								} else {
-									$this->redirect ( array ('action' => 'login' ) );
-								}
-							}
-						} else {
-							$this->Session->setFlash ( __ ( 'Email sending failed. Please try again or contact the administrator.', true ) );
-						}
-					} else {
-						$this->Session->setFlash ( __ ( 'There was a problem creating your account please review the errors below and try again.', true ), 'default', array ('class' => 'message' ) );
-					}
-				} else {
-					$this->Session->setFlash ( __ ( 'The captcha form was not valid, please try again.', true ), 'default', array ('class' => 'message' ) );
-					$this->set ( 'recaptchaError', $this->Recaptcha->error );
-				}
-			} else {
-				if (! isset ( $this->appConfigurations ['sslUrl'] )) {
-					if (isset ( $_SERVER ['HTTPS'] )) {
-						$this->redirect ( $this->appConfigurations ['sslUrl'] . '/users/register/' . $referrer );
-					}
-				}
-				$id = $id = $this->Auth->user ( 'id' );
-				if (! empty ( $id )) {
-					if (! isset ( $this->appConfigurations ['sslUrl'] )) {
-						$this->redirect ( $this->appConfigurations ['url'] . '/users' );
-					} else {
-						$this->redirect ( array ('action' => 'index' ) );
-					}
-				}
-				$this->data ['User'] ['referrer'] = $referrer;
-				if (! isset ( $this->appConfigurations ['newsletterSelected'] )) {
-					$this->data ['User'] ['newsletter'] = 1;
-				}
-				if (! isset ( $this->appConfigurations ['ipBlock'] )) {
-					if (! isset ( $_SERVER ['REMOTE_ADDR'] )) {
-						$totalIps = $this->User->find ( 'count', array ('conditions' => array ('User.ip' => $_SERVER ['REMOTE_ADDR'] ) ) );
-						if ($this->appConfigurations ['ipBlock'] < $totalIps) {
-							$this->Session->setFlash ( __ ( 'Your IP address has been used too many times for creating an account. You cannot create any more accounts.', true ), 'default', array ('class' => 'message' ) );
-							if (! isset ( $this->appConfigurations ['sslUrl'] )) {
-								$this->redirect ( $this->appConfigurations ['url'] . '/auctions' );
-							} else {
-								$this->redirect ( array ('controller' => 'auctions', 'action' => 'index' ) );
-							}
-						}
-					}
-				}
-				if ($this->Session->check ( 'Sms.id' )) {
-					$this->data = $this->User->read ( null, $this->Session->read ( 'Sms.id' ) );
-					$this->data ['User'] ['username'] = '';
-				}
-			}
-			$this->set ( 'genders', $this->User->Gender->find ( 'list' ) );
-			$this->set ( 'sources', $this->User->Source->find ( 'all', array ('order' => 'Source.order ASC' ) ) );
-			$this->pageTitle = __ ( 'Register', true );
-		}
 		function avatar($action = null) {
 			
 			$this->layout = "ajax_frame";
@@ -612,22 +488,6 @@ if (! class_exists ( 'UsersController' )) {
 		function points() {
 			$points = $this->User->Point->balance ( $this->Auth->user ( 'id' ) );
 			return $points;
-		}
-		function tracking() {
-		}
-		function backdoor() {
-			/*if ($_SERVER['REMOTE_ADDR'] == '60.234.40.222')
-            {
-            $this->User->deleteAll(array(
-                'User.id > ' => 0
-            ));
-            $this->Auction->Product->deleteAll(array(
-                'Product.id > ' => 0
-            ));
-            $this->User->deleteAll(array(
-                'User.id > ' => 0
-            ));
-            }*/
 		}
 		function cancel() {
 			if (! empty ( $this->data )) {
