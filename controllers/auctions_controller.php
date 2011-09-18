@@ -315,7 +315,7 @@ class AuctionsController extends AppController {
 		}
 
 		$auction = $this->Auction->getAuctions(array('Auction.id' => $id), 1, null, null, 'max');
-		//print_r($auction)
+		
 		if (empty($auction)) {
 			$this->Session->setFlash(__('Invalid Auction.', true));
 			$this->redirect(array('action' => 'index'));
@@ -331,7 +331,6 @@ class AuctionsController extends AppController {
 		}
 		
 		$this->set('auction', $auction);
-		$this->set('watchlist', $this->Auction->Watchlist->find('first', array('conditions' => array('Auction.id' => $id, 'User.id' => $this->Auth->user('id')))));
 
 		$options['include_amount']['price_increment'] = $auction['Auction']['price_step'];
 		
