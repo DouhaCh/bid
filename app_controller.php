@@ -2,7 +2,7 @@
 class AppController extends Controller {
     var $helpers = array('Html', 'Form', 'Time', 'Number', 'Javascript', 'Cache', 'Text');
     var $components = array('Auth', 'Mailer', 'Cookie', 'RequestHandler', 'Paypal');
-    var $uses = array('Setting', 'Currency', 'Language', 'User');
+    var $uses = array('User');
     var $view = 'Theme';
 
     var $appConfigurations;
@@ -34,48 +34,10 @@ class AppController extends Controller {
 	$this->RequestHandler->setContent('json', 'text/x-json');	
 	$this->set('appConfigurations', $this->appConfigurations);
 	
-	//see if we need to invoke stats logger
-	/*if (Configure::read('Stats') && Configure::read('Stats.enabled')===true) {
-		
-		if (preg_match('@^(/daemons|/dwinner|/dcleaner)@Ui', $this->here)) {
-			//don't log daemon calls
-		} elseif (Configure::read('Stats.log_admin')==false && $this->Auth->user('admin')) {
-			//don't log admin
-			
-		} else {
-			//good to log
-			
-			App::import('Vendor', 'phptraffica/write_logs');
-			log_phpTA(array(	'site_id'=>836796,
-						'db_server'=>Configure::read('Database.host'),
-						'db_user'=>Configure::read('Database.login'),
-						'db_password'=>Configure::read('Database.password'),
-						'db_database'=>Configure::read('Database.database'),
-						
-						));
-		}
-	}*/
-	
-	
-	/*// lets check to see if there is a lang other than the default set
-	$lang = $this->Language->find('first', array('conditions' => array('Language.server_name' => $_SERVER['SERVER_NAME'], 'default' => 0), 'contain' => ''));
-	Configure::write('Lang.id', $lang['Language']['id']);*/
-	
 	// Set the theme if it exists
 	if(!empty($this->appConfigurations['theme'])) {
 	    $this->theme = $this->appConfigurations['theme'];
 	}
-	
-	// lets set the currencyRate
-	/*$currency = strtolower($this->appConfigurations['currency']);
-	$rate     = Cache::read('currency_'.$currency.'_rate');
-	if(empty($rate)){
-		$currencyRate = $this->Currency->find('first', array('fields' => 'rate', 'conditions' => array('Currency.currency' => $currency)));
-		if(!empty($currencyRate)){
-			Cache::write('currency_'.$currency.'_rate', $currencyRate['Currency']['rate']);
-		}
-	}
-	$this->set('rate', $rate);*/
 	
 	// Change the layout to admin if the prefix is admin
 	if (isset($this->params['prefix']) && $this->params['prefix'] == 'admin') {
@@ -201,9 +163,26 @@ class AppController extends Controller {
 
 	function beforeRender(){
 		parent::beforeRender();
-				
+		
+		//load random Testimonial
+		App::import('model','Testimonial');
+		$testimonial = $this->User->Testimonial->find('first', array('conditions' => array('Testimonial.active' => 1),
+																	  'order' => 'rand()',
+																	  'fields' => array('Testimonial.img', 'Testimonial.content', 'Testimonial.id', 'Testimonial.auction_id', 'User.username' ),
+										   							  'contain' => array('User', 'Auction' => array('fields' => array('id','price','product_id'),
+										   							  												'Product.title'))));
+		$this->set('random_testimonial', $testimonial);
+		
+		//load top news
+		/*App::import('model','News');
+		$news = new News();
+		$topNews = $news->find('all', array('limit' => 5, 'order' => array('created' => 'desc')));
+		$this->set('topNews', $topNews);*/
+		
 		if ($this->Auth->user('id')) {
-			$this->set('bidBalance', $this->User->Bid->balance($this->Auth->user('id')));
+		$this->set('bidBalance', $this->User->Bid->balance($this->Auth->user('id')));
+		$this->set('userImg',$this->Auth->user('avatar'));
+		$this->set('currentBalance',$this->User->currentBalance($this->Auth->user('id')));
 		}
 		
 		if(empty($this->params['requested']) && empty($this->params['prefix'])) {
@@ -237,87 +216,6 @@ class AppController extends Controller {
 
         return true;
     }
-
-    /**
-     * Function to check if now peak or not
-     *
-     * @return int One if true, zero otherwise
-     */
-    function isPeakNow($returnDates = false) {
-		$this->layout = 'js/ajax';
-
-		if($returnDates == false) {
-			$isPeakNow = Cache::read('peak');
-		} else {
-			$isPeakNow = null;
-		}
-
-		if(strlen($isPeakNow) == 0) {
-			$data = array();
-			$isPeakNow = 0;
-
-	        $data['auction_peak_start'] = $this->Setting->get('auction_peak_start');
-	        $data['auction_peak_end'] = $this->Setting->get('auction_peak_end');
-
-			$auction_peak_start_time = explode(':', $data['auction_peak_start']);
-			$auction_peak_end_time   = explode(':', $data['auction_peak_end']);
-
-			$peak_start_hour   = $auction_peak_start_time[0];
-			$peak_start_minute = $auction_peak_start_time[1];
-
-			$peak_end_hour   = $auction_peak_end_time[0];
-			$peak_end_minute = $auction_peak_end_time[1];
-
-			$peak_length = $peak_end_hour - $peak_start_hour;
-
-			if($peak_length <= 0) {
-				$peak_start = date('Y-m-d') . ' ' . $data['auction_peak_start'] . ':00';
-				$peak_end   = date('Y-m-d', time() + 86400) . ' ' . $data['auction_peak_end'] . ':00';
-			} else {
-				$peak_start = date('Y-m-d') . ' ' . $data['auction_peak_start'] . ':00';
-				$peak_end   = date('Y-m-d') . ' ' . $data['auction_peak_end'] . ':00';
-			}
-
-			// 19/02/2009 - Michael - lets do some adjustments on the peak times
-			if($peak_end > date('Y-m-d H:i:s', time() + 86400)) {
-				$peak_end   = date('Y-m-d') . ' ' . $data['auction_peak_end'] . ':00';
-			}
-
-			if($peak_start > date('Y-m-d H:i:s')) {
-				$peak_start   = date('Y-m-d', time() - 86400) . ' ' . $data['auction_peak_start'] . ':00';
-			}
-			if($peak_start < date('Y-m-d H:i:s', time() - 86400)) {
-				$peak_start   = date('Y-m-d') . ' ' . $data['auction_peak_start'] . ':00';
-			}
-			// peak start and end time should never be more than 24 hours apart
-			if(strtotime($peak_end) - strtotime($peak_start) > 86400) {
-				// lets adjust peak end back to where it should be
-				$peak_end   = date('Y-m-d') . ' ' . $data['auction_peak_end'] . ':00';
-			}
-
-			// lets check to see if the different is STILL more than 24 hours
-			if(strtotime($peak_end) - strtotime($peak_start) > 86400) {
-				// lets adjust peak end back to where it should be - back 1 day
-				$peak_end   = date('Y-m-d H:i:s', strtotime($peak_end) - 86400);
-			}
-
-			if($returnDates == true) {
-				$data['peak_end']   = $peak_end;
-				$data['peak_start'] = $peak_start;
-				return $data;
-			}
-
-			$now = time();
-
-			if($now > strtotime($peak_start) && $now < strtotime($peak_end)) {
-				$isPeakNow = 1;
-			}
-
-			Cache::write('peak', $isPeakNow, '+1 minute');
-		}
-
-		return $isPeakNow;
-	}
 
     /**
      * Function to send email
