@@ -2,16 +2,15 @@ $(document).ready(function(){
 
     // Variable to hold auction data
     var auctions = [];
-    var auctionObjects = new Array();
+    var auctionObjects = {};
 
     // Collecting auction data, the layer id and auction id
     $('.auction-item').each(function(){
         var auctionId    = $(this).attr('id');
-        var auctionTitle = $(this).attr('auction_id');
 
         if($('#' + auctionId + ' .-auction-time').length){
             // collect the id for post data
-            auctions.push(auctionTitle);
+            auctions.push($(this).attr('auction_id'));
 
             // collect the object
             auctionObjects[auctionId]                           = $('#' + auctionId);
@@ -22,7 +21,7 @@ $(document).ready(function(){
     });
 
     // additional object
-    var bidBalance             = $('.bid-balance');
+    var bidBalance = $('.bid-balance');
     var getAuctionsUrl;
     var time = 0;
     var lastGetAuctionsTime = 0;
@@ -35,12 +34,13 @@ $(document).ready(function(){
 
     // Do the loop when auction available only
     if(auctions){
+    	console.log(auctions);
     	(function getAuctionsLoop(){
         	$.ajax({
                 url: getAuctionsUrl,
                 dataType: 'json',
                 type: 'POST',
-                data: "auctions=" + JSON.stringify(auctions.removeDuplicate()),
+                data: "auctions=" + JSON.stringify(auctions),
                 success: function(data){
             		if(lastGetAuctionsTime > data.ms) return;
             		if(time < 10000) return;
@@ -74,9 +74,12 @@ $(document).ready(function(){
                     				second='00';
                     			}
                     			
-                    			auctionObject['time'].html(hour + " : " + minute + " : " + second);
+                    			auctionObject['time'].html(
+                    				"<span>" + hour + "</span> <span>" + minute + "</span> <span>" + second + "</span>"
+                    			);
             				}
             			}else{
+            				auctionObject.removeClass("bid-panel-active").addClass("bid-panel");
             			}
             		}
                 }
@@ -91,7 +94,7 @@ $(document).ready(function(){
         	var gettime = '/live/time.php?' + new Date().getTime();
         	$.ajax({
         		url: gettime,
-        		timeout : 2000,
+        		timeout : 1000,
         		success: function(data){
         			time = data;
         		}
@@ -110,7 +113,11 @@ $(document).ready(function(){
         $.ajax({
             url: "/live/bid.php?auction_id=" + $(this).attr('auction_id'),
             success: function(data){
-            	$.jGrowl(data);
+            	var parts = data.split("::");
+            	$.jGrowl(parts[0]);
+            	if(parts[1] !== undefined){
+            		bidBalance.html(parts[1]);
+            	}
             }
         });
 
