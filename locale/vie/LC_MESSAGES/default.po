@@ -8067,3 +8067,6 @@ msgstr "Tổng"
 
 msgid "Order status/Actions"
 msgstr "Trạng thái"
+
+msgid "Bp Cost"
+msgstr "Giá bid"
