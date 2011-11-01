@@ -5,7 +5,6 @@ echo $this->element('admin/crumb');
 ?>
 
 <h2><?php __('Users');?></h2>
-<blockquote><p>Below is a list of your website's users. From here you can reward users with points as well as view their signup information and bid history.</p></blockquote>
 <div class="actions">
 	<ul>
 		<li><?php echo $html->link(__('Create a new user', true), array('action' => 'add')); ?></li>
@@ -32,16 +31,9 @@ echo $this->element('admin/crumb');
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('username');?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
-	<th><?php echo $paginator->sort('first_name');?></th>
-	<th><?php echo $paginator->sort('last_name');?></th>
 	<th><?php echo $paginator->sort('email');?></th>
-	<th><?php echo $paginator->sort('ip');?></th>
-	<th><?php echo $paginator->sort('newsletter');?></th>
-	<th><?php echo $paginator->sort('gender_id');?></th>
-	<th><?php echo $paginator->sort(__('DOB', true), 'date_of_birth');?></th>
-	<th><?php echo $paginator->sort(__('Source', true), 'source.name');?></th>
-	<th><?php echo $paginator->sort('Active');?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
-	<th><?php echo $paginator->sort('Created');?></th>
+	<th><?php echo $paginator->sort("Hoạt động", "User.active");?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
+	<th><?php echo $paginator->sort("Ngày tạo", "User.created");?></th>
 	<th class="actions"><?php __('Options');?></th>
 </tr>
 <?php
@@ -54,27 +46,7 @@ foreach ($users as $user):
 ?>
 	<tr<?php echo $class;?>>
 		<td><?php echo $user['User']['username']; ?></td>
-		<td><?php echo $user['User']['first_name']; ?></td>
-		<td><?php echo $user['User']['last_name']; ?></td>
 		<td><a href="mailto:<?php echo $user['User']['email']; ?>"><?php echo $user['User']['email']; ?></a></td>
-		<td>
-			<?php if(!empty($user['User']['ip'])):?>
-				<?php echo $html->link($user['User']['ip'], 'http://centralops.net/co/DomainDossier.aspx?addr='.$user['User']['ip'].'&dom_whois=true&net_whois=true', array('target' => '_blank')); ?>
-			<?php else:?>
-				<?php __('Not Available');?>
-			<?php endif;?>
-		</td>
-		<td><?php if($user['User']['newsletter'] == 1) : ?>Yes<?php else: ?>No<?php endif; ?></td>
-		<td><?php echo $user['Gender']['name']; ?></td>
-		<td><?php echo $time->format('d-m-Y', $user['User']['date_of_birth']); ?></td>
-		<td>
-			<?php if(!empty($user['Source']['name'])): ?>
-				<?php echo $user['Source']['name']; ?>
-				<?php if(!empty($user['User']['source_extra'])): ?>
-					(<?php echo $user['User']['source_extra']; ?>)
-				<?php endif; ?>
-			<?php endif; ?>
-		</td>
 		<td><?php if($user['User']['active'] == 1) : ?>Yes<?php else: ?>No<?php endif; ?></td>
 		<td><?php echo $user['User']['created']; ?></td>
 		<td class="actions">
@@ -90,31 +62,8 @@ foreach ($users as $user):
 				/ <?php echo $html->link(__('Bid Butlers', true), array('controller' => 'bidbutlers', 'action' => 'user', $user['User']['id'])); ?>
 			<?php endif; ?>
 			<?php if(!empty($user['Auction'])) : ?>
-				/ <?php echo $html->link(__('Won Auctions', true), array('controller' => 'auctions', 'action' => 'user', $user['User']['id'])); ?>
+				/ <?php echo $html->link("Đã chiến thắng", array('controller' => 'auctions', 'action' => 'user', $user['User']['id'])); ?>
 			<?php endif; ?>
-			<?php if(!empty($user['Account'])) : ?>
-				/ <?php echo $html->link(__('Account', true), array('controller' => 'accounts', 'action' => 'user', $user['User']['id'])); ?>
-			<?php endif; ?>
-			<?php if(!empty($appConfigurations['limits']['active'])) : ?>
-				/ <?php echo $html->link(__('Limits', true), array('controller' => 'limits', 'action' => 'user', $user['User']['id'])); ?>
-			<?php endif; ?>
-			<?php if(!empty($user['Referred'])) : ?>
-				/ <?php echo $html->link(__('Referred Users', true), array('controller' => 'referrals', 'action' => 'user', $user['User']['id'])); ?>
-			<?php endif; ?>
-			<?php if(!empty($user['AffiliateCode'])) : ?>
-				/ <?php echo $html->link(__('Affiliate Account', true), array('controller' => 'affiliates', 'action' => 'user', $user['User']['id'])); ?>
-			<?php endif; ?>
-			
-			<?php if(!empty($appConfigurations['credits']['active'])) : ?>
-				<?php if(!empty($user['Credit'])) : ?>
-					/ <?php echo $html->link(__('Credits', true), array('controller' => 'credits', 'action' => 'user', $user['User']['id'])); ?>
-				<?php endif; ?>
-			<?php endif; ?>
-			
-			<?php if(!empty($appConfigurations['rewardsPoint'])) : ?>
-					/ <?php echo $html->link(__('Reward Points', true), array('controller' => 'points', 'action' => 'user', $user['User']['id'])); ?>
-			<?php endif; ?>
-			
 			<?php if(empty($user['User']['admin'])) : ?>
 				<?php if(!empty($user['User']['active'])):?>
 					/ <?php echo $html->link(__('Suspend', true), array('action' => 'suspend', $user['User']['id']), null, sprintf(__('Are you sure you want to suspend the user: %s?', true), $user['User']['username'])); ?>

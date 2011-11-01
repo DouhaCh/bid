@@ -11,14 +11,14 @@ class PagesController extends AppController {
 	function beforeFilter(){
 		parent::beforeFilter();
 
-		$this->cacheAction = Configure::read('Cache.time');
+		//$this->cacheAction = Configure::read('Cache.time');
 		if(!empty($this->Auth)){
 			$this->Auth->allow('view', 'getpages', 'contact', 'suggestion');
 		}
 	}
 
 	function view($slug = null) {
-		$this->cacheAction='3 days';
+		//$this->cacheAction='3 days';
 		if (!$slug) {
 			$this->Session->setFlash(__('Invalid Page.', true));
 			$this->redirect(array('action'=>'index'));

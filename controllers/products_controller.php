@@ -8,8 +8,6 @@ class ProductsController extends AppController {
 	function admin_index() {
 		$this->paginate = array('limit' => $this->appConfigurations['adminPageLimit'], 'order' => array('Product.title' => 'asc'));
 		$this->set('products', $this->paginate('Product'));
-
-		//$this->set('languages', $this->Language->find('count'));
 	}
 
 	function admin_auctions($id = null) {
@@ -112,10 +110,6 @@ class ProductsController extends AppController {
 			}
 		}
 		$this->set('categories', $this->Product->Category->generatetreelist(null, null, null, '-'));
-
-		$this->set('priceIncrement', $this->requestAction('/settings/get/price_increment'));
-		$this->set('markUp', $this->Setting->get('mark_up'));
-		$this->set('packagePrice', $this->requestAction('/admin/packages/mostexpensive'));
 		
 		if(!empty($this->appConfigurations['limits']['active'])) {
 			$this->set('limits', $this->Product->Limit->find('list', array('order' => array('Limit.limit' => 'desc'))));

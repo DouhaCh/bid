@@ -22,11 +22,9 @@ echo $this->element('admin/crumb');
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('featured');?></th>
-	<th><?php echo $paginator->sort('peak_only');?></th>
-	<th><?php echo $paginator->sort('fixed_price');?></th>
+	<th><?php echo $paginator->sort("Giá bid", 'bp_cost');?></th>
+	<th><?php echo $paginator->sort('price');?></th>
 	<th><?php echo $paginator->sort('end_time');?></th>
-	<th><?php echo $paginator->sort('max_end_time');?></th>
-	<th><?php echo $paginator->sort('Active');?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
 	<th><?php echo $paginator->sort('Status', 'Status.name');?></th>
 	<th class="actions"><?php __('Options');?></th>
 </tr>
@@ -43,23 +41,13 @@ foreach ($auctions as $auction):
 			<?php echo !empty($auction['Auction']['featured']) ? __('Yes', true) : __('No', true); ?>
 		</td>
 		<td>
-			<?php echo !empty($auction['Auction']['peak_only']) ? __('Yes', true) : __('No', true); ?>
+			<?php echo $auction['Auction']['bp_cost']; ?>
 		</td>
 		<td>
-			<?php echo !empty($auction['Product']['fixed']) ? __('Yes', true) : __('No', true); ?>
+			<?php echo $auction['Auction']['price']; ?>
 		</td>
 		<td>
 			<?php echo $time->nice($auction['Auction']['end_time']); ?>
-		</td>
-		<td>
-			<?php if(!empty($auction['Auction']['max_end'])) : ?>
-				<?php echo $time->nice($auction['Auction']['max_end_time']); ?>
-			<?php else : ?>
-			n/a
-			<?php endif; ?>
-		</td>
-		<td>
-			<?php echo !empty($auction['Auction']['active']) ? __('Yes', true) : __('No', true); ?>
 		</td>
 		<td>
 			<?php echo $auction['Status']['name']; ?>

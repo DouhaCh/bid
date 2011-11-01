@@ -74,62 +74,19 @@ thefield.value = ""
 <body>
   <div id="wrapper">
   <?php echo $this->element('admin/menu_top');?>
-
-
     <div id="container">
 		<div id="header" class="clearfix">
 			<div class="container">
-				<div class="logo">
-                    <?php echo $html->link($html->image('admin/logo.png'), array('controller' => 'dashboards', 'action' => 'index', 'admin' => 'admin'), null, null , false);?>
-				</div>
-                                   <div id="search">
-     <form name="search" action="https://qazware.com/index.php" method="post" target="_blank">
-                        <input name="searchquery" class="searchtext" type="text" style="max-width:90px;" value="[Enter keyword]" onFocus="clearText(this)">
-                       <input type="submit" name="Submit" value="Search" class="searchbuttonc">
-                 <select name="searchtype" class="searchselect" style="visibility: hidden !important;">
-                          <option value="all" selected style="visibility: hidden;">-- Support Site --</option>
-                        </select>
-                <input type="hidden" name="_m" value="core"><input type="hidden" name="_a" value="searchclient"></form>
-                  </div>
-
-
-<?php echo $this->element('admin/menu');?>
+				<?php echo $this->element('admin/menu');?>
 			</div>
 
 		</div>
-
-
-
-			<?php
-				if($session->check('Message.flash')){
-					$session->flash();
-				}
-
-				if($session->check('Message.auth')){
-					$session->flash('auth');
-				}
-			?>
-
-
-
-
-            <div id="content_container">
-
-              <div id="left_side">
-			<?php echo $content_for_layout; ?>
+        <div id="content_container">
+        	<div id="left_side">
+				<?php echo $content_for_layout; ?>
             </div>
-
-
-       <div style="clear:both"></div>
-
-
-
-<!-- footer Starts -->
-
-	
-	<!-- footer Ends -->
-
-	</div>
+       		<div style="clear:both"></div>
+		</div>
     </div>
 	<?php echo $cakeDebug; ?>
 </body>

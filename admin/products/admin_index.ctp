@@ -7,7 +7,6 @@ echo $this->element('admin/crumb');
 <div class="auctions index">
 
 <h2><?php __('Products');?></h2>
-<blockquote><p>Manage your products from here. You will need to <a href="/admin/products/add">add a product</a> first, and then click on 'create auction' to begin selling on your website. This allows you to start multiple auctions  selling the same product. <span class="helplink">[ <a href="https://members.phppennyauction.com/link.php?id=12" target="_blank">Find out more &raquo;</a> ]</span></p></blockquote>
 
 <div class="actions">
 	<ul>
@@ -22,11 +21,9 @@ echo $this->element('admin/crumb');
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort(__('Title',true), 'title');?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
-	<th><?php echo $paginator->sort(__('Product Code',true), 'code');?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
 	<th><?php echo $paginator->sort(__('Category',true), 'Category.name');?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
-	<th><?php echo $paginator->sort(__('MSRP (RRP)',true));?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
+	<th><?php echo $paginator->sort("Giá thực");?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
 	<th><?php echo $paginator->sort(__('Start Price',true));?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
-	<th><?php echo $paginator->sort(__('Fixed Price',true), 'fixed');?> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortup.gif" /> <img src="<?php echo $appConfigurations['url']?>/admin/img/sortdown.gif" /> </th>
 	<th class="actions"><?php __('Options');?></th>
 </tr>
 <?php
@@ -42,13 +39,6 @@ foreach ($products as $product):
         			<img src="<?php echo $appConfigurations['url']?>/admin/img/add.png" alt="" align="left" />&nbsp;<?php echo $product['Product']['title']; ?> 
 		</td>
 		<td>
-			<?php if(!empty($product['Product']['code'])) : ?>
-				<?php echo $product['Product']['code']; ?>
-			<?php else: ?>
-				n/a
-			<?php endif; ?>
-		</td>
-		<td>
 			<?php echo $html->link($product['Category']['name'], array('admin' => false, 'controller'=> 'categories', 'action'=>'view', $product['Category']['id']), array('target' => '_blank')); ?>
 		</td>
 		<td>
@@ -61,16 +51,10 @@ foreach ($products as $product):
 		<td>
 			<?php echo $number->currency($product['Product']['start_price'], $appConfigurations['currency']); ?>
 		</td>
-		<td>
-			<?php echo !empty($product['Product']['fixed']) ? __('Yes', true) : __('No', true); ?>
-		</td>
 		<td class="actions">
 			<?php echo $html->link(__('Edit', true), array('action' => 'edit', $product['Product']['id'])); ?>
 			/ <?php echo $html->link(__('Images', true), array('controller' => 'images', 'action' => 'index', $product['Product']['id'])); ?>
-			<?php if($languages > 1) : ?>
-				/ <?php echo $html->link(__('Translations', true), array('controller' => 'translations', 'action' => 'index', $product['Product']['id'])); ?>
-			<?php endif; ?>
-			/ <?php echo $html->link(__('<span style="color: #f00;">Create Auction</span>', true), array('controller' => 'auctions', 'action' => 'add', $product['Product']['id'])); ?>
+			/ <?php echo $html->link(__('<span style="color: #f00;">Tạo phiên đấu giá</span>', true), array('controller' => 'auctions', 'action' => 'add', $product['Product']['id'])); ?>
 			<?php if(!empty($product['Auction'])) : ?>
 					/ <?php echo $html->link(__('Auctions', true), array('action' => 'auctions', $product['Product']['id'])); ?>
 			<?php else: ?>

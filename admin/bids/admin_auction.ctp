@@ -9,16 +9,6 @@ echo $this->element('admin/crumb');
 
 <h2><?php __('Bids Placed on Auction');?> <?php echo $auction['Product']['title']; ?></h2>
 
-<?php if(!empty($appConfigurations['autobids'])) : ?>
-	<?php if(!empty($realBidsOnly)) : ?>
-		<p><?php echo $html->link('Click here to view all the bids on this auction.', array('action' => 'auction', $auction['Auction']['id'])); ?></p>
-	<?php else : ?>
-		<p><?php echo $html->link('Click here to view only bids placed by real users.', array('action' => 'auction', $auction['Auction']['id'], true)); ?></p>
-	<?php endif; ?>
-	
-	
-<?php endif; ?>
-
 <?php if($paginator->counter() > 0):?>
 
 <?php echo $this->element('admin/pagination'); ?>
@@ -26,8 +16,8 @@ echo $this->element('admin/crumb');
 <table cellpadding="0" cellspacing="0">
 <tr>
 	<th><?php echo $paginator->sort('Username', 'User.username');?></th>
-	<th><?php echo $paginator->sort('Bid Type', 'Bid.description');?></th>
-	<th><?php echo $paginator->sort('Date Placed', 'Bid.created');?></th>
+	<th><?php echo $paginator->sort('Loại bid', 'Bid.description');?></th>
+	<th><?php echo $paginator->sort('Ngày đặt bid', 'Bid.created');?></th>
 </tr>
 <?php
 $i = 0;

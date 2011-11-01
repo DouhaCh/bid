@@ -9,42 +9,18 @@ echo $this->element('admin/crumb');
 <?php echo $form->create('Auction', array('url' => '/admin/auctions/add/'.$product['Product']['id']));?>
 	<fieldset>
  		<legend><?php echo sprintf(__('Add an Auction for: %s', true), $product['Product']['title']);?></legend>
-        <blockquote><p>Select the options you want to use on this auction, and then click 'Add Auction &raquo;' at the bottom of the page to list it on your website.</p></blockquote>
 		<?php
 			echo $form->input('start_time', array('timeFormat' => '24+second', 'label' => __('Start Time *', true)));
 			echo $form->input('end_time', array('timeFormat' => '24+second', 'label' => __('End Time *', true)));
-			echo $form->input('price_step', array('label' => 'Price Step','value'=> 10));
-			echo $form->input('bp_cost', array('label' => 'Bid Point Cost','value'=> 100));
-			echo $form->input('max_bid', array('label' => 'Max bid per user','value'=> 0));
-			echo $form->input('time_increment', array('label' => 'Time increase for each bid','value'=> 10));
-			if(!empty($appConfigurations['autobids'])) {
-				echo $form->input('max_end', array('id' => 'maxEnd', 'label' => __('** Max End Time - force this auction to close at a certain time.', true)));
-			} else {
-				echo $form->input('max_end', array('id' => 'maxEnd', 'label' => __('Max End Time - force this auction to close at a certain time.', true)));
-			}
+			echo $form->input('price_step', array('label' => 'Bước giá','value'=> 10));
+			echo $form->input('bp_cost', array('label' => 'Số xu/bid','value'=> 100));
+			echo $form->input('time_increment', array('label' => 'Thời gian tăng','value'=> 10));
+			echo $form->input('rapid', array('label' => "Chơi tốc độ", 'type'=>'checkbox'));
+			echo $form->input('featured', array('label' => "Tiêu biểu"));
+			echo $form->input('nail_bitter', array('label' => 'Không đặt bid tự động', true));
+			echo $form->input('beginner', array('label' => 'Phiên đấu giá cho người mới chơi'));
+			echo $form->input('active', array('label' => 'Hiển thị'));
 		?>
-		<div id="maxEndTimeBlock" style="display: none">
-			<?php echo $form->input('max_end_time', array('label' => __('** Max End Time', true), 'timeFormat' => '24+second'));?>
-		</div>
-		<?php
-			echo $form->input('rapid', array('label' => "Bid giống vbid.vn", 'type'=>'checkbox'));
-			echo $form->input('special', array('label' => __('Valentine Special- Special Auction 4 valentine', true),'value'=>'Valentine','type'=>'checkbox'));
-			echo $form->input('autolist', array('label' => __('Autolist this auction - it will be automatically listed once it closes.', true)));
-			echo $form->input('featured', array('label' => __('Featured Auction - Show this auction on the home page.', true)));
-			echo $form->input('peak_only', array('label' => __('Peak Auction - Only allow bidding on the auction during a set time.', true)));
-			echo $form->input('nail_bitter', array('label' => __('Nail Biter - The Bid Butler cannot be used on this auction.', true)));
-			echo $form->input('penny', array('label' => __('Penny Auction - This will make the bid increment increase by 0.01 each bid.', true)));
-			echo $form->input('beginner', array('label' => __('Beginner Auction - Only new members can bid.&nbsp;&nbsp;<img src="/admin/img/new-feature.gif" alt="" />', true)));
-			echo $form->input('reverse', array('label' => __('Reverse Auction - Price starts at <span class="HelpToolTip" style="float: none;"> RRP <span class="HelpToolTip_Title" style="display:none;">RRP/MSRP</span> <span class="HelpToolTip_Contents" style="display:none;">The RRP is the Recommended Retail Price, sometimes known as the <b>MSRP</b>, this will be shown on your website as \'worth up to \'.</span></span> and decreases with each bid.&nbsp;&nbsp;<img src="/admin/img/new-feature.gif" alt="" />', true)));
-			echo $form->input('active', array('label' => __('Active - show this auction on the website.', true)));
-			if(!empty($appConfigurations['hiddenReserve'])) {
-				echo $form->input('hidden_reserve');
-			}
-		?>
-
-		<?php if(!empty($appConfigurations['autobids'])) : ?>
-		<p><?php __('** If using the max end time, when the time is met, it will close the auction regardless of whether the minimum price has been met.', true);?></p>
-		<?php endif; ?>
 
 	</fieldset>
 <?php echo $form->end(__('Add Auction >>', true));?>

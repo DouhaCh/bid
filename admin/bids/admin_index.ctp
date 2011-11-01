@@ -7,7 +7,6 @@ echo $this->element('admin/crumb');
 <div class="auctions index">
 
 <h2><?php __('Bids Placed');?></h2>
-<blockquote><p>Below you can see an overview of all bids that have been placed. Clicking on 'View only this auction' will display the bid history for each particular auction. </p></blockquote>
 <?php if($paginator->counter() > 0):?>
 
 <?php echo $this->element('admin/pagination'); ?>

@@ -32,7 +32,7 @@ class PackagesController extends AppController {
 	}
 
 	function index() {
-		$this->cacheAction='3 days';
+		//$this->cacheAction='3 days';
 		/*
 		App::import('vendor','payments/nganluong');
 		
@@ -45,13 +45,47 @@ class PackagesController extends AppController {
 		$url = $nl->buildCheckoutUrl($return_url, $receiver, $transaction_info, $order_code, $price);
 		*/
 		
+		App::import('model','Coupon');
+		$cp = new Coupon();
+		$cp->checkExpired($this->Auth->User('id'));
+		$coupon = $cp->getCouponByUser($this->Auth->User('id'));		
 		$packages = $this->Package->find('all',array('order' => array('Package.price')));
 		$this->set('packages',$packages);
 		for ($i=0; $i<count($packages); $i++) {
 			$packages[$i]['Payment']=1;
 		}
+		$this->set('coupon_code', $coupon['Coupon']['code']);
 		$this->pageTitle = __('Nạp XU', true);
 	}
+	
+	function intro() {
+		
+	}
+	function video() {
+		
+	}
+	
+	function prepaid(){
+		
+	}
+	
+	function sms(){
+		
+	}
+	
+	function online(){
+		$packages = $this->Package->find('all',array('order' => array('Package.price')));
+		$this->set('packages',$packages);
+		for ($i=0; $i<count($packages); $i++) {
+			$packages[$i]['Payment']=1;
+		}
+	}
+	
+	function online2($package){
+		$this->set('pkg',$package);
+	}
+	
+	function bank(){}
 
 	function applycoupon(){
 		if(!empty($this->data['Coupon']['code'])){

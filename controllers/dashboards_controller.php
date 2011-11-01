@@ -1,7 +1,7 @@
 <?php
 	class DashboardsController extends AppController{
 		var $name = 'Dashboards';
-		var $uses = array('Bid', 'Account');
+		var $uses = array('Bid', 'Account', 'Setting');
 		
 		
 		function beforeFilter(){

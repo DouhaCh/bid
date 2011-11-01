@@ -20,12 +20,6 @@
 	);
 	Configure::write('Security', $security);
 
-	//Configure::write('Asset.filter.css', 'css.php');
-	//Configure::write('Asset.filter.js', 'custom_javascript_output_filter.php');
-
-	//Configure::write('Acl.classname', 'DbAcl');
-	//Configure::write('Acl.database', 'default');
-
 	Cache::config('default', array('engine' => 'File', 'path'=>TMP.'cache'));
 	Cache::config('short', array(
 		'engine' => 'File', 
