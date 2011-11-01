@@ -96,20 +96,6 @@
 			} else {
 				$categories = $this->generateTreeList(null, null, null, '-');
 			}
-			/*
-			if($count == 'count') {
-				foreach($categories as $key => $category) {
-					$category_id = $category['Category']['id'];
-					$categories[$key]['Category']['count'] = $this->Product->Auction->find('count', array('conditions' => "Product.category_id = $category_id AND Auction.start_time < '" . date('Y-m-d H:i:s') . "' AND Auction.end_time > '" . date('Y-m-d H:i:s') . "'"));
-					$children = $this->children($category_id, false);
-					if(!empty($children)) {
-						foreach ($children as $child) {
-							$category_id = $child['Category']['id'];
-							$categories[$key]['Category']['count'] += $this->Product->Auction->find('count', array('conditions' => "Product.category_id = $category_id AND Auction.start_time < '" . date('Y-m-d H:i:s') . "' AND Auction.end_time > '" . date('Y-m-d H:i:s') . "'"));
-						}
-					}
-				}
-			}*/
 
 			return $categories;
 		}

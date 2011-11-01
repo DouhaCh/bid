@@ -170,7 +170,13 @@
 						'rule' => array('minLength', 1),
 						'message' => __('Bid increment is required.', true)
 					)
-				)
+				),
+				/*'meta_description' => array(
+					'maxLength' => array(
+						'rule' => array('maxLength', 200),
+						'message' => __('Meta description must be less than 200')
+					)
+				)*/
 			);
 
 		}
@@ -336,6 +342,7 @@
 		}
 		
 		function beforeFind($queryData) {
+			
 			//exclude deleted products from all find() requests
 			if (is_array($queryData['conditions'])) {
 				$queryData['conditions']['Product.deleted']=0;

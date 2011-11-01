@@ -25,8 +25,9 @@
 		}
 		
 		function add($data) {
+		
 			if ($data['Referral']['user_id']==0) {
-				$count = $this->find('count',array('condition'=>array('ip'=>$data['Referral']['ip'],'user_id'=>0)));
+				$count = $this->find('count',array('conditions'=>array('ip'=>$data['Referral']['ip'],'user_id'=>0)));
 				if ($count==0) {
 					$this->create();
 					$this->save($data);
@@ -34,7 +35,7 @@
 				
 			}
 			else {
-				$count = $this->find('count',array('condition'=>array('ip'=>$data['Referral']['ip'],'user_id >'=>0)));
+				$count = $this->find('count',array('conditions'=>array('ip'=>$data['Referral']['ip'],'user_id >'=>0)));
 				if ($count==0) {
 					$this->create();
 					$this->save($data);

@@ -5,17 +5,22 @@
 
 		var $actsAs = array('Containable');
 
-		//var $hasOne = array('Point');
-
 		var $hasMany = array(
 			'Bid' => array(
 				'className'  => 'Bid',
+				'limit' => 10
+			),
+			'Bidbutler',
+
+			'Auction' => array(
+				'className'  => 'Auction',
+				'foreignKey' => 'winner_id',
 				'limit' => 10
 			)
 		);
 
 		var $belongsTo = array('Gender');
-
+		var $cacheQueries = true;
 		/**
 		 * Constructor, redefine to use __() in validate message
 		 */
@@ -29,12 +34,16 @@
 						'message' => __('The username is already taken.', true)
 					),
 					'between' => array(
-		        		'rule' => array('between', 3, 50),
-		        		'message' => __('Username must be between 3 and 50 characters long.', true)
+		        		'rule' => array('between', 6, 20),
+		        		'message' => __('Username must be between 6 and 20 characters long.', true)
 		        	),
 					'minlength' => array(
 						'rule' => array('minLength', '1'),
 						'message' => __('A username is required.', true)
+					),
+					'username' => array(
+						'rule' => '/^[a-zA-Z0-9_]{6,20}$/',
+						'message' => 'Tên đăng nhập chỉ được gồm chữ cái, chữ số và dấu gạch dươi(_)'
 					)
 				),
 
@@ -224,14 +233,15 @@
 						// Get the last inserted user
 						
 						$user = $this->read(null, $this->getLastInsertID());
-
+						
 						// now lets check if there was a referred
-						if(!empty($data['User']['referrer'])) {
+						if($data['User']['referrer']>0) {
 							
-							$referralData['Referral']['user_id'] = $user['User']['id'];
-							$referralData['Referral']['referrer_id'] = $data['User']['referrer'];
-							$referralData['Referral']['ip'] = $data['User']['ip'];
-							$referralData['Referral']['confirmation'] = 0;	
+							$referralData=array('Referral'=>array(
+							'user_id' => $user['User']['id'],
+							'referrer_id' => $data['User']['referrer'],
+							'ip' => $data['User']['ip'],
+							'confirmed' => 0));	
 													
 							
 							$this->Referral->add($referralData);
@@ -403,40 +413,6 @@
 			}
 			
 			return $newPassword;
-		}
-		
-		//***** validation rules		
-		function sourceRequired($data) {
-			if(!empty($this->appConfigurations['sourceRequired'])) {
-				if(empty($data['source_id'])) {
-					return false;
-				} else {
-					return true;
-				}
-			} else {
-				return true;
-			}
-		}
-		
-		function lastLogin($id)
-		{
-			$this->read('last_login', $id);
-			$this->set('last_login',date('Y-m-d H:i:s', strtotime('now')));
-			$this->save();				
-		}
-		
-		function sourceNeedExtra($data){
-			if(!empty($this->data['User']['source_id'])){
-				$source = $this->Source->findById($this->data['User']['source_id']);
-
-				if(!empty($source)){
-					if(empty($this->data['User']['source_extra']) && $source['Source']['extra'] == 1){
-						return false;
-					}
-				}
-			}
-
-			return true;
 		}
 	}
 	

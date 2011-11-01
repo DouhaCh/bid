@@ -14,6 +14,20 @@
 				'description' => array(
 					'rule' => array('minLength', 1),
 					'message' => __('Description is a required field.', true)
+				),
+				'total' => array(
+					'comparison' => array(
+						'rule'=> array('comparison', 'not equal', 0),
+						'message' => __('The total cannot be zero.', true)
+					),
+					'numeric' => array(
+						'rule'=> 'numeric',
+						'message' => __('The total can be a number only.', true)
+					),
+					'minLength' => array(
+						'rule' => array('minLength', 1),
+						'message' => __('Total is required.', true)
+					)
 				)
 			);
 		}
@@ -50,22 +64,14 @@
 		 * @return int Balance of user's bid
 		 */
 		function balance($user_id) {
-			if(!empty($this->appConfigurations['simpleBids']) && $this->appConfigurations['simpleBids'] == true) {
-				$user = $this->User->find('first', array('conditions' => array('User.id' => $user_id), 'contain' => ''));
-				return $user['User']['bid_balance'];
-			} else {
-				$credit = $this->find('all', array('conditions' => array('Bid.user_id' => $user_id), 'fields' => "SUM(Bid.credit) as 'credit'"));
-				if(empty($credit[0][0]['credit'])) {
-					$credit[0][0]['credit'] = 0;
-				}
-
-				$debit  = $this->find('all', array('conditions' => array('Bid.user_id' => $user_id), 'fields' => "SUM(Bid.debit) as 'debit'"));
-				if(empty($debit[0][0]['debit'])) {
-					$debit[0][0]['debit'] = 0;
-				}
-
-				return $credit[0][0]['credit'] - $debit[0][0]['debit'];
-			}
+			$bid = $this->find("first", array(
+				"conditions" => array(
+					"user_id" => $user_id
+				),
+				"fields" => array("SUM(credit) - SUM(debit) AS balance")
+			));
+			
+			return $bid["0"]["balance"];
 		}
 
         /**
@@ -80,19 +86,18 @@
             $auction = $this->Auction->findById($auction_id);
 
             $lastPrice = $auction['Auction']['price'];
-            $histories = $this->find('all', array('conditions' => array('Auction.id' => $auction_id), 'fields' => array('Bid.id', 'Bid.debit', 'Bid.created', 'Bid.description', 'User.username'), 'limit' => $limit, 'order' => 'Bid.id DESC'));
+            $histories = $this->find('all', array('conditions' => array('Auction.id' => $auction_id), 'fields' => array('Bid.id', 'Bid.debit', 'Bid.created', 'Bid.description', 'User.username','User.id'), 'limit' => $limit, 'order' => 'Bid.id DESC'));
 			
             if(!empty($options['include_amount']['price_increment'])){
                 foreach($histories as $key => $history){
-                    $histories[$key]['Bid']['amount'] = $lastPrice;
+                	if($history['Bid']['amount'] == 0){
+                		$histories[$key]['Bid']['amount'] = $lastPrice;	
+                	}
                     $lastPrice -= $options['include_amount']['price_increment'];
                     $temp = explode("@", $histories[$key]['User']['username']);
-					$histories[$key]['User']['username'] = $temp[0];
-					
-               		if(strlen($histories[$key]['User']['username'])>12){
-						$histories[$key]['User']['username'] = substr($histories[$key]['User']['username'], 0, 12)."...";
-					}
-
+					$tag = "[".substr((md5($histories[$key]['User']['id'])),0,3)."]";
+					$name = substr($temp[0], 0, 2)."***".substr($temp[0], -2);
+				    $histories[$key]['User']['username'] = $tag." ".$name;
                 }
             }
             return $histories;
@@ -110,8 +115,12 @@
 			$lastBid = $this->find('first', array('conditions' => array('Bid.auction_id' => $auction_id, 'Bid.type' => 'Bid'), 'order' => 'Bid.id DESC', 'contain' => array('User')));
 			$bid = array();
 			
-			//var_dump($lastBid);
 			if(!empty($lastBid)) {
+				if($_SESSION['Auth']['User']['admin'] == 0){
+					$temp = explode("@", $lastBid['User']['username']);
+					$lastBid['User']['username'] = substr($temp[0], 0, 2)."***".substr($temp[0], -2);
+				}
+				
 				$bid = array(
 					'debit'       => $lastBid['Bid']['debit'],
 					'created'     => $lastBid['Bid']['created'],
